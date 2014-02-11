@@ -1,0 +1,841 @@
+ 1     PROCEEDINGS                  NNS      O  ///d,sw$1
+
+ 1              OF                   IN      O  ///d,sw$1
+ 2             THE                   DT      O  ///d,sw$1
+
+ 1      CALIFORNIA      CALIFORNIA  NNP LOCATI  
+ 2               :               :    :      O  
+ 3        vACADEMY        :AlCABEM   NN      O  |||ed,comb+ed$ACADEMY
+ 4               ?               Y   CD NUMBER  |||twchar,rmchar$
+ 5              OF              OF   IN      O  
+ 6        SCIENCES        SCIENCES  NNS      O  
+
+ 1         1-vFoUR         :FOURTH   NN      O  |||rmchar$FOURTH
+ 2               *                   CD NUMBER  ///twchar$
+ 3               i                   FW      O  ///d,sw$
+ 4               *                   FW      O  ///d,sw,twchar$
+ 5               H                   NN      O  ///d,sw$
+ 6          SERIES          SERIES   NN      O  
+ 7               :               '    :      O  |||rmchar,twchar,cwchar$
+
+ 1             voL             VOL   NN      O  |||upp,sw$2
+ 2               ;               ,    :      O  |||twchar,cwchar,rmchar$
+ 3           xv111           XVIII   NN      O  |||sw,swgram$2
+ 4               ,               ,    ,      O  
+ 5             No.             No;   NN      O  |||sw$1
+ 6               4               4   CD NUMBER  
+ 7               ,               ,    ,      O  
+ 8              pp              pp   NN      O  
+ 9               .               .    .      O  
+
+ 1              73              73   CD NUMBER  
+ 2               '               -   ''      O  |||comb$-213,
+ 3              -2              '2   CD NUMBER  |||rmchar,ner$
+ 4               ?               1   CD NUMBER  |||$
+ 5              l3              3,   NN      O  |||$
+ 6               ,               '    ,      O  |||cwchar,rmchar$
+ 7               ?               p   CD NUMBER  |||$
+ 8          plates           1ates  NNS      O  |||d,sw$plates
+ 9            8-23            8-23   CD NUMBER  
+10               ?               M   CD NUMBER  |||$
+11           MARCH           ARcII   NN   DATE  |||d,sw$MARCH
+12              29              29   CD   DATE  
+13               ,              ';    ,   DATE  |||cwchar$,
+14            1929            1929   CD   DATE  
+
+ 1              IV                   CD NUMBER  ///$1
+
+ 1          MARINE          MARINE   JJ      O  
+ 2         MIOCENE         MIOCENE   JJ   MISC  
+ 3             AND             AND   CC      O  
+ 4         RELATED       :RELATEX)   JJ      O  |||d,sw$1
+ 5        DEPOSITS        DEP'OSXT  NNS      O  |||d,sw$1
+ 6               ?              S:   IN      O  |||twchar,charuni$
+
+ 1              OF             OF:   IN      O  |||d,sw$1
+ 2           NORTH           NQRTH  NNP      O  |||d,sw$1
+ 3               "               C   ``      O  |||rmchar$
+ 4        COLOMBIA         OLOMBIA  NNP LOCATI  |||d,sw$1
+
+ 1              BY              SY   IN      O  |||d,sw,by$1
+
+ 1           FRANK           FRANK   JJ      O  
+ 2               ?                   JJ      O  |||twchar$
+ 3               ?               .   NN      O  |||twchar,comb+persondot$2
+ 4               *              M;   CD NUMBER  |||?$
+ 5        ANDERSON        ANDERSON  NNP      O  
+
+ 1        CONTENTS        CONTENTS  NNS      O  
+
+ 1            PAGE           PAGP.   NN      O  |||d,sw$1
+
+ 1    INTRODUCTION    INTROBUCTXON   NN      O  |||d,sw$1
+ 2               !              -'    .      O  |||rmchar$
+
+ 1             The             The   DT      O  
+ 2               _               m   NN      O  |||comb+twchar$
+ 3          marine           arine   JJ      O  |||comb+twchar$1
+ 4          Eocene          Eocene  NNP   MISC  
+ 5        deposits        deposits  NNS      O  
+ 6              of              of   IN      O  
+ 7        northern        northern   JJ      O  
+ 8        Colombia        Colombia  NNP LOCATI  
+ 9            have            have  VBP      O  
+10         already        al-ready   RB      O  |||d,sw,rmchar$1
+11            been            been  VBN      O  
+12       described       described  VBN      O  
+13              in              in   IN      O  
+14         earlier         earlier  JJR      O  
+15          papers          papers  NNS      O  
+16               ?               '   CD NUMBER  |||?$^1footnote
+17             and             and   CC      O  
+18       therefore       therefore   RB      O  
+19         require         require  VBP      O  
+20            only            only   RB      O  
+21         general         general   JJ      O  
+22          notice          notice   NN      O  
+23            here            here   RB      O  
+24               .               .    .      O  
+
+ 1               -                    :      O  ///$
+ 2             For            For.   IN      O  |||d,sw$1
+ 3             the             the   DT      O  
+ 4            most            most  JJS      O  
+ 5            part            part   NN      O  
+ 6            they            they  PRP      O  
+ 7          occupy          occupy  VBP      O  
+ 8               a               a   DT      O  
+ 9           broad           broad   JJ      O  
+10       synclinal       synclinal   JJ      O  
+11            area            area   NN      O  
+12         between         between   IN      O  
+13             the             the   DT      O  
+14           north           north   NN      O  
+15           coast           coast   NN      O  
+16              of              of   IN      O  
+17        Colombia        Colombia  NNP LOCATI  
+18             and             and   CC      O  
+19             the             the   DT      O  
+20           spurs           spurs  VBZ      O  
+21              of              of   IN      O  
+22             the             the   DT      O  
+23        northern        northern   JJ      O  
+24           Andes           Andes  NNP      O  
+25           lying           lying  VBG      O  
+26              to              to   TO      O  
+27             the             the   DT      O  
+28           south           south   NN      O  
+29               .               .    .      O  
+
+ 1              In              In   IN      O  
+ 2             the             the   DT      O  
+ 3           midst           midst   NN      O  
+ 4              of              of   IN      O  
+ 5            this            this   DT      O  
+ 6               "               g   ``      O  |||comb+twchar$
+ 7         general          eneral   JJ      O  |||comb+twchar$1
+ 8        syncline        syncline   NN      O  
+ 9           which           which  WDT      O  
+10         extends         extends  VBZ      O  
+11             for             for   IN      O  
+12            more            more  JJR      O  
+13            than            thin   IN      O  |||swgram,pos$1
+14             160             160   CD NUMBER  
+15           miles           miles  NNS      O  
+16               ,               ,    ,      O  
+17           there           there   EX      O  
+18             are             are  VBP      O  
+19      pronounced      pronounced   JJ      O  
+20      anticlinal       antichnal   JJ      O  |||d,sw$1
+21           folds           folds  VBZ      O  
+22       extending       extending  VBG      O  
+23        parallel        parallel   NN      O  
+24            with            with   IN      O  
+25             its             its  PRP$      O 
+26            axis            axis   NN      O  
+27             and             and   CC      O  
+28            also            also   RB      O  
+29            with            with   IN      O  
+30             the             the   DT      O  
+31           coast           coast   NN      O  
+32               .               .    .      O  
+
+ 1              On              On   IN      O  
+ 2             the             the   DT      O  
+ 3        southern        southern   JJ      O  
+ 4          border          border   NN      O  
+ 5              of              of   IN      O  
+ 6            this            this   DT      O  
+ 7        syncline        syncline   NN      O  
+ 8             the             the   DT      O  
+ 9          Eocene          Eocene  NNP   MISC  
+10           rocks           rocks  NNS      O  
+11         outcrop         outcrop   NN      O  
+12              in              in   IN      O  
+13              an              an   DT      O  
+14       irregular       irregular   JJ      O  
+15            zone            zone   NN      O  
+16       following       following  VBG      O  
+17             the             the   DT      O  
+18        contours        contours  NNS      O  
+19              of              of   IN      O  
+20             the             the   DT      O  
+21     preexisting    pre-existing  VBG      O  |||rmchar,d,sw$1
+22          ranges          ranges  NNS      O  
+23             and             and   CC      O  
+24           spurs           spurs  VBZ      O  
+25               ,               ,    ,      O  
+26           while           while   IN      O  
+27            upon            upon   IN      O  
+28             its             its  PRP$      O 
+29        northern        northern   JJ      O  
+30            limb            limb   NN      O  
+31            they            they  PRP      O  
+32         outcrop        outcro'p  VBP      O  |||d,sw$1
+33              in              in   IN      O  
+34    disconnected    disconnected  VBN      O  
+35           areas           areas  NNS      O  
+36           along           along   IN      O  
+37             the             the   DT      O  
+38       Caribbean       Caribbean   JJ LOCATI  
+39           coast           coast   NN      O  
+40            from            from   IN      O  
+41             the             the   DT      O  
+42            west            west   NN      O  
+43            ?ank            Aank   NN      O  |||edrule,swgram$flank
+44              of              of   IN      O  
+45             the             the   DT      O  
+46          Sierra          Sierra  NNP LOCATI  
+47          Nevada          Xevada  NNP LOCATI  |||d,sw,kbe,kbr$1
+48               .               l    .      O  |||dot,rmchar$
+
+ 1              de             :dh   IN      O  |||swgram$1
+ 2           Santa           Santa  NNP LOCATI  
+ 3           Marta           Marta  NNP LOCATI  
+ 4              to              to   TO      O  
+ 5             the             the   DT      O  
+ 6            Gulf            Gulf  NNP      O  
+ 7              of              of   IN      O  
+ 8           Uraba           Uraba  NNP LOCATI  
+ 9               .               .    .      O  
+
+ 1               A               A   DT      O  
+ 2           large           large   JJ      O  
+ 3            area            area   NN      O  
+ 4              of             of:   IN      O  |||d,sw,rmchar$1
+ 5           these           these   DT      O  
+ 6               ?               r   CD NUMBER  |||twchar+comb$
+ 7           rocks           ocks,  NNS      O  |||seg$1
+ 8               ,                    ,      O  
+ 9             for             for   IN      O  
+10         example         example   NN      O  
+11               ,               ,    ,      O  
+12            lies            lies  VBZ      O  
+13            west            west   NN      O  
+14              of              of   IN      O  
+15             the             the   DT      O  
+16             Rio             Rio  NNP LOCATI  
+17               "               M   ``      O  |||twchar+comb$
+18       Magdalena       agdalena,  NNP PERSON  |||seg$1
+19               ,                    ,      O  
+20       extending       extending  VBG      O  
+21           north           north   RB      O  
+22            from            from   IN      O  
+23          Arjona          Arjona  NNP PERSON  
+24          nearly          nearly   RB      O  
+25              to              to   TO      O  
+26             the             the   DT      O  
+27             sea             sea   NN      O  
+28               ,               ,    ,      O  
+29             and             and   CC      O  
+30              to              to   TO      O  
+31   the/southwest    thesouthwest   VB      O  |||seg$the$southwest
+32             for             for   IN      O  
+33              an              an   DT      O  
+34         unknown         unknown   JJ      O  
+35        distance        dis-tanc   NN      O  |||d,sw,comb+rmchar$1
+36               .              e.    .      O  |||d,sw,comb+rmchar$1
+
+ 1             The             The   DT      O  
+ 2               ?               "   CD NUMBER  |||rmchar$
+ 3          Arjona          Arjona  NNP PERSON  
+ 4           group           group   NN      O  
+ 5               ?               "   CD NUMBER  |||rmchar$
+ 6       mentioned       mentioned  VBN      O  
+ 7              in              in   IN      O  
+ 8               a               a   DT      O  
+ 9          former          former   JJ      O  
+10          paperi          paper'   NN      O  |||rmchar$paper
+11               ?               o   NN      O  |||comb+twchar$
+12        occupies         ccupies  VBZ      O  |||comb+twchar$1
+13            this            this   DT      O  
+14            area            area   NN      O  
+15               .               .    .      O  
+
+ 1         Farther         Farther  JJR      O  
+ 2              to              to   TO      O  
+ 3             the             the   DT      O  
+ 4       southwest       southwest   NN      O  
+ 5           other           other   JJ      O  
+ 6           areas           areas  NNS      O  
+ 7              of              of   IN      O  
+ 8          Eocene          Eocene  NNP      O  
+ 9             are             are  VBP      O  
+10           found           found  VBN      O  
+11              in              in   IN      O  
+12             the             the   DT      O  
+13          Coloso          Coloso  NNP      O  
+14           range           range   NN      O  
+15               ,               ,    ,      O  
+16              in              in   IN      O  
+17             the             the   DT      O  
+18           Cerro           Cerro  NNP      O  
+19              de              de   IN      O  
+20         Cispata         Cispata  NNP      O  
+21            near            near   IN      O  
+22          Lorica          Lorica  NNP LOCATI  
+23               ,               ,    ,      O  
+24              in              in   IN      O  
+25             the             the   DT      O  
+26         Cerrosi          Cerros  NNP      O  |||swgram$2
+27              de              de   IN      O  
+28             las             las   FW      O  
+29         Palomas         Palomas   FW LOCATI  
+30               ,               ,    ,      O  
+31             and             and   CC      O  
+32              in              in   IN      O  
+33           other           other   JJ      O  
+34       districts      dis-tricts  NNS      O  |||d,sw,rmchar$1
+35           about           about   IN      O  
+36             the             the   DT      O  
+37            head            head   NN      O  
+38              of              of   IN      O  
+39             the             the   DT      O  
+40             Rio             Rio  NNP LOCATI  
+41            Sinu            Sinu  NNP LOCATI  
+42               .               .    .      O  
+
+ 1               ?                  NNP      O  ///$
+ 2        Wherever        Wherever  NNP      O  
+ 3            they            they  PRP      O  
+ 4             are             are  VBP      O  
+ 5           found           found  VBN      O  
+ 6             the             the   DT      O  
+ 7          Eocene          Eocene  NNP      O  
+ 8           rocks           rocks  NNS      O  
+ 9             are             are  VBP      O  
+10          highly          highly   RB      O  
+11          folded          folded  VBN      O  
+12             and             and   CC      O  
+13             are             are  VBP      O  
+14       traversed       traversed  VBN      O  
+15              by              by   IN      O  
+16          faults          faults  NNS      O  
+17               .               .    .      O  
+
+ 1              In              In   IN      O  
+ 2            some            some   DT      O  
+ 3           cases           :cams  NNS      O  |||d,sw$1
+ 4               -               t    :      O  |||rmchar$
+ 5            they            he'y  PRP      O  |||d,sw$1
+ 6             are             are  VBP      O  
+ 7            much            much   JJ      O  
+ 8      compressed      compressed  VBN      O  
+ 9             and             and   CC      O  
+10       distorted       distorted  VBN      O  
+11               ,               ,    ,      O  
+12             but             but   CC      O  
+13            they            they  PRP      O  
+14             are             are  VBP      O  
+15   suf?cvient-ly     suRiefently   JJ      O  |||upp,ed,edrule$sufficiently
+16          fossil          fossil   JJ      O  
+17         bearing         bearing   NN      O  
+18             for             for   IN      O  
+19   identi?cation   identificatio   NN      O  |||edrule,comb+seg$identification
+20               .              n.    .      O  |||d,sw$1
+
+ 1     POST-EOCENE     POST-EOCENE   JJ      O  
+ 2        SEQUENCE        SEQUENCE   NN      O  
+
+ 1             The             The   DT      O  
+ 2          Eocene          Eocene  NNP   MISC  
+ 3        deposits        deposits  NNS      O  
+ 4              of              of   IN      O  
+ 5        Colombia        Colombia  NNP LOCATI  
+ 6             are             are  VBP      O  
+ 7             for            :for   IN      O  |||d,sw,rmchar$1
+ 8             the             the   DT      O  
+ 9            most           tnost  JJS      O  |||d,sw$1
+10            part            part   NN      O  
+11               ,               ,    ,      O  
+12      especially      especially   RB      O  
+13              in              in   IN      O  
+14             the             the   DT      O  
+15         central         central   JJ      O  
+16           areas           areas  NNS      O  
+17              of              of   IN      O  
+18             the             the   DT      O  
+19        syncline        synchne,   NN      O  |||d,sw$1
+20               ,                    ,      O  ///$
+21        overlaid        Overlaid  VBN      O  |||upper$1
+22              by              by   IN      O  
+23               a               a   DT      O  
+24        sequence        sequence   NN      O  
+25              of              of   IN      O  
+26          strata          strata   NN      O  
+27              of              of   IN      O  
+28           great           great   JJ      O  
+29       thickness       thickness   NN      O  
+30               .               .    .      O  
+
+ 1              In              In   IN      O  
+ 2            some            some   DT      O  
+ 3     placesthese    places.these   NN      O  |||seg$places$these
+ 4           later           later   RB      O  
+ 5            beds            beds  NNS      O  
+ 6         overlap         overlap  VBP      O  
+ 7             the             the   DT      O  
+ 8         borders         borders  NNS      O  
+ 9              of              of   IN      O  
+10             the             the   DT      O  
+11          trough         :trough   NN      O  |||d,sw,rmchar$1
+12             and             and   CC      O  
+13           along           along   IN      O  
+14             its             its  PRP$      O 
+15         coastal         coastal   JJ      O  
+16            side            side   NN      O  
+17            ?ank           flank   VB      O  |||d,sw,edrule$2
+18              it              it  PRP      O  
+19             for             for   IN      O  
+20            many            many   JJ      O  
+21           miles           miles  NNS      O  
+22               .               .    .      O  
+
+ 1               -               W    :      O  |||comb+twchar$
+ 2           While            hile   IN      O  |||comb+twchar$1
+ 3             the             the   DT      O  
+ 4      succeeding      succeeding  VBG      O  
+ 5       divisions       divisions  NNS      O  
+ 6              of              of   IN      O  
+ 7            this            this   DT      O  
+ 8        sequence        sequence   NN      O  
+ 9             are             are  VBP      O  
+10         largely         largely   RB      O  
+11             the             the   DT      O  
+12          result          result   NN      O  
+13              of              of   IN      O  
+14  reconnaissance  reconnas-sance   NN      O  |||d,sw$1
+15               ,               ,    ,      O  
+16             and             and   CC      O  
+17            only            only   RB      O  
+18     qualitative     qualitative   JJ      O  
+19           study           study   NN      O  
+20             can             can   MD      O  
+21              be              be   VB      O  
+22         claimed         claimed  VBN      O  
+23             for             for   IN      O  
+24        themgyet       them,:yet   NN      O  |||seg+rmchar$them$,$yet
+25              it              it  PRP      O  
+26              is              is  VBZ      O  
+27        believed        believed  VBN      O  
+28            that            that   IN      O  
+29             the             the   DT      O  
+30            more            more  RBR      O  
+31       important       important   JJ      O  
+32          series          series   NN      O  
+33             are             are  VBP      O  
+34        properly        properly   RB      O  
+35   d1Stinguished   dis-tinguishe  VBN      O  |||comb+rmchar,ed+d,ed+sw$distinguished
+36               ,              d,    ,      O  |||charuni,comb$1
+37             and             and   CC      O  
+38           their           their  PRP$      O 
+39        position        position   NN      O  
+40              in              in   IN      O  
+41             the             the   DT      O  
+42          column          column   NN      O  
+43              1S               s   NN      O  |||ed+swgram$is
+44     undoubtedly     undoubtedly   RB      O  
+45               ?               r   CD NUMBER  |||?$^1footnote
+46        Anderson        Anderson  NNP PERSON  
+47               ,               ,    ,      O  
+48              F.              F.  NNP PERSON  
+49              M.              M.  NNP PERSON  
+50               ,               ,    ,      O  
+51            Proc            Proc  NNP      O  
+52               .               .    .      O  
+
+ 1          Calif.          Calif.  NNP LOCATI  
+ 2               .                    .      O  ///$
+
+ 1            Acad            Aced  NNP      O  |||swgram,kbe$1
+ 2               .               .    .      O  
+
+ 1            Sci.            Sci.  NNP      O  
+ 2               ,               ,    ,      O  
+ 3             Vol             Vol  NNP      O  
+ 4               .               .    .      O  
+
+ 1              17              12   CD NUMBER  |||?$1
+ 2               ,               ,    ,      O  
+ 3            1928            1928   CD   DATE  
+ 4               ,               ,    ,      O  
+ 5              pp              pp   NN      O  
+ 6               .               .    .      O  
+
+ 1            1-29            1-29   CD NUMBER  
+ 2               .               .    .      O  
+
+ 1               _                   NN      O  ///$
+ 2               1                   CD NUMBER  ///$
+ 3               ?               "   CD NUMBER  |||rmchar$
+ 4        Anderson        Anderson  NNP PERSON  
+ 5               ,               ,    ,      O  
+ 6              F.              F,  NNP PERSON  |||persondot$1
+ 7              M.              M.  NNP PERSON  
+ 8               ,               ,    ,      O  
+ 9            Bull            Bull  NNP ORGANI  
+10               .                    .      O  ///$1
+
+ 1            Amer            Amer  NNP PERSON  
+ 2               .               .    .      O  
+
+ 1           Assoc           Assoc  NNP      O  
+ 2               .               .    .      O  
+
+ 1          Petrol          Petrol  NNP      O  
+ 2           Geol.           Geol.  NNP      O  
+ 3               ,               ,    ,      O  
+ 4             Vol             Vol  NNP      O  
+ 5               .               .    .      O  
+
+ 1              10              10   CD NUMBER  
+ 2               ,               ,    ,      O  
+ 3            1926            1926   CD   DATE  
+ 4               ,               ,    ,      O  
+ 5              p.              p;   NN      O  |||sw$1
+ 6             387             387   CD NUMBER  
+ 7               .               .    .      O  
+
+ 1              oL              11   NN      O  |||comb+charuni,comb+upp$112
+ 2               +               2   CC      O  |||$
+ 3      CALIFORNIA      CALIFORNIA  NNP LOCATI  
+ 4         ACADEMY       ACADEMIA'  NNP      O  |||swgram,kbe$1
+ 5              OF              OF   IN      O  
+ 6        SCIENCES        SCIENCES  NNP      O  
+ 7               [               [   CD NUMBER  
+ 8            Pnoc            Pace  NNP      O  |||ed+swgram$Proc
+ 9               .               .    .      O  
+
+ 1             411             Sai   CD NUMBER  |||ner$1
+ 2               !               c    .      O  |||rmchar$
+
+ 1             San             Sss  NNP LOCATI  |||ed?$Ser.
+ 2               .               .    .      O  
+
+ 1               *                   NN      O  ///$
+ 2              19              19   CD NUMBER  
+ 3               .               .    .      O  
+
+ 1           Conus           Conus   NN      O  
+ 2      tuberacola      tuberacola   NN      O  
+ 3               ?                   CD NUMBER  ///$
+ 4        Anderson        Anderson  NNP PERSON  
+ 5               ,               ,    ,      O  
+ 6             new            .new   JJ      O  |||d,sw,rmchar$1
+ 7         species         species  NNS      O  
+ 8               '               '  POS      O  
+
+ 1           Plate           Plate   NN      O  
+ 2               9               9   CD NUMBER  
+ 3               ,               ,    ,      O  
+ 4          ?gures         figures  VBZ      O  |||d,sw,edrule$2
+ 5               4               4   LS NUMBER  
+ 6               -               ,    :      O  |||twchar$2
+ 7               ,                    ,      O  |||$
+ 8               5               8   CD NUMBER  |||?$1
+
+ 1           Shell           Shell  NNP      O  
+ 2              of              of   IN      O  
+ 3          medium          medium   NN      O  
+ 4            size            size   NN      O  
+ 5               ,               ,    ,      O  
+ 6        probable        probable   JJ      O  
+ 7          height          height   NN      O  
+ 8              of              of   IN      O  
+ 9        holotype        holotype   NN      O  
+10               (               {   NN      O  |||statc,path$1
+11      incomplete      incom-plet   JJ      O  |||d,sw,comb+rmchar$1
+12               )              e)   NN      O  |||d,sw,comb+rmchar$1
+13              54              54   CD NUMBER  
+14               .               m    .      O  |||dot+comb+swgram$
+
+ 1             mm.             m.,   NN      O  |||dot+comb+swgram$1
+ 2               ,                    ,      O  ///$1
+ 3           width           width   NN      O  
+ 4             3.4             3.4   CD NUMBER  
+ 5             mm.             mm.   NN      O  
+ 6               ,               ,    ,      O  
+ 7               -                    :      O  ///$
+ 8           spire           spire   NN      O  
+ 9            high            high   RB      O  
+10               ,               ,    ,      O  
+11       concavely       concavely   RB      O  
+12        turrited        turrited  VBN      O  
+13               ,               ,    ,      O  
+14         earlier        earlier:  JJR      O  |||d,sw,cwchar$
+15 whorlsvcoronated whorls::coronate  VBN      O  |||seg+comb$whorls$coronated
+16               ;              d;    :      O  |||seg+comb$1
+17            last            last   JJ      O  
+18             two             two   CD NUMBER  
+19              or              or   CC      O  
+20           three           three   CD NUMBER  
+21          whorls          whorls  NNS      O  
+22          smooth          smooth   JJ      O  
+23               ,               ,    ,      O  
+24             but             but   CC      O  
+25        slightly        slightly   RB      O  
+26               ,                    ,      O  ///$
+27  excavatedabove  excavated:abov   NN      O  |||seg,comb+seg$excavated$above
+28               ;              e;    :      O  |||comb+seg$1
+29           sides           sides  NNS      O  
+30              of              of   IN      O  
+31           older         older..  JJR      O  |||d,sw$1
+32       specimens      .specimens  NNS      O  |||d,sw$1
+33          smooth          smooth   VB      O  
+34               ,               ,    ,      O  
+35              in              in   IN      O  
+36         younger         younger  JJR      O  
+37          shells          shells  NNS      O  
+38             the             the   DT      O  
+39           sides           sides  NNS      O  
+40             are             are  VBP      O  
+41         adorned         adorned  VBN      O  
+42 withiaminuterspirally w'ith:,minute.spirally   RB      O |||seg+rmchar$with$minute$spirally
+43        arranged       ar-ranged  VBN      O  |||d,sw$1
+44           beads           beads  NNS      O  
+45               ,               ,    ,      O  
+46          chie?y         chiefly   NN      O  |||d,sw,edrule$2
+47              on              on   IN      O  
+48             the             the   DT      O  
+49           lower          low'er  JJR      O  |||d,sw,cwchar$1
+50        half.-of         half.of   NN      O  |||rmchar$half$of
+51             the             the   DT      O  
+52           shell           shell   NN      O  
+53               ;               ;    :      O  
+54        aperture        aperture   NN      O  
+55          narrow          narrow   JJ      O  
+56               .               .    .      O  
+
+ 1             The             The   DT      O  
+ 2       shoulders       shoulders  NNS      O  
+ 3              of              of   IN      O  
+ 4             the             the   DT      O  
+ 5             las             las  NNS      O  
+ 6               '               t  POS      O  |||comb$
+ 7               t               .   NN      O  |||$
+ 8               ?               :   CD NUMBER  |||$
+ 9          wl1orl          :whorl   NN      O  |||rmchar$whorl
+10           sharp           sharp   JJ      O  
+11             and             and   CC      O  
+12          abrupt          abrupt   JJ      O  
+13               ;              .;    :      O  |||rmchar$1
+14           lines           lines  NNS      O  
+15              of              of   IN      O  
+16          growth          growth   NN      O  
+17        strongly       strorigly   RB      O  |||d,sw$1
+18          curved          curved  VBD      O  
+19               .               .    .      O  
+
+ 1               ?                   NN      O  ///$
+ 2               .                    .      O  ///$
+
+ 1               ?                   NN      O  ///$
+ 2            This            This   DT      O  
+ 3           shell           shell   NN      O  
+ 4       resembles       resembles  VBZ      O  
+ 5              C.              C.  NNP      O  
+ 6     consobrimus     ConsobrN2NS   NN      O  |||ed+kbe$1
+ 7            Sow.            Sow.  NNP      O  
+ 8               ,               ,    ,      O  
+ 9            only            only   RB      O  
+10              in              in   IN      O  
+11       sculpture       sculpture   NN      O  
+12               ,               ,    ,      O  
+13             but             but   CC      O  
+14              is              is  VBZ      O  
+15      relatively      relatively   RB      O  
+16           wider           wider  JJR      O  
+17               ,               ,    ,      O  
+18             has             has  VBZ      O  
+19            less         .less..  RBR      O  |||d,sw,swgram$1
+20        strongly        stxongly   RB      O  |||d,sw$1
+21       developed       developed  VBN      O  
+22    granulations   granula-tions  NNS      O  |||d,sw,rmchar$1
+23              on              on   IN      O  
+24             the             the   DT      O  
+25           sides           sides  NNS      O  
+26               .               .    .      O  
+
+ 1              It              It  PRP      O  
+ 2            also            also   RB      O  
+ 3         differs         differs  VBZ      O  
+ 4            from            from   IN      O  
+ 5              C.              C.  NNP      O  
+ 6       toroensis       toroensfs  NNP      O  |||kbe$1
+ 7          Olsson          Olsson  NNP PERSON  
+ 8              in              in   IN      O  
+ 9        relative        relative   JJ      O  
+10           width           width   NN      O  
+11             and             and   CC      O  
+12              in              in   IN      O  
+13               ?               f   JJ      O  |||rmchar,comb+twchar$
+14            form             orm   NN      O  |||rmchar,comb+twchar$1
+15              of              of   IN      O  
+16           spire           spire   NN      O  
+17               .               .    .      O  
+
+ 1               H               H   NN      O  
+ 2         olotype         01otype   NN      O  |||comb,charuni$
+ 3               :               f    :      O  |||pos$
+ 4               N               N   NN      O  
+ 5          0-4623          o.4623   CD NUMBER  |||comb+sw$2
+ 6               ,               ,    ,      O  
+ 7             Mus             Mus   NN      O  
+ 8               .               .    .      O  
+
+ 1          Calif.          Calif;  NNP LOCATI  |||sw$1
+ 2               _               A  VBD      O  |||rmchar$
+ 3            Acad            cad.  NNP      O  |||comb+swgram,comb+kbe$1
+ 4               .                    .      O  ///$
+
+ 1            Sci.            Sci.  NNP      O  
+ 2               ,               ,    ,      O  
+ 3               ?               f   CD NUMBER  |||comb+twchar$
+ 4            from             rom   IN      O  |||comb+twchar$1
+ 5             Loc             I.o   NN LOCATI  |||sw$1
+ 6               .              c.    .      O  |||charuni$1
+
+ 1             267             267   CD NUMBER  
+ 2               ,               ,    ,      O  
+ 3              C.              C.  NNP PERSON  
+ 4              A.              A.  NNP PERSON  
+ 5              S.              S.  NNP PERSON  
+ 6               ,               ,    ,      O  
+ 7         horizon         horizon   NN      O  
+ 8              M.              M,   NN      O  |||sw$1
+ 9               -             ???    :      O  |||rmchar$
+10               N               N   NN      O  
+11               ,               ,    ,      O  
+12            near            near   IN      O  
+13            base            base   NN      O  
+14              of              of   IN      O  
+15             the             the   DT      O  
+16          Tuber?          Tubers  NNP      O  |||twchar$2
+17           group           group   NN      O  
+18               ,               ,    ,      O  
+19           where           where  WRB      O  
+20              it              it  PRP      O  
+21         appears         appears  VBZ      O  
+22              to              to   TO      O  
+23          belong          belong   VB      O  
+24               ,               ,    ,      O  
+25             and             and   CC      O  
+26           where           where  WRB      O  
+27         several         several   JJ      O  
+28            fair            fair   JJ      O  
+29               ?               -   NN      O  |||comb$2
+30           sized           sized  VBN      O  
+31       specimens       specimens  NNS      O  
+32            were            were  VBD      O  
+33        obtained        obtained  VBN      O  
+34               :               :    :      O  
+35         Miocene         Miocene  NNP      O  
+36              of              of   IN      O  
+37        Colombia        'Colombi  NNP LOCATI  |||d,sw$1
+38               .              a.    .      O  |||charuni$1
+
+ 1              20              20   CD NUMBER  
+ 2               .               .    .      O  
+
+ 1           Conus           Conus   NN      O  
+ 2   crenospiratus   crenospiratus   NN      O  
+ 3        Anderson        Anderson  NNP PERSON  
+ 4               ,               ,    ,      O  
+ 5             new             new   JJ      O  
+ 6         species         species  NNS      O  
+
+ 1           Plate           Plate   NN      O  
+ 2               9               9   CD NUMBER  
+ 3               ,               ,    ,      O  
+ 4          ?gures         figures  VBZ      O  |||d,sw,edrule$2
+ 5               6               6   CD NUMBER  
+ 6               ,               ,    ,      O  
+ 7               7               7   CD NUMBER  
+
+ 1           Shell           Shell  NNP      O  
+ 2           small           small   JJ      O  
+ 3               ,               ,    ,      O  
+ 4          height          height   NN      O  
+ 5              of              of   IN      O  
+ 6        holotype        holotype   NN      O  
+ 7              17              17   CD NUMBER  
+ 8             mm.             mm,   NN      O  |||sw$1
+ 9               ,                    ,      O  ///$1
+10           width           width   NN      O  
+11              10              10   CD NUMBER  
+12             mm.             mm.   NN      O  
+13               ,               ,    ,      O  
+14            with            with   IN      O  
+15        graceful        graceful   JJ      O  
+16         outline         outline   NN      O  
+17               ,               ,    ,      O  
+18             low             low   JJ      O  
+19           spire           spire   NN      O  
+20             and             and   CC      O  
+21        somewhat        somewhat   RB      O  
+22         rounded         rounded  VBD      O  
+23           sides           sides  NNS      O  
+24               ;               ;    :      O  
+25              in              in   IN      O  
+26            size            size   NN      O  
+27               ,               ,    ,      O  
+28            form            form   NN      O  
+29             and             and   CC      O  
+30     sculptureit    sculpture,it   NN      O  |||seg$sculpture$it
+31         recalls         recalls  VBZ      O  
+32              C.             ,C.  NNP      O  |||sw$2
+33               ,               ,    ,      O  
+34              i.              is  NNP      O  |||?$
+35              s0              t7   NN      O  |||$
+36               .               n    .      O  |||$
+
+ 1               _               v   NN      O  |||$
+ 2             m1I             itr   NN      O  |||$
+ 3               ,               f    ,      O  |||$
+ 4               _               f   NN      O  |||$
+ 5             tra             txs   NN      O  |||$
+ 6               {                   CD NUMBER  ///$
+ 7              tt                   NN      O  ///$
+ 8              ,4                   CD NUMBER  ///$
+ 9               s                  NNS      O  ///$
+10            Dall            Dali  NNP PERSON  |||sw$1
+11               ,               ,    ,      O  
+12            from            from   IN      O  
+13             the             the   DT      O  
+14         Chipola         Chipola  NNP LOCATI  
+15            beds            beds  NNS      O  
+16               "               o   ``      O  |||twchar+comb$
+17              of               f   IN      O  |||d,sw,twchar+comb$1
+18               F               F   NN      O  
+19         loridai         lorida;  NNS      O  |||comb$
+20               ;                    :      O  
+21               ?               u   CD NUMBER  |||twchar+comb$
+22           upper            pper   JJ      O  |||twchar+comb$1
+23               ?               s   NN      O  |||twchar+comb$
+24         surface          urface   NN      O  |||twchar+comb$1
+25              of              of   IN      O  
+26             the             the   DT      O  
+27          whorls          whorls  NNS      O  
+28        ?attened        flat-ten  VBD      O  |||edrule,comb+rmchar$2
+29               "               e   ``      O  |||$
+30               ;             d";    :      O  |||cwchar$1

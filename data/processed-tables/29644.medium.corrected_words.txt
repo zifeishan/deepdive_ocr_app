@@ -1,0 +1,783 @@
+29644.medium	0	PROCEEDINGS
+29644.medium	1	OF
+29644.medium	2	THE
+29644.medium	3	CALIFORNIA
+29644.medium	4	:
+29644.medium	5	ACADEMY
+29644.medium	6	
+29644.medium	7	OF
+29644.medium	8	SCIENCES
+29644.medium	9	FOURTH
+29644.medium	10	
+29644.medium	11	
+29644.medium	12	
+29644.medium	13	
+29644.medium	14	SERIES
+29644.medium	15	
+29644.medium	16	VOL
+29644.medium	17	
+29644.medium	18	XVIII
+29644.medium	19	,
+29644.medium	20	No.
+29644.medium	21	4
+29644.medium	22	,
+29644.medium	23	pp
+29644.medium	24	.
+29644.medium	25	73
+29644.medium	26	-213,
+29644.medium	27	
+29644.medium	28	
+29644.medium	29	
+29644.medium	30	
+29644.medium	31	
+29644.medium	32	plates
+29644.medium	33	8-23
+29644.medium	34	
+29644.medium	35	MARCH
+29644.medium	36	29
+29644.medium	37	,
+29644.medium	38	1929
+29644.medium	39	IV
+29644.medium	40	MARINE
+29644.medium	41	MIOCENE
+29644.medium	42	AND
+29644.medium	43	RELATED
+29644.medium	44	DEPOSITS
+29644.medium	45	
+29644.medium	46	OF
+29644.medium	47	NORTH
+29644.medium	48	
+29644.medium	49	COLOMBIA
+29644.medium	50	BY
+29644.medium	51	FRANK
+29644.medium	52	
+29644.medium	53	.
+29644.medium	54	
+29644.medium	55	ANDERSON
+29644.medium	56	CONTENTS
+29644.medium	57	PAGE
+29644.medium	58	INTRODUCTION
+29644.medium	59	
+29644.medium	60	The
+29644.medium	61	
+29644.medium	62	marine
+29644.medium	63	Eocene
+29644.medium	64	deposits
+29644.medium	65	of
+29644.medium	66	northern
+29644.medium	67	Colombia
+29644.medium	68	have
+29644.medium	69	already
+29644.medium	70	been
+29644.medium	71	described
+29644.medium	72	in
+29644.medium	73	earlier
+29644.medium	74	papers
+29644.medium	75	^1footnote
+29644.medium	76	and
+29644.medium	77	therefore
+29644.medium	78	require
+29644.medium	79	only
+29644.medium	80	general
+29644.medium	81	notice
+29644.medium	82	here
+29644.medium	83	.
+29644.medium	84	
+29644.medium	85	For
+29644.medium	86	the
+29644.medium	87	most
+29644.medium	88	part
+29644.medium	89	they
+29644.medium	90	occupy
+29644.medium	91	a
+29644.medium	92	broad
+29644.medium	93	synclinal
+29644.medium	94	area
+29644.medium	95	between
+29644.medium	96	the
+29644.medium	97	north
+29644.medium	98	coast
+29644.medium	99	of
+29644.medium	100	Colombia
+29644.medium	101	and
+29644.medium	102	the
+29644.medium	103	spurs
+29644.medium	104	of
+29644.medium	105	the
+29644.medium	106	northern
+29644.medium	107	Andes
+29644.medium	108	lying
+29644.medium	109	to
+29644.medium	110	the
+29644.medium	111	south
+29644.medium	112	.
+29644.medium	113	In
+29644.medium	114	the
+29644.medium	115	midst
+29644.medium	116	of
+29644.medium	117	this
+29644.medium	118	
+29644.medium	119	general
+29644.medium	120	syncline
+29644.medium	121	which
+29644.medium	122	extends
+29644.medium	123	for
+29644.medium	124	more
+29644.medium	125	than
+29644.medium	126	160
+29644.medium	127	miles
+29644.medium	128	,
+29644.medium	129	there
+29644.medium	130	are
+29644.medium	131	pronounced
+29644.medium	132	anticlinal
+29644.medium	133	folds
+29644.medium	134	extending
+29644.medium	135	parallel
+29644.medium	136	with
+29644.medium	137	its
+29644.medium	138	axis
+29644.medium	139	and
+29644.medium	140	also
+29644.medium	141	with
+29644.medium	142	the
+29644.medium	143	coast
+29644.medium	144	.
+29644.medium	145	On
+29644.medium	146	the
+29644.medium	147	southern
+29644.medium	148	border
+29644.medium	149	of
+29644.medium	150	this
+29644.medium	151	syncline
+29644.medium	152	the
+29644.medium	153	Eocene
+29644.medium	154	rocks
+29644.medium	155	outcrop
+29644.medium	156	in
+29644.medium	157	an
+29644.medium	158	irregular
+29644.medium	159	zone
+29644.medium	160	following
+29644.medium	161	the
+29644.medium	162	contours
+29644.medium	163	of
+29644.medium	164	the
+29644.medium	165	preexisting
+29644.medium	166	ranges
+29644.medium	167	and
+29644.medium	168	spurs
+29644.medium	169	,
+29644.medium	170	while
+29644.medium	171	upon
+29644.medium	172	its
+29644.medium	173	northern
+29644.medium	174	limb
+29644.medium	175	they
+29644.medium	176	outcrop
+29644.medium	177	in
+29644.medium	178	disconnected
+29644.medium	179	areas
+29644.medium	180	along
+29644.medium	181	the
+29644.medium	182	Caribbean
+29644.medium	183	coast
+29644.medium	184	from
+29644.medium	185	the
+29644.medium	186	west
+29644.medium	187	flank
+29644.medium	188	of
+29644.medium	189	the
+29644.medium	190	Sierra
+29644.medium	191	Nevada
+29644.medium	192	
+29644.medium	193	de
+29644.medium	194	Santa
+29644.medium	195	Marta
+29644.medium	196	to
+29644.medium	197	the
+29644.medium	198	Gulf
+29644.medium	199	of
+29644.medium	200	Uraba
+29644.medium	201	.
+29644.medium	202	A
+29644.medium	203	large
+29644.medium	204	area
+29644.medium	205	of
+29644.medium	206	these
+29644.medium	207	
+29644.medium	208	rocks
+29644.medium	209	,
+29644.medium	210	for
+29644.medium	211	example
+29644.medium	212	,
+29644.medium	213	lies
+29644.medium	214	west
+29644.medium	215	of
+29644.medium	216	the
+29644.medium	217	Rio
+29644.medium	218	
+29644.medium	219	Magdalena
+29644.medium	220	,
+29644.medium	221	extending
+29644.medium	222	north
+29644.medium	223	from
+29644.medium	224	Arjona
+29644.medium	225	nearly
+29644.medium	226	to
+29644.medium	227	the
+29644.medium	228	sea
+29644.medium	229	,
+29644.medium	230	and
+29644.medium	231	to
+29644.medium	232	the southwest
+29644.medium	233	for
+29644.medium	234	an
+29644.medium	235	unknown
+29644.medium	236	distance
+29644.medium	237	.
+29644.medium	238	The
+29644.medium	239	
+29644.medium	240	Arjona
+29644.medium	241	group
+29644.medium	242	
+29644.medium	243	mentioned
+29644.medium	244	in
+29644.medium	245	a
+29644.medium	246	former
+29644.medium	247	paper
+29644.medium	248	
+29644.medium	249	occupies
+29644.medium	250	this
+29644.medium	251	area
+29644.medium	252	.
+29644.medium	253	Farther
+29644.medium	254	to
+29644.medium	255	the
+29644.medium	256	southwest
+29644.medium	257	other
+29644.medium	258	areas
+29644.medium	259	of
+29644.medium	260	Eocene
+29644.medium	261	are
+29644.medium	262	found
+29644.medium	263	in
+29644.medium	264	the
+29644.medium	265	Coloso
+29644.medium	266	range
+29644.medium	267	,
+29644.medium	268	in
+29644.medium	269	the
+29644.medium	270	Cerro
+29644.medium	271	de
+29644.medium	272	Cispata
+29644.medium	273	near
+29644.medium	274	Lorica
+29644.medium	275	,
+29644.medium	276	in
+29644.medium	277	the
+29644.medium	278	Cerros
+29644.medium	279	de
+29644.medium	280	las
+29644.medium	281	Palomas
+29644.medium	282	,
+29644.medium	283	and
+29644.medium	284	in
+29644.medium	285	other
+29644.medium	286	districts
+29644.medium	287	about
+29644.medium	288	the
+29644.medium	289	head
+29644.medium	290	of
+29644.medium	291	the
+29644.medium	292	Rio
+29644.medium	293	Sinu
+29644.medium	294	.
+29644.medium	295	
+29644.medium	296	Wherever
+29644.medium	297	they
+29644.medium	298	are
+29644.medium	299	found
+29644.medium	300	the
+29644.medium	301	Eocene
+29644.medium	302	rocks
+29644.medium	303	are
+29644.medium	304	highly
+29644.medium	305	folded
+29644.medium	306	and
+29644.medium	307	are
+29644.medium	308	traversed
+29644.medium	309	by
+29644.medium	310	faults
+29644.medium	311	.
+29644.medium	312	In
+29644.medium	313	some
+29644.medium	314	cases
+29644.medium	315	
+29644.medium	316	they
+29644.medium	317	are
+29644.medium	318	much
+29644.medium	319	compressed
+29644.medium	320	and
+29644.medium	321	distorted
+29644.medium	322	,
+29644.medium	323	but
+29644.medium	324	they
+29644.medium	325	are
+29644.medium	326	sufficiently
+29644.medium	327	fossil
+29644.medium	328	bearing
+29644.medium	329	for
+29644.medium	330	identification
+29644.medium	331	.
+29644.medium	332	POST-EOCENE
+29644.medium	333	SEQUENCE
+29644.medium	334	The
+29644.medium	335	Eocene
+29644.medium	336	deposits
+29644.medium	337	of
+29644.medium	338	Colombia
+29644.medium	339	are
+29644.medium	340	for
+29644.medium	341	the
+29644.medium	342	most
+29644.medium	343	part
+29644.medium	344	,
+29644.medium	345	especially
+29644.medium	346	in
+29644.medium	347	the
+29644.medium	348	central
+29644.medium	349	areas
+29644.medium	350	of
+29644.medium	351	the
+29644.medium	352	syncline
+29644.medium	353	
+29644.medium	354	overlaid
+29644.medium	355	by
+29644.medium	356	a
+29644.medium	357	sequence
+29644.medium	358	of
+29644.medium	359	strata
+29644.medium	360	of
+29644.medium	361	great
+29644.medium	362	thickness
+29644.medium	363	.
+29644.medium	364	In
+29644.medium	365	some
+29644.medium	366	places these
+29644.medium	367	later
+29644.medium	368	beds
+29644.medium	369	overlap
+29644.medium	370	the
+29644.medium	371	borders
+29644.medium	372	of
+29644.medium	373	the
+29644.medium	374	trough
+29644.medium	375	and
+29644.medium	376	along
+29644.medium	377	its
+29644.medium	378	coastal
+29644.medium	379	side
+29644.medium	380	flank
+29644.medium	381	it
+29644.medium	382	for
+29644.medium	383	many
+29644.medium	384	miles
+29644.medium	385	.
+29644.medium	386	
+29644.medium	387	While
+29644.medium	388	the
+29644.medium	389	succeeding
+29644.medium	390	divisions
+29644.medium	391	of
+29644.medium	392	this
+29644.medium	393	sequence
+29644.medium	394	are
+29644.medium	395	largely
+29644.medium	396	the
+29644.medium	397	result
+29644.medium	398	of
+29644.medium	399	reconnaissance
+29644.medium	400	,
+29644.medium	401	and
+29644.medium	402	only
+29644.medium	403	qualitative
+29644.medium	404	study
+29644.medium	405	can
+29644.medium	406	be
+29644.medium	407	claimed
+29644.medium	408	for
+29644.medium	409	them , yet
+29644.medium	410	it
+29644.medium	411	is
+29644.medium	412	believed
+29644.medium	413	that
+29644.medium	414	the
+29644.medium	415	more
+29644.medium	416	important
+29644.medium	417	series
+29644.medium	418	are
+29644.medium	419	properly
+29644.medium	420	distinguished
+29644.medium	421	,
+29644.medium	422	and
+29644.medium	423	their
+29644.medium	424	position
+29644.medium	425	in
+29644.medium	426	the
+29644.medium	427	column
+29644.medium	428	is
+29644.medium	429	undoubtedly
+29644.medium	430	^1footnote
+29644.medium	431	Anderson
+29644.medium	432	,
+29644.medium	433	F.
+29644.medium	434	M.
+29644.medium	435	,
+29644.medium	436	Proc
+29644.medium	437	.
+29644.medium	438	Calif.
+29644.medium	439	
+29644.medium	440	Acad
+29644.medium	441	.
+29644.medium	442	Sci.
+29644.medium	443	,
+29644.medium	444	Vol
+29644.medium	445	.
+29644.medium	446	17
+29644.medium	447	,
+29644.medium	448	1928
+29644.medium	449	,
+29644.medium	450	pp
+29644.medium	451	.
+29644.medium	452	1-29
+29644.medium	453	.
+29644.medium	454	
+29644.medium	455	
+29644.medium	456	
+29644.medium	457	Anderson
+29644.medium	458	,
+29644.medium	459	F.
+29644.medium	460	M.
+29644.medium	461	,
+29644.medium	462	Bull
+29644.medium	463	.
+29644.medium	464	Amer
+29644.medium	465	.
+29644.medium	466	Assoc
+29644.medium	467	.
+29644.medium	468	Petrol
+29644.medium	469	Geol.
+29644.medium	470	,
+29644.medium	471	Vol
+29644.medium	472	.
+29644.medium	473	10
+29644.medium	474	,
+29644.medium	475	1926
+29644.medium	476	,
+29644.medium	477	p.
+29644.medium	478	387
+29644.medium	479	.
+29644.medium	480	112
+29644.medium	481	
+29644.medium	482	CALIFORNIA
+29644.medium	483	ACADEMY
+29644.medium	484	OF
+29644.medium	485	SCIENCES
+29644.medium	486	[
+29644.medium	487	Proc
+29644.medium	488	.
+29644.medium	489	411
+29644.medium	490	
+29644.medium	491	Ser.
+29644.medium	492	.
+29644.medium	493	
+29644.medium	494	19
+29644.medium	495	.
+29644.medium	496	Conus
+29644.medium	497	tuberacola
+29644.medium	498	
+29644.medium	499	Anderson
+29644.medium	500	,
+29644.medium	501	new
+29644.medium	502	species
+29644.medium	503	'
+29644.medium	504	Plate
+29644.medium	505	9
+29644.medium	506	,
+29644.medium	507	figures
+29644.medium	508	4
+29644.medium	509	,
+29644.medium	510	
+29644.medium	511	5
+29644.medium	512	Shell
+29644.medium	513	of
+29644.medium	514	medium
+29644.medium	515	size
+29644.medium	516	,
+29644.medium	517	probable
+29644.medium	518	height
+29644.medium	519	of
+29644.medium	520	holotype
+29644.medium	521	(
+29644.medium	522	incomplete
+29644.medium	523	)
+29644.medium	524	54
+29644.medium	525	
+29644.medium	526	mm.
+29644.medium	527	,
+29644.medium	528	width
+29644.medium	529	3.4
+29644.medium	530	mm.
+29644.medium	531	,
+29644.medium	532	
+29644.medium	533	spire
+29644.medium	534	high
+29644.medium	535	,
+29644.medium	536	concavely
+29644.medium	537	turrited
+29644.medium	538	,
+29644.medium	539	
+29644.medium	540	whorls coronated
+29644.medium	541	;
+29644.medium	542	last
+29644.medium	543	two
+29644.medium	544	or
+29644.medium	545	three
+29644.medium	546	whorls
+29644.medium	547	smooth
+29644.medium	548	,
+29644.medium	549	but
+29644.medium	550	slightly
+29644.medium	551	
+29644.medium	552	excavated above
+29644.medium	553	;
+29644.medium	554	sides
+29644.medium	555	of
+29644.medium	556	older
+29644.medium	557	specimens
+29644.medium	558	smooth
+29644.medium	559	,
+29644.medium	560	in
+29644.medium	561	younger
+29644.medium	562	shells
+29644.medium	563	the
+29644.medium	564	sides
+29644.medium	565	are
+29644.medium	566	adorned
+29644.medium	567	with minute spirally
+29644.medium	568	arranged
+29644.medium	569	beads
+29644.medium	570	,
+29644.medium	571	chiefly
+29644.medium	572	on
+29644.medium	573	the
+29644.medium	574	lower
+29644.medium	575	half of
+29644.medium	576	the
+29644.medium	577	shell
+29644.medium	578	;
+29644.medium	579	aperture
+29644.medium	580	narrow
+29644.medium	581	.
+29644.medium	582	The
+29644.medium	583	shoulders
+29644.medium	584	of
+29644.medium	585	the
+29644.medium	586	las
+29644.medium	587	
+29644.medium	588	
+29644.medium	589	
+29644.medium	590	whorl
+29644.medium	591	sharp
+29644.medium	592	and
+29644.medium	593	abrupt
+29644.medium	594	;
+29644.medium	595	lines
+29644.medium	596	of
+29644.medium	597	growth
+29644.medium	598	strongly
+29644.medium	599	curved
+29644.medium	600	.
+29644.medium	601	
+29644.medium	602	
+29644.medium	603	
+29644.medium	604	This
+29644.medium	605	shell
+29644.medium	606	resembles
+29644.medium	607	C.
+29644.medium	608	consobrimus
+29644.medium	609	Sow.
+29644.medium	610	,
+29644.medium	611	only
+29644.medium	612	in
+29644.medium	613	sculpture
+29644.medium	614	,
+29644.medium	615	but
+29644.medium	616	is
+29644.medium	617	relatively
+29644.medium	618	wider
+29644.medium	619	,
+29644.medium	620	has
+29644.medium	621	less
+29644.medium	622	strongly
+29644.medium	623	developed
+29644.medium	624	granulations
+29644.medium	625	on
+29644.medium	626	the
+29644.medium	627	sides
+29644.medium	628	.
+29644.medium	629	It
+29644.medium	630	also
+29644.medium	631	differs
+29644.medium	632	from
+29644.medium	633	C.
+29644.medium	634	toroensis
+29644.medium	635	Olsson
+29644.medium	636	in
+29644.medium	637	relative
+29644.medium	638	width
+29644.medium	639	and
+29644.medium	640	in
+29644.medium	641	
+29644.medium	642	form
+29644.medium	643	of
+29644.medium	644	spire
+29644.medium	645	.
+29644.medium	646	H
+29644.medium	647	
+29644.medium	648	
+29644.medium	649	N
+29644.medium	650	o.4623
+29644.medium	651	,
+29644.medium	652	Mus
+29644.medium	653	.
+29644.medium	654	Calif.
+29644.medium	655	
+29644.medium	656	Acad
+29644.medium	657	
+29644.medium	658	Sci.
+29644.medium	659	,
+29644.medium	660	
+29644.medium	661	from
+29644.medium	662	Loc
+29644.medium	663	.
+29644.medium	664	267
+29644.medium	665	,
+29644.medium	666	C.
+29644.medium	667	A.
+29644.medium	668	S.
+29644.medium	669	,
+29644.medium	670	horizon
+29644.medium	671	M.
+29644.medium	672	
+29644.medium	673	N
+29644.medium	674	,
+29644.medium	675	near
+29644.medium	676	base
+29644.medium	677	of
+29644.medium	678	the
+29644.medium	679	Tubers
+29644.medium	680	group
+29644.medium	681	,
+29644.medium	682	where
+29644.medium	683	it
+29644.medium	684	appears
+29644.medium	685	to
+29644.medium	686	belong
+29644.medium	687	,
+29644.medium	688	and
+29644.medium	689	where
+29644.medium	690	several
+29644.medium	691	fair
+29644.medium	692	-
+29644.medium	693	sized
+29644.medium	694	specimens
+29644.medium	695	were
+29644.medium	696	obtained
+29644.medium	697	:
+29644.medium	698	Miocene
+29644.medium	699	of
+29644.medium	700	Colombia
+29644.medium	701	.
+29644.medium	702	20
+29644.medium	703	.
+29644.medium	704	Conus
+29644.medium	705	crenospiratus
+29644.medium	706	Anderson
+29644.medium	707	,
+29644.medium	708	new
+29644.medium	709	species
+29644.medium	710	Plate
+29644.medium	711	9
+29644.medium	712	,
+29644.medium	713	figures
+29644.medium	714	6
+29644.medium	715	,
+29644.medium	716	7
+29644.medium	717	Shell
+29644.medium	718	small
+29644.medium	719	,
+29644.medium	720	height
+29644.medium	721	of
+29644.medium	722	holotype
+29644.medium	723	17
+29644.medium	724	mm.
+29644.medium	725	,
+29644.medium	726	width
+29644.medium	727	10
+29644.medium	728	mm.
+29644.medium	729	,
+29644.medium	730	with
+29644.medium	731	graceful
+29644.medium	732	outline
+29644.medium	733	,
+29644.medium	734	low
+29644.medium	735	spire
+29644.medium	736	and
+29644.medium	737	somewhat
+29644.medium	738	rounded
+29644.medium	739	sides
+29644.medium	740	;
+29644.medium	741	in
+29644.medium	742	size
+29644.medium	743	,
+29644.medium	744	form
+29644.medium	745	and
+29644.medium	746	sculpture it
+29644.medium	747	recalls
+29644.medium	748	,C.
+29644.medium	749	,
+29644.medium	750	
+29644.medium	751	
+29644.medium	752	
+29644.medium	753	
+29644.medium	754	
+29644.medium	755	
+29644.medium	756	
+29644.medium	757	
+29644.medium	758	
+29644.medium	759	
+29644.medium	760	
+29644.medium	761	
+29644.medium	762	Dall
+29644.medium	763	,
+29644.medium	764	from
+29644.medium	765	the
+29644.medium	766	Chipola
+29644.medium	767	beds
+29644.medium	768	
+29644.medium	769	of
+29644.medium	770	F
+29644.medium	771	
+29644.medium	772	;
+29644.medium	773	
+29644.medium	774	upper
+29644.medium	775	
+29644.medium	776	surface
+29644.medium	777	of
+29644.medium	778	the
+29644.medium	779	whorls
+29644.medium	780	flat-ten
+29644.medium	781	
+29644.medium	782	;

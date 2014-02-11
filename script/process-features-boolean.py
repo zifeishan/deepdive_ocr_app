@@ -1,9 +1,12 @@
+#!/usr/bin/python
+
 import os, sys
 from util import *
 # from nltk.corpus import wordnet as wn
 # import enchant
 import featureextractor
 import naivefeature
+import mylabelextractor
 import re
 
 numSuggestions = 0
@@ -16,7 +19,7 @@ def FeatureExtract(alignedfile, labels, corrections, corpus ={}, startingid = 0,
   feature_names = []
 
   if outputbase == '':
-    filebase = alignedfile.rstrip('output.txt') # remove ".outpu..."
+    filebase = alignedfile[:-len('.output.txt')] # remove ".outpu..."
     filebase += '.'
   else:
     filebase = outputbase + '/' + docid + '.'
@@ -31,7 +34,7 @@ def FeatureExtract(alignedfile, labels, corrections, corpus ={}, startingid = 0,
   # 1 JIM JIM NNP PERSON  JIM nn  3 273 ['P11,1732 2036 1855 2083']
   wid = -1  # Start from 0
   for word in words: 
-    if len(word) == 0: continue  # Empty line
+    if len(word) <= 1: continue  # Empty line
     # FIXED!!
 
     wid += 1
@@ -44,15 +47,16 @@ def FeatureExtract(alignedfile, labels, corrections, corpus ={}, startingid = 0,
     options = [word[1], word[2]]  # NEW!!!
 
 
-    if word[1] == word[2] or word[1] == '' or word[2] == '':  # Only run difference
-      # TODO add words where outputs are same!
-      # continue
-      labels[wid] = '0'  # Both true
+    # stripped = [Strip(w) for w in options]
+    # stripped = [w for w in options]  # DO NOT STRIP WORDS NOW!!
 
-    stripped = [Strip(w) for w in options]
-    if stripped[0] == '' and stripped[1] == '':  # no \w
+    if word[1] == '' and word[2] == '':  # no \w
       # print 'Skip:', options
       continue
+
+    # No labels & same: both true
+    if wid not in labels and word[1] == word[2]:
+      labels[wid] = '0'
 
     if wid not in labels: 
       print 'Missing labels for word', wid, word[1], word[2]
@@ -93,16 +97,21 @@ def FeatureExtract(alignedfile, labels, corrections, corpus ={}, startingid = 0,
     didwid = [str(docid), str(wid)]
     print >>fopt, '\t'.join(didwid + options)
 
-    if len(featureset) > 0:
-      print >>fftr, '\t'.join(didwid + 
-        [str(this_features[i]) for i in range(0, len(this_features)) if i in featureset])
-    elif len(featurenameset) > 0:
-      print >>fftr, '\t'.join(didwid +
-        [str(this_features[i]) for i in range(0, len(this_features)) if this_feature_names[i] in featurenameset])
-    else:
-      print >>fftr, '\t'.join(didwid + 
-        [str(i) for i in this_features])
+    # if len(featureset) > 0:
+    #   print >>fftr, '\t'.join(didwid + 
+    #     [str(this_features[i]) for i in range(0, len(this_features)) if i in featureset])
+    # elif len(featurenameset) > 0:
+    #   print >>fftr, '\t'.join(didwid +
+    #     [str(this_features[i]) for i in range(0, len(this_features)) if this_feature_names[i] in featurenameset])
+    # else:
+    #   print >>fftr, '\t'.join(didwid + 
+    #     [str(i) for i in this_features])
 
+    # Print a thin table for evry docid, wid, fname, fval
+    for i in range(0, len(this_features)):
+      print >>fftr, '\t'.join(didwid + 
+        [this_feature_names[i], str(this_features[i])]
+        )  
 
     # print >>fftr, '\t'.join([str(i) for i in this_features])
     fopt.flush()
@@ -119,6 +128,7 @@ def FeatureExtract(alignedfile, labels, corrections, corpus ={}, startingid = 0,
       corrected = options[0]  # first option is correct.. ? TODO
       for i in range(0, len(options)):
         bool_labels[i] = True
+
     elif label == 'T':  # TODO Haowen's 1 means 
       corrected = options[0]
       bool_labels[0] = True
@@ -129,7 +139,7 @@ def FeatureExtract(alignedfile, labels, corrections, corpus ={}, startingid = 0,
 
     elif label == '3':  # none-right
       # label = len(suggs) + len(options) + 1 # None-right label
-      corrected = ''
+      corrected = '???'
       # bool_labels all false
     else:
       print 'Warn: label', label
@@ -184,9 +194,6 @@ def FeatureExtract(alignedfile, labels, corrections, corpus ={}, startingid = 0,
 
   naivefeature.occurweb.WriteDict()
 
-
-
-
 def HaowenLabelExtract(haowen_labeled_file):
   classes = {}  # WID, label
   corrections = {}
@@ -213,9 +220,9 @@ def HaowenLabelExtract(haowen_labeled_file):
 
     # REVERSE CHAR for Tess/Cuni!!!
     if classchar == '1': 
-      classchar = 'C'
-    elif classchar == '2': 
       classchar = 'T'
+    elif classchar == '2': 
+      classchar = 'C'
 
     classes[wid] = classchar
 
@@ -231,7 +238,7 @@ def HaowenLabelExtract(haowen_labeled_file):
 
 
   print 'X Cases:',casenum
-  filebase = haowen_labeled_file.rstrip('.labeled.txt') + '.'
+  filebase = haowen_labeled_file[:-len('.labeled.txt')] + '.'
 
   return classes, corrections
 
@@ -239,17 +246,22 @@ def HaowenLabelExtract(haowen_labeled_file):
 
 if __name__ == "__main__": 
 
-  if len(sys.argv) == 3:
+  LABEL_TYPE_NEW = False
+
+  if len(sys.argv) >= 3:
     dirbase = sys.argv[1]
     outputbase = sys.argv[2]
-    
+    if len(sys.argv) == 4:
+      if sys.argv[3] == '1':
+        LABEL_TYPE_NEW = True
+
   else:
-    print 'Usage:',sys.argv[0],'<OCRoutput-dir-base/> <outputBase/>'
+    print 'Usage:',sys.argv[0],'<OCRoutput-dir-base/> <outputBase/> <IfExtractNewLabels = 0>'
     sys.exit(1)
 
   dirbase += '/'
 
-  ids = [f.rstrip('.output.txt') for f in os.listdir(dirbase) if f.endswith('.output.txt')]
+  ids = [f[:-len('.output.txt')] for f in os.listdir(dirbase) if f.endswith('.output.txt')]
 
   # if len(idfilters) > 0:
   #   print 'Filter file', idfilters
@@ -267,12 +279,17 @@ if __name__ == "__main__":
 
   for fid in ids:
     alignedfile = dirbase + fid + '.output.txt'
-    labeledfile = dirbase + fid + '.labeled.txt'
+    
 
     # TODO EXTRACT LABELS SEPARATEDLY!!!!
     # TODO
     
-    cls, cor = HaowenLabelExtract(labeledfile)
+    if not LABEL_TYPE_NEW:
+      labeledfile = dirbase + fid + '.labeled.txt'
+      cls, cor = HaowenLabelExtract(labeledfile)
+    else:
+      labeledfile = dirbase + fid + '.labeled'
+      cls, cor = mylabelextractor.MyLabelExtract(labeledfile, alignedfile)
 
     FeatureExtract(alignedfile, cls, cor, 
       # corpus, 

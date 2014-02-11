@@ -6,3 +6,4 @@ googlebooks-eng-all-test.txt
 *.pyc
 script/web_occur_dict-backup.json
 data/raw/boolean-f52-c3-m620-backup/
+target/

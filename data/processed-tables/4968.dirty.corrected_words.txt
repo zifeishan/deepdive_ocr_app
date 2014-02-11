@@ -1,0 +1,432 @@
+4968.dirty	0	No.
+4968.dirty	1	1
+4968.dirty	2	.
+4968.dirty	3	
+4968.dirty	4	The
+4968.dirty	5	Parasitic
+4968.dirty	6	Hymenoptera
+4968.dirty	7	of
+4968.dirty	8	the
+4968.dirty	9	Tertiary
+4968.dirty	10	of
+4968.dirty	11	Florissant
+4968.dirty	12	,
+4968.dirty	13	
+4968.dirty	14	
+4968.dirty	15	
+4968.dirty	16	Colorado
+4968.dirty	17	.
+4968.dirty	18	
+4968.dirty	19	
+4968.dirty	20	
+4968.dirty	21	
+4968.dirty	22	
+4968.dirty	23	BY
+4968.dirty	24	CHARLES
+4968.dirty	25	T.
+4968.dirty	26	BRUES
+4968.dirty	27	.
+4968.dirty	28	
+4968.dirty	29	The
+4968.dirty	30	present
+4968.dirty	31	paper
+4968.dirty	32	is
+4968.dirty	33	based
+4968.dirty	34	upon
+4968.dirty	35	studies
+4968.dirty	36	on
+4968.dirty	37	the
+4968.dirty	38	parasitic
+4968.dirty	39	Hymenoptera
+4968.dirty	40	
+4968.dirty	41	
+4968.dirty	42	contained
+4968.dirty	43	in
+4968.dirty	44	the
+4968.dirty	45	very
+4968.dirty	46	extensive
+4968.dirty	47	collection
+4968.dirty	48	of
+4968.dirty	49	fossil
+4968.dirty	50	insects made
+4968.dirty	51	many
+4968.dirty	52	years
+4968.dirty	53	ago
+4968.dirty	54	by
+4968.dirty	55	Dr.
+4968.dirty	56	Samuel
+4968.dirty	57	H.
+4968.dirty	58	Scudder
+4968.dirty	59	at
+4968.dirty	60	Florissant
+4968.dirty	61	,
+4968.dirty	62	Colorado
+4968.dirty	63	,
+4968.dirty	64	,
+4968.dirty	65	and
+4968.dirty	66	now
+4968.dirty	67	contained
+4968.dirty	68	in
+4968.dirty	69	the
+4968.dirty	70	Museum
+4968.dirty	71	
+4968.dirty	72	of
+4968.dirty	73	Comparative
+4968.dirty	74	Zoology
+4968.dirty	75	.
+4968.dirty	76	
+4968.dirty	77	In
+4968.dirty	78	
+4968.dirty	79	
+4968.dirty	80	addition , Prof 
+4968.dirty	81	.
+4968.dirty	82	T.
+4968.dirty	83	D.A.
+4968.dirty	84	.
+4968.dirty	85	Cockerell
+4968.dirty	86	has
+4968.dirty	87	sent
+4968.dirty	88	me
+4968.dirty	89	much
+4968.dirty	90	material
+4968.dirty	91	from
+4968.dirty	92	the
+4968.dirty	93	same
+4968.dirty	94	locality
+4968.dirty	95	obtained
+4968.dirty	96	by
+4968.dirty	97	expeditions
+4968.dirty	98	under
+4968.dirty	99	his
+4968.dirty	100	charge
+4968.dirty	101	during
+4968.dirty	102	the
+4968.dirty	103	
+4968.dirty	104	summers
+4968.dirty	105	of
+4968.dirty	106	1907
+4968.dirty	107	and
+4968.dirty	108	1908
+4968.dirty	109	,
+4968.dirty	110	most
+4968.dirty	111	of
+4968.dirty	112	this
+4968.dirty	113	second
+4968.dirty	114	
+4968.dirty	115	series
+4968.dirty	116	belonging
+4968.dirty	117	to
+4968.dirty	118	.
+4968.dirty	119	
+4968.dirty	120	the
+4968.dirty	121	
+4968.dirty	122	
+4968.dirty	123	
+4968.dirty	124	American
+4968.dirty	125	
+4968.dirty	126	
+4968.dirty	127	Museum
+4968.dirty	128	of
+4968.dirty	129	Natural
+4968.dirty	130	History
+4968.dirty	131	.
+4968.dirty	132	In
+4968.dirty	133	all
+4968.dirty	134	I
+4968.dirty	135	"
+4968.dirty	136	
+4968.dirty	137	had
+4968.dirty	138	the
+4968.dirty	139	
+4968.dirty	140	opportunity
+4968.dirty	141	to
+4968.dirty	142	examine
+4968.dirty	143	over
+4968.dirty	144	700
+4968.dirty	145	well-preserved
+4968.dirty	146	specimens
+4968.dirty	147	
+4968.dirty	148	of
+4968.dirty	149	insects
+4968.dirty	150	belonging
+4968.dirty	151	to
+4968.dirty	152	this
+4968.dirty	153	group
+4968.dirty	154	,
+4968.dirty	155	among
+4968.dirty	156	which
+4968.dirty	157	there
+4968.dirty	158	are
+4968.dirty	159	112
+4968.dirty	160	clearly
+4968.dirty	161	defined
+4968.dirty	162	species
+4968.dirty	163	which
+4968.dirty	164	are
+4968.dirty	165	described
+4968.dirty	166	on the
+4968.dirty	167	following
+4968.dirty	168	pages
+4968.dirty	169	.
+4968.dirty	170	Adding
+4968.dirty	171	ta
+4968.dirty	172	these
+4968.dirty	173	the
+4968.dirty	174	13
+4968.dirty	175	species
+4968.dirty	176	previously
+4968.dirty	177	described
+4968.dirty	178	
+4968.dirty	179	by
+4968.dirty	180	Professor
+4968.dirty	181	Cockerell
+4968.dirty	182	and
+4968.dirty	183	
+4968.dirty	184	
+4968.dirty	185	the
+4968.dirty	186	present
+4968.dirty	187	
+4968.dirty	188	
+4968.dirty	189	
+4968.dirty	190	
+4968.dirty	191	writer
+4968.dirty	192	,
+4968.dirty	193	the
+4968.dirty	194	total
+4968.dirty	195	number
+4968.dirty	196	so
+4968.dirty	197	far
+4968.dirty	198	found
+4968.dirty	199	at
+4968.dirty	200	Florissant
+4968.dirty	201	is 125
+4968.dirty	202	.
+4968.dirty	203	
+4968.dirty	204	
+4968.dirty	205	
+4968.dirty	206	
+4968.dirty	207	
+4968.dirty	208	
+4968.dirty	209	
+4968.dirty	210	
+4968.dirty	211	
+4968.dirty	212	The
+4968.dirty	213	
+4968.dirty	214	
+4968.dirty	215	
+4968.dirty	216	very
+4968.dirty	217	large
+4968.dirty	218	number
+4968.dirty	219	of
+4968.dirty	220	species
+4968.dirty	221	of
+4968.dirty	222	parasitic
+4968.dirty	223	Hymenoptera
+4968.dirty	224	
+4968.dirty	225	
+4968.dirty	226	
+4968.dirty	227	represented
+4968.dirty	228	at
+4968.dirty	229	Florissant
+4968.dirty	230	shows
+4968.dirty	231	it
+4968.dirty	232	to
+4968.dirty	233	be
+4968.dirty	234	by
+4968.dirty	235	far
+4968.dirty	236	the
+4968.dirty	237	richest
+4968.dirty	238	locality
+4968.dirty	239	in
+4968.dirty	240	the
+4968.dirty	241	world
+4968.dirty	242	for
+4968.dirty	243	these
+4968.dirty	244	insects
+4968.dirty	245	,
+4968.dirty	246	as
+4968.dirty	247	it
+4968.dirty	248	has
+4968.dirty	249	already
+4968.dirty	250	been
+4968.dirty	251	found
+4968.dirty	252	to
+4968.dirty	253	be
+4968.dirty	254	by
+4968.dirty	255	Scudder
+4968.dirty	256	for
+4968.dirty	257	many
+4968.dirty	258	
+4968.dirty	259	
+4968.dirty	260	
+4968.dirty	261	other
+4968.dirty	262	groups
+4968.dirty	263	.
+4968.dirty	264	This
+4968.dirty	265	is
+4968.dirty	266	shown
+4968.dirty	267	in
+4968.dirty	268	the
+4968.dirty	269	following
+4968.dirty	270	table
+4968.dirty	271	
+4968.dirty	272	which
+4968.dirty	273	g
+4968.dirty	274	
+4968.dirty	275	
+4968.dirty	276	a
+4968.dirty	277	comparison between
+4968.dirty	278	the
+4968.dirty	279	several
+4968.dirty	280	important
+4968.dirty	281	places
+4968.dirty	282	where
+4968.dirty	283	fossil
+4968.dirty	284	parasitic
+4968.dirty	285	Hymenoptera
+4968.dirty	286	
+4968.dirty	287	have
+4968.dirty	288	been
+4968.dirty	289	found
+4968.dirty	290	.
+4968.dirty	291	
+4968.dirty	292	Number
+4968.dirty	293	
+4968.dirty	294	
+4968.dirty	295	
+4968.dirty	296	
+4968.dirty	297	
+4968.dirty	298	
+4968.dirty	299	
+4968.dirty	300	
+4968.dirty	301	
+4968.dirty	302	
+4968.dirty	303	
+4968.dirty	304	
+4968.dirty	305	
+4968.dirty	306	of
+4968.dirty	307	parasitic
+4968.dirty	308	Hymenoptera
+4968.dirty	309	found
+4968.dirty	310	in
+4968.dirty	311	
+4968.dirty	312	various localities
+4968.dirty	313	.
+4968.dirty	314	
+4968.dirty	315	With
+4968.dirty	316	the
+4968.dirty	317	exception
+4968.dirty	318	of
+4968.dirty	319	a
+4968.dirty	320	single
+4968.dirty	321	genus
+4968.dirty	322	and
+4968.dirty	323	species
+4968.dirty	324	(
+4968.dirty	325	Ephialtites
+4968.dirty	326	
+4968.dirty	327	
+4968.dirty	328	)
+4968.dirty	329	
+4968.dirty	330	from
+4968.dirty	331	the
+4968.dirty	332	Upper
+4968.dirty	333	Jurassic
+4968.dirty	334	,
+4968.dirty	335	no
+4968.dirty	336	parasitic
+4968.dirty	337	Hymenoptera
+4968.dirty	338	are
+4968.dirty	339	known
+4968.dirty	340	before
+4968.dirty	341	the
+4968.dirty	342	Tertiary
+4968.dirty	343	.
+4968.dirty	344	However
+4968.dirty	345	,
+4968.dirty	346	the
+4968.dirty	347	quite
+4968.dirty	348	typical
+4968.dirty	349	character
+4968.dirty	350	of
+4968.dirty	351	Ephialtites
+4968.dirty	352	,
+4968.dirty	353	and
+4968.dirty	354	the
+4968.dirty	355	abundance
+4968.dirty	356	in
+4968.dirty	357	which
+4968.dirty	358	the
+4968.dirty	359	group
+4968.dirty	360	appears in
+4968.dirty	361	deposits
+4968.dirty	362	of
+4968.dirty	363	Lower
+4968.dirty	364	Oligocene
+4968.dirty	365	show
+4968.dirty	366	that
+4968.dirty	367	it
+4968.dirty	368	must
+4968.dirty	369	have been
+4968.dirty	370	clearly
+4968.dirty	371	differentiated
+4968.dirty	372	and
+4968.dirty	373	well
+4968.dirty	374	developed
+4968.dirty	375	at
+4968.dirty	376	least
+4968.dirty	377	before the
+4968.dirty	378	beginning
+4968.dirty	379	of
+4968.dirty	380	the
+4968.dirty	381	Tertiary
+4968.dirty	382	.
+4968.dirty	383	
+4968.dirty	384	The
+4968.dirty	385	
+4968.dirty	386	discovery
+4968.dirty	387	
+4968.dirty	388	of
+4968.dirty	389	Ephialtites
+4968.dirty	390	
+4968.dirty	391	
+4968.dirty	392	
+4968.dirty	393	in
+4968.dirty	394	rocks
+4968.dirty	395	so
+4968.dirty	396	much
+4968.dirty	397	older
+4968.dirty	398	
+4968.dirty	399	than
+4968.dirty	400	those
+4968.dirty	401	
+4968.dirty	402	in
+4968.dirty	403	which
+4968.dirty	404	
+4968.dirty	405	
+4968.dirty	406	
+4968.dirty	407	other
+4968.dirty	408	of
+4968.dirty	409	the
+4968.dirty	410	
+4968.dirty	411	higher
+4968.dirty	412	
+4968.dirty	413	
+4968.dirty	414	
+4968.dirty	415	
+4968.dirty	416	
+4968.dirty	417	Hymenoptera
+4968.dirty	418	have
+4968.dirty	419	been
+4968.dirty	420	found
+4968.dirty	421	has
+4968.dirty	422	led
+4968.dirty	423	Handlirsch
+4968.dirty	424	to derive
+4968.dirty	425	both
+4968.dirty	426	the
+4968.dirty	427	parasitic
+4968.dirty	428	and
+4968.dirty	429	aculeate
+4968.dirty	430	Hymenoptera
+4968.dirty	431	

@@ -1,0 +1,432 @@
+4968.dirty	0	No.	
+4968.dirty	1	1	
+4968.dirty	2	.	
+4968.dirty	3	?	
+4968.dirty	4	The	
+4968.dirty	5	Parasitic	
+4968.dirty	6	Hymerwptsm	
+4968.dirty	7	of	
+4968.dirty	8	the	
+4968.dirty	9	Tertiary	
+4968.dirty	10	of	
+4968.dirty	11	Florissant	
+4968.dirty	12	.	
+4968.dirty	13	-	
+4968.dirty	14	-	
+4968.dirty	15	'	
+4968.dirty	16	Colorado	
+4968.dirty	17	.	
+4968.dirty	18	-	
+4968.dirty	19	-	
+4968.dirty	20	'	
+4968.dirty	21	'	
+4968.dirty	22	'	
+4968.dirty	23	Br	BY
+4968.dirty	24	CHARLES	CSLjLRKXS
+4968.dirty	25	T.	T.
+4968.dirty	26	Bones	BRBZS
+4968.dirty	27	.	.
+4968.dirty	28	I	
+4968.dirty	29	The	The
+4968.dirty	30	present	preacnt
+4968.dirty	31	paper	paper
+4968.dirty	32	is	18
+4968.dirty	33	based	based
+4968.dirty	34	upon	upan
+4968.dirty	35	studies	Studies
+4968.dirty	36	on	an
+4968.dirty	37	the	the
+4968.dirty	38	parasitic	parASLYLC
+4968.dirty	39	I-Iymenop?	Hxvnenop
+4968.dirty	40	tera	tera
+4968.dirty	41	.	
+4968.dirty	42	contained	contained
+4968.dirty	43	in	in
+4968.dirty	44	the	the
+4968.dirty	45	very	very
+4968.dirty	46	extensive	extensive
+4968.dirty	47	collection	coilectfon
+4968.dirty	48	of	of
+4968.dirty	49	fossil	fassii
+4968.dirty	50	insectslnade	ilisectsmade
+4968.dirty	51	many	many
+4968.dirty	52	years	)mse
+4968.dirty	53	ago	ago
+4968.dirty	54	by	by
+4968.dirty	55	Dr.	Dr,
+4968.dirty	56	Samuel	Samuel
+4968.dirty	57	H.	H.
+4968.dirty	58	Scudder	Bcudder
+4968.dirty	59	at	at
+4968.dirty	60	Florissant	Plarissant
+4968.dirty	61	,	,
+4968.dirty	62	Colorado	Color'ad
+4968.dirty	63	,	o
+4968.dirty	64	?	,
+4968.dirty	65	uod	?lnd
+4968.dirty	66	how	new
+4968.dirty	67	contained	contained
+4968.dirty	68	in	in
+4968.dirty	69	the	the
+4968.dirty	70	Museum	Museum
+4968.dirty	71	"	
+4968.dirty	72	of	of
+4968.dirty	73	Comparative	Comparative
+4968.dirty	74	Zc-o'logy	Zaokjgy.
+4968.dirty	75	.	
+4968.dirty	76	.	
+4968.dirty	77	In	
+4968.dirty	78	-	
+4968.dirty	79	'	
+4968.dirty	80	addition,-Prof	addition,Prof,
+4968.dirty	81	.	
+4968.dirty	82	T.	T.
+4968.dirty	83	D.-A	D.A.
+4968.dirty	84	.	
+4968.dirty	85	Coclserell	CachereB
+4968.dirty	86	has	has
+4968.dirty	87	sent	sent
+4968.dirty	88	me	me
+4968.dirty	89	much	much
+4968.dirty	90	Iueteriel	material
+4968.dirty	91	from	from
+4968.dirty	92	the	lhe
+4968.dirty	93	some	same
+4968.dirty	94	locality	locality
+4968.dirty	95	obtained	obtained
+4968.dirty	96	by	by
+4968.dirty	97	expeditions	expeditions
+4968.dirty	98	under	under
+4968.dirty	99	his	his
+4968.dirty	100	charge	charge
+4968.dirty	101	during	during
+4968.dirty	102	the	the
+4968.dirty	103	-	s
+4968.dirty	104	summers	ummers
+4968.dirty	105	of	of
+4968.dirty	106	1907	%07
+4968.dirty	107	and	and
+4968.dirty	108	1908	I908
+4968.dirty	109	,	,
+4968.dirty	110	most	most
+4968.dirty	111	of	of
+4968.dirty	112	this	this
+4968.dirty	113	second	second
+4968.dirty	114	"	s
+4968.dirty	115	series	eries
+4968.dirty	116	belonging	be'longing
+4968.dirty	117	to	Yo
+4968.dirty	118	.	.
+4968.dirty	119	th	th
+4968.dirty	120	-	e
+4968.dirty	121	.	A
+4968.dirty	122	e	m
+4968.dirty	123	'	e
+4968.dirty	124	Americo	rican
+4968.dirty	125	.	
+4968.dirty	126	n	
+4968.dirty	127	Museum	Museum
+4968.dirty	128	of	of
+4968.dirty	129	Natural	Xatural
+4968.dirty	130	History	History
+4968.dirty	131	.	.
+4968.dirty	132	In	In
+4968.dirty	133	all	aW
+4968.dirty	134	I	I
+4968.dirty	135	"	h
+4968.dirty	136	have	ave
+4968.dirty	137	had	had,
+4968.dirty	138	the	the
+4968.dirty	139	.	
+4968.dirty	140	opportunity	opportuma
+4968.dirty	141	to	to
+4968.dirty	142	ezmruine	esainine
+4968.dirty	143	over	over
+4968.dirty	144	700	760
+4968.dirty	145	wellepreser-ted	well-preserved
+4968.dirty	146	s-pecimens	specimens
+4968.dirty	147	-	
+4968.dirty	148	of	af
+4968.dirty	149	insects	insects
+4968.dirty	150	belonging	belonging
+4968.dirty	151	to	to
+4968.dirty	152	this	this
+4968.dirty	153	group	group
+4968.dirty	154	.	,
+4968.dirty	155	among	among
+4968.dirty	156	which	xvhich
+4968.dirty	157	there	there
+4968.dirty	158	are	are
+4968.dirty	159	112	IIQ
+4968.dirty	160	clearly	cfearfy
+4968.dirty	161	de?ned	degned
+4968.dirty	162	species	species
+4968.dirty	163	which	which
+4968.dirty	164	are	are
+4968.dirty	165	described	described
+4968.dirty	166	on-the	onthe
+4968.dirty	167	following	foliavviing
+4968.dirty	168	pages	pages
+4968.dirty	169	.	.
+4968.dirty	170	Adding	adding
+4968.dirty	171	to	ta
+4968.dirty	172	these	these
+4968.dirty	173	the	the
+4968.dirty	174	13	I3
+4968.dirty	175	species	specie8
+4968.dirty	176	previously	prevlausiv
+4968.dirty	177	described	iiescrlba
+4968.dirty	178	"	d
+4968.dirty	179	by	by
+4968.dirty	180	Proiesso-r	Professor
+4968.dirty	181	Coclterell	Cockereii
+4968.dirty	182	a.	an
+4968.dirty	183	r1d	d.t
+4968.dirty	184	.	h
+4968.dirty	185	the	e
+4968.dirty	186	present	present
+4968.dirty	187	ix	vi
+4968.dirty	188	?	v
+4968.dirty	189	-1	it
+4968.dirty	190	-	e
+4968.dirty	191	iter	rj
+4968.dirty	192	,	
+4968.dirty	193	the	tha
+4968.dirty	194	total	lotai
+4968.dirty	195	riumher	BLLmber
+4968.dirty	196	so	8o
+4968.dirty	197	far	far
+4968.dirty	198	found	found
+4968.dirty	199	at	at
+4968.dirty	200	Florissant	Irlorissant
+4968.dirty	201	is125	is125
+4968.dirty	202	--	.
+4968.dirty	203	.	
+4968.dirty	204	3	
+4968.dirty	205	-	
+4968.dirty	206	.	
+4968.dirty	207	Y	
+4968.dirty	208	,	
+4968.dirty	209	+	
+4968.dirty	210	-	
+4968.dirty	211	.	
+4968.dirty	212	'	T
+4968.dirty	213	I	h
+4968.dirty	214	-	e
+4968.dirty	215	?	v
+4968.dirty	216	he-very	ery
+4968.dirty	217	large	urge
+4968.dirty	218	number	number
+4968.dirty	219	of	of
+4968.dirty	220	species	species
+4968.dirty	221	of	ot
+4968.dirty	222	parasitic	parasitic
+4968.dirty	223	I-Iy_me	Hylneno
+4968.dirty	224	.	p
+4968.dirty	225	nopteras	tera,
+4968.dirty	226	_	
+4968.dirty	227	represented	repre-sente(l
+4968.dirty	228	at	at
+4968.dirty	229	Florissant	PJorissallt
+4968.dirty	230	shows	slloivs
+4968.dirty	231	it	lt
+4968.dirty	232	to	to
+4968.dirty	233	be	be
+4968.dirty	234	by	by
+4968.dirty	235	for	far
+4968.dirty	236	the	Lha
+4968.dirty	237	richest	richest
+4968.dirty	238	locality	focaLIlty
+4968.dirty	239	in	fn
+4968.dirty	240	the	the
+4968.dirty	241	world	bvorfd
+4968.dirty	242	for	for
+4968.dirty	243	these	tllase
+4968.dirty	244	insects	insects
+4968.dirty	245	.	,
+4968.dirty	246	as	as
+4968.dirty	247	it	it
+4968.dirty	248	has	hila
+4968.dirty	249	ulrezidy	slreadv
+4968.dirty	250	been	been
+4968.dirty	251	found	t(LLlnd
+4968.dirty	252	to	to
+4968.dirty	253	be	lie
+4968.dirty	254	by	by
+4968.dirty	255	Sc-udder	Scudder
+4968.dirty	256	for	itar
+4968.dirty	257	.	n
+4968.dirty	258	mo	ul
+4968.dirty	259	,	n
+4968.dirty	260	ny	l'
+4968.dirty	261	other	other
+4968.dirty	262	groups	gl'oup
+4968.dirty	263	.	s.
+4968.dirty	264	This	Tilis
+4968.dirty	265	is	Ls
+4968.dirty	266	sllown	shown
+4968.dirty	267	in	Ul
+4968.dirty	268	the	the
+4968.dirty	269	following	foliovj'Lug
+4968.dirty	270	table	table
+4968.dirty	271	"	
+4968.dirty	272	which	lvhLcll
+4968.dirty	273	Y	g
+4968.dirty	274	,	i
+4968.dirty	275	+	ves
+4968.dirty	276	:1	LL
+4968.dirty	277	compariscmbetween	comparllaonbetweien
+4968.dirty	278	the	the
+4968.dirty	279	several	several
+4968.dirty	280	important	'LYBpoY(ant
+4968.dirty	281	places	pisces
+4968.dirty	282	where	where
+4968.dirty	283	fossil	fossii
+4968.dirty	284	parasitic	parasllic
+4968.dirty	285	I-ljrmenoptern	Hvtnenoptcrs,
+4968.dirty	286	.	
+4968.dirty	287	have	have
+4968.dirty	288	been	been
+4968.dirty	289	found	found
+4968.dirty	290	.	.
+4968.dirty	291	'	
+4968.dirty	292	.	X
+4968.dirty	293	-	L
+4968.dirty	294	?	L
+4968.dirty	295	s7	Li
+4968.dirty	296	'	i
+4968.dirty	297	miriI4l	hsi
+4968.dirty	298	:	
+4968.dirty	299	?	
+4968.dirty	300	:	
+4968.dirty	301	r	
+4968.dirty	302	'	
+4968.dirty	303	of	cf
+4968.dirty	304	Tertiary	T6'rhaiJ(
+4968.dirty	305	species	jfla(.'les
+4968.dirty	306	of	of
+4968.dirty	307	parasitic	p(YPO+'c(te.
+4968.dirty	308	PI-gcneiaogotero	JIS'lasLLLvfrfer(L
+4968.dirty	309	found	JOLYYY(f
+4968.dirty	310	in	YN
+4968.dirty	311	?	t
+4968.dirty	312	acrimolocalities	j(LYYOL(slac(YHt
+4968.dirty	313	.	lca
+4968.dirty	314	-	.
+4968.dirty	315	With	YYVith
+4968.dirty	316	the	the
+4968.dirty	317	exception	exception
+4968.dirty	318	of	of
+4968.dirty	319	a.	8
+4968.dirty	320	single	single
+4968.dirty	321	genus	genus
+4968.dirty	322	and	and
+4968.dirty	323	species	species
+4968.dirty	324	(	(
+4968.dirty	325	Ephia	Zphia
+4968.dirty	326	.	f
+4968.dirty	327	ltites	tites)
+4968.dirty	328	)	
+4968.dirty	329	?	
+4968.dirty	330	from	fram
+4968.dirty	331	the	the
+4968.dirty	332	Upper	Upper
+4968.dirty	333	Jurassic	Jurassic
+4968.dirty	334	,	,
+4968.dirty	335	no	no
+4968.dirty	336	parasitic	parasitic
+4968.dirty	337	Hymenoptera	Hymenoptel'a
+4968.dirty	338	are	are
+4968.dirty	339	vlgnown	known
+4968.dirty	340	before	before
+4968.dirty	341	the	the
+4968.dirty	342	Tertiary	Tertiary
+4968.dirty	343	.	.
+4968.dirty	344	However	However
+4968.dirty	345	,	,
+4968.dirty	346	the	the
+4968.dirty	347	quite	(Iuisc
+4968.dirty	348	typical	typical
+4968.dirty	349	character	ch~er
+4968.dirty	350	of	af
+4968.dirty	351	Ephialtites	Zphiaitites
+4968.dirty	352	,	,
+4968.dirty	353	and	and.
+4968.dirty	354	the	the
+4968.dirty	355	abundance	abiuYLdaYLce
+4968.dirty	356	in	ln'
+4968.dirty	357	which	winch.
+4968.dirty	358	the	the
+4968.dirty	359	group	group
+4968.dirty	360	appearsin	appeSY'8ln
+4968.dirty	361	deposits	depaeiits
+4968.dirty	362	of	Of
+4968.dirty	363	Lower	I~ajjrer
+4968.dirty	364	Oligoceneege	01igaceneage
+4968.dirty	365	show	ShOW
+4968.dirty	366	that	that
+4968.dirty	367	it	lt
+4968.dirty	368	must	nlust
+4968.dirty	369	have-been	hLYVebaeXL
+4968.dirty	370	clearly	Cfearfy
+4968.dirty	371	dilferentiated	differentiated
+4968.dirty	372	and	and
+4968.dirty	373	well	vve)i
+4968.dirty	374	developed	(feveiope(i
+4968.dirty	375	at	at
+4968.dirty	376	least	feast
+4968.dirty	377	befor?t-he	befol'6.the
+4968.dirty	378	beginning	beginning
+4968.dirty	379	of	of
+4968.dirty	380	the	the
+4968.dirty	381	Tertiury	Tcrtlifl
+4968.dirty	382	.	r
+4968.dirty	383	_	y..
+4968.dirty	384	The	The
+4968.dirty	385	-	d
+4968.dirty	386	discovery	iscovery
+4968.dirty	387	-	o
+4968.dirty	388	of	f
+4968.dirty	389	E1	Ep
+4968.dirty	390	:	h
+4968.dirty	391	-	i
+4968.dirty	392	hialtites	aititea
+4968.dirty	393	in	in
+4968.dirty	394	rocks	rocks
+4968.dirty	395	so	so
+4968.dirty	396	much	much
+4968.dirty	397	older	OI(ier
+4968.dirty	398	-	t
+4968.dirty	399	than	han
+4968.dirty	400	those	those
+4968.dirty	401	"	
+4968.dirty	402	in	in
+4968.dirty	403	wlji	vYhi
+4968.dirty	404	'	c
+4968.dirty	405	c.	h
+4968.dirty	406	l1	
+4968.dirty	407	bother	other
+4968.dirty	408	of	of
+4968.dirty	409	tl1e	theh
+4968.dirty	410	?	i
+4968.dirty	411	higher	gherHy
+4968.dirty	412	'	m
+4968.dirty	413	H	e
+4968.dirty	414	_	n
+4968.dirty	415	}	o
+4968.dirty	416	'	p
+4968.dirty	417	menoptera	tara
+4968.dirty	418	have	have
+4968.dirty	419	been	been
+4968.dirty	420	found	found
+4968.dirty	421	has	has
+4968.dirty	422	led	led
+4968.dirty	423	Hundlirscb	Handhrsch
+4968.dirty	424	to-derive	Ioderive
+4968.dirty	425	both	both.
+4968.dirty	426	the	the
+4968.dirty	427	parasitic	parasitic
+4968.dirty	428	end	aud
+4968.dirty	429	aculeute	acufaate
+4968.dirty	430	I-Ijnuenoptera	Hnnenopterafro
+4968.dirty	431	.	m

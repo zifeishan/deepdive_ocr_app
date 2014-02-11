@@ -1,5 +1,6 @@
 data/raw/*.csv
-output/1gram-output/
+output/
+1gram-output/
 googlebooks-eng-all-test.txt
 *.DS_Store
 *.pyc

@@ -2,3 +2,6 @@ data/raw/*.csv
 output/1gram-output/
 googlebooks-eng-all-test.txt
 *.DS_Store
+*.pyc
+script/web_occur_dict-backup.json
+data/raw/boolean-f52-c3-m620-backup/

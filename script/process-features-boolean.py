@@ -109,6 +109,9 @@ def FeatureExtract(alignedfile, labels, corrections, corpus ={}, startingid = 0,
 
     # Print a thin table for evry docid, wid, fname, fval
     for i in range(0, len(this_features)):
+      # ONLY WRITE TRUE FEATURES!
+      if not this_features[i]: continue
+
       print >>fftr, '\t'.join(didwid + 
         [this_feature_names[i], str(this_features[i])]
         )  

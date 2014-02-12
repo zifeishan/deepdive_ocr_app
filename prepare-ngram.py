@@ -52,3 +52,5 @@ if __name__ == "__main__":
     if linenum % 10000000 == 0:
       print 'Processing line', linenum
 
+  # RM!!!!!!!!!!!
+  os.remove(path)

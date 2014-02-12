@@ -3,6 +3,7 @@
 export DBNAME=ddocr
 export PGUSER=${PGUSER:-`whoami`}
 export PGPASSWORD=${PGPASSWORD:-}
+export PG_PORT=5432
 
 export DEEPDIVE_HOME=`cd $(dirname $0)/../..; pwd`
 export APP_HOME=`pwd`

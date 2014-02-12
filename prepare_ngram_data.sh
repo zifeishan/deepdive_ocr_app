@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# SAMPLE USAGE:
+# bash ./prepare_ngram_data.sh /lfs/local/0/zifei/google-ngram/output/
+
 # Configuration
 DB_NAME=ddocr
 DB_PORT=5437
@@ -14,7 +17,7 @@ BASE_DIR=$1
 psql -c "create table ngram_1(
   id BIGSERIAL PRIMARY KEY, 
   gram TEXT, 
-  count INT);" $DB_NAME
+  count REAL);" $DB_NAME
 
 # psql -c "COPY ngram_1(gram, count) FROM '$BASE_DIR/$1'" $DB_NAME  # escaped \t
 

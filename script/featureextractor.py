@@ -6,7 +6,7 @@ def FeatureExtract(word, optnum, corpus = {}):
   fnames = []
   fvals = []
 
-  fnames.append('d_'+str(optnum))
+  fnames.append('dict_'+str(optnum))
   fvals.append(DictValid(word))
   fnames.append('wl_'+str(optnum))
   fvals.append(WordLength(word))

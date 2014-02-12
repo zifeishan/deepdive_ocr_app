@@ -1,4 +1,4 @@
-d_0
+dict_0
 wl_0
 upp_0
 upc_0
@@ -42,7 +42,7 @@ fl_0
 rn_0
 rm_0
 nn_0
-d_1
+dict_1
 wl_1
 upp_1
 upc_1

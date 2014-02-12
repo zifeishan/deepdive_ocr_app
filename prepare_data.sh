@@ -25,7 +25,7 @@ psql -p $DB_PORT -c "create table actual_words(id bigserial primary key, docid T
 
 psql -p $DB_PORT -c "create table options(id bigserial primary key, docid TEXT, wordid INT, option_t TEXT, option_c TEXT);" $DB_NAME
 
-psql -p $DB_PORT -c "create table feature_names(id bigserial primary key, docid TEXT, name TEXT);" $DB_NAME
+# psql -p $DB_PORT -c "create table feature_names(id bigserial primary key, feature_name TEXT);" $DB_NAME
 
 
 cat data/processed-tables/*.features.txt | psql -p $DB_PORT -c "COPY features(docid, wordid, feature_name, feature_val) FROM STDIN" $DB_NAME
@@ -36,4 +36,4 @@ cat data/processed-tables/*.corrected_words.txt | psql -p $DB_PORT -c "COPY actu
 
 cat data/processed-tables/*.options.txt | psql -p $DB_PORT -c "COPY options(docid, wordid, option_t, option_c) FROM STDIN" $DB_NAME
 
-cat data/processed-tables/*.feature_names.txt | psql -p $DB_PORT -c "COPY feature_names(docid, name) FROM STDIN" $DB_NAME
+# cat data/processed-tables/*.feature_names.txt | psql -p $DB_PORT -c "COPY feature_names(docid, feature_name) FROM STDIN" $DB_NAME

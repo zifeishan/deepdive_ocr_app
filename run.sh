@@ -1,7 +1,13 @@
 #! /bin/bash
 
+export DBNAME=ddocr
 export PGUSER=${PGUSER:-`whoami`}
 export PGPASSWORD=${PGPASSWORD:-}
+
+export DEEPDIVE_HOME=`cd $(dirname $0)/../..; pwd`
+export APP_HOME=`pwd`
+export JAVA_OPTS="-Xmx4g"
+
 
 # cd data/raw/
 # ROOT_PATH=`pwd`
@@ -12,7 +18,7 @@ ROOT_PATH=`pwd`
 
 # $ROOT_PATH/app/ocr/prepare_data.sh
 
-env SBT_OPTS="-Xmx4g" sbt "run -c app/ocr/application.conf"
+SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 
 # cd "$(dirname $0)"
 # ROOT_PATH=`pwd`

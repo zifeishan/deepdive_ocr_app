@@ -11,16 +11,11 @@ if __name__ == "__main__":
     outpath = sys.argv[2]
   else:
     print 'Usage:',sys.argv[0],'<gram-path> <outpath>'
-    print 'you should put all .gz files in gzfile/, and omit .gz in using this.'
     sys.exit(1)
 
   # files = [f for f in os.listdir(dirpath) if f.startswith('googlebooks-eng-all')]
 
   # for f in files:
-
-  gzpath = 'gzfiles/' + path + '.gz'
-  os.system('gunzip ' + gzpath)
-  os.system('mv gzfiles/'+path+' ./')
 
   f = path
   fpath = path

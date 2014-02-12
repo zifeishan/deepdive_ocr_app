@@ -1,2 +1,2 @@
 #! /usr/bin/env bash
-psql -c "TRUNCATE filtered_features CASCADE;" ddocr
+psql -c "DROP TABLE IF EXISTS filtered_features CASCADE;" ddocr

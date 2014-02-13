@@ -24,17 +24,24 @@ create table options(id bigserial primary key,
 
 
 # QUERY!!!
+-- select lt.docid, lt.wordid, lt.label_t, lt.label_c, lt.probability as p_t, lc.probability as p_c
+
 create view compare_results as
 select lt.docid, lt.wordid, lt.probability as p_t, lc.probability as p_c
 from filtered_labels_label_t_inference as lt INNER JOIN filtered_labels_label_c_inference as lc ON lt.docid =lc.docid and lt.wordid=lc.wordid;
 
-select count(*) from compare_results, labels where labels.label_t != label_c;
-# 52
-select count(*) from compare_results 
-WHERE label_t != label_c AND 
-  (label_t = True and p_t > p_c) 
+select count(*) from compare_results INNER JOIN labels 
+ON compare_results.docid = labels.docid and compare_results.wordid = labels.wordid 
+-- WHERE label_t != label_c;
+
+# TOTAL
+
+select count(*) from compare_results INNER JOIN labels 
+ON compare_results.docid = labels.docid and compare_results.wordid = labels.wordid 
+WHERE (label_t = True and p_t > p_c) 
   OR (label_c = True and p_t < p_c);
-# 44
+
+# Precision / Recall
 
 
 -- 14GB text, ~15k documents:
@@ -54,3 +61,29 @@ UPDATE filtered_labels
 
 -- select count(*) from filtered_labels where id < (:numrows) * :thisfold / :foldnum and id >= (:numrows) * (:thisfold - 1) / :foldnum;
 
+
+
+
+---------------
+
+drop view if exists compare_results;
+create view compare_results as
+select lt.docid, lt.wordid, lt.probability as p_t, lc.probability as p_c
+from filtered_labels_label_t_inference as lt INNER JOIN filtered_labels_label_c_inference as lc ON lt.docid =lc.docid and lt.wordid=lc.wordid;
+
+COPY (
+select count(*) from compare_results INNER JOIN labels 
+  ON compare_results.docid = labels.docid and compare_results.wordid = labels.wordid) 
+TO '/tmp/ddocr_diff.tsv';
+
+COPY(
+select count(*) from compare_results INNER JOIN labels 
+ON compare_results.docid = labels.docid and compare_results.wordid = labels.wordid 
+WHERE (label_t = True and p_t > p_c) 
+  OR (label_c = True and p_t < p_c)
+) TO '/tmp/ddocr_correct.tsv';
+
+COPY(
+select count(*) from compare_results INNER JOIN labels 
+ON compare_results.docid = labels.docid and compare_results.wordid = labels.wordid WHERE (label_t = True OR label_c = True)
+) TO '/tmp/ddocr_fixable.tsv'

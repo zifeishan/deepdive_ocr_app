@@ -20,7 +20,7 @@ ROOT_PATH=`pwd`
 # $ROOT_PATH/app/ocr/prepare_data.sh
 
 # Store stats...
-rm -f evaluation.tsv
+rm -f $APP_HOME/evaluation.tsv
 
 # Set the k-fold K here (4)
 for iter in {1..4}; 
@@ -31,12 +31,12 @@ do
   SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
   rm -rf $DEEPDIVE_HOME/target/calibration-$iter
   mv $DEEPDIVE_HOME/target/calibration $DEEPDIVE_HOME/target/calibration-$iter
-  python ocr-evaluation.py
+  python $APP_HOME/ocr-evaluation.py
   
 done
 
-rm -rf evaluation
-mkdir evaluation
-mv evaluation.tsv evaluation/
-mv $DEEPDIVE_HOME/target/calibration-* evaluation/
-cat evaluation/evaluation.tsv
+rm -rf $APP_HOME/evaluation
+mkdir $APP_HOME/evaluation
+mv /tmp/evaluation.tsv $APP_HOME/evaluation/
+mv $DEEPDIVE_HOME/target/calibration-* $APP_HOME/evaluation/
+cat $APP_HOME/evaluation/evaluation.tsv

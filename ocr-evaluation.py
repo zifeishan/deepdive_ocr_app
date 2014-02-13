@@ -38,5 +38,5 @@ diff = int(open(p_diff).readline().strip())
 corr = int(open(p_corr).readline().strip())
 fix = int(open(p_fixable).readline().strip())
 
-fout = open('evaluation.tsv', 'a')
-print >>fout, '%d\t%d\t%d\t%.2f\t%.2f' % [diff, fix, corr, corr/float(diff), corr/float(fix)]
+fout = open('/tmp/evaluation.tsv', 'a')
+print >>fout, '%d\t%d\t%d\t%.2f%%\t%.2f%%' % (diff, fix, corr, 100.0*corr/diff, 100.0*corr/fix)

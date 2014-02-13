@@ -37,4 +37,4 @@ os.system('psql -c """'+'\n'.join(sql_queries)+'""" ddocr')
 # ExecSQL(updatequery)
 
 # DEBUG
-print updatequery
+print 'psql -c """'+'\n'.join(sql_queries)+'""" ddocr'

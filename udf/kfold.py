@@ -23,7 +23,7 @@ else:
 
 sql_queries = []
 sql_queries.append('\set foldnum '+KFOLD_NUM)
-sql_queries.append('\set thisfold 1'+KFOLD_ITER)
+sql_queries.append('\set thisfold '+KFOLD_ITER)
 sql_queries.append("\set numrows \'select count(*) from " + table + "\'")
 
 # K-fold query: hold out columns with ID from (i-1)/K to i/K

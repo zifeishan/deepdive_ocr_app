@@ -30,7 +30,8 @@ updatequery = ' '.join(
     KFOLD_ITER + ' - 1) / '+ KFOLD_NUM + ';'])
 
 sql_queries.append(updatequery)
-os.system('psql -c """'+'\n'.join(sql_queries)+'"""')
+fullquery = 'psql -c """'+'\n'.join(sql_queries)+'""" '+os.environ['DBNAME']
+os.system(fullquery)
 
 # DEBUG
-print 'psql -c """'+'\n'.join(sql_queries)+'"""'
+print fullquery

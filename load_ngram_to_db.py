@@ -23,7 +23,7 @@ if __name__ == "__main__":
   files = [f for f in os.listdir(path) if f.endswith('.ngram')]
   print files[:10],'...'
   pq = 'drop table if exists '+table_name + ';'
-  os.system('psql -c "'+pq+'" $'+dbname)
+  os.system('psql -c "'+pq+'" '+dbname)
 
   pq = 'create table '+table_name+'''(
     id BIGSERIAL PRIMARY KEY,
@@ -31,12 +31,12 @@ if __name__ == "__main__":
     count REAL);''' 
   print pq
     
-  os.system('psql -c "'+pq+'" $'+dbname)
+  os.system('psql -c "'+pq+'" '+dbname)
 
   for f in files:
     fpath = os.path.abspath(path+'/'+f)
     print 'Copying file:'+ fpath
     pq = 'COPY '+table_name+'(gram, count) FROM \''+fpath+'\''
-    os.system('psql -c "'+pq+'" $'+dbname)
+    os.system('psql -c "'+pq+'" '+dbname)
 
   print 'Done.'

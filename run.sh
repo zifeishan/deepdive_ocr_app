@@ -19,6 +19,10 @@ ROOT_PATH=`pwd`
 
 # $ROOT_PATH/app/ocr/prepare_data.sh
 
+export CALI_FRACTION=0.25
+export KFOLD_ITER=1
+export KFOLD_NUM=1
+
 SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 
 # cd "$(dirname $0)"

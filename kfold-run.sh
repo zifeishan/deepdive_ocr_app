@@ -22,6 +22,8 @@ ROOT_PATH=`pwd`
 # Store stats...
 rm -f $APP_HOME/evaluation.tsv
 
+export CALI_FRACTION=0
+
 # Set the k-fold K here (4)
 for iter in {1..4}; 
 do 

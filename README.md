@@ -33,3 +33,28 @@ Results
 - Feature analysis and system calibration result is in `output/`.
 - For details, enter your database specified in `application.conf`,
   and examine the result relations.
+
+
+Datasets
+----
+
+    140,982  /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL
+     43,487  /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15
+     14,646  /lfs/madmax3/0/czhang/cleanpaleo/NLPRS_jan20_overlap.22/
+
+
+
+Ground truth
+----
+
+HTML: (hold out 1/5 as ground truth and rest for distant supervision; run 5 times to make sure they do not differ wildly...)
+
+    168,790  /lfs/madmax3/0/czhang/cleanpaleo/jid2url.tsv
+
+     37,545  grep sciencedirect /lfs/madmax3/0/czhang/cleanpaleo/jid2url.tsv
+     
+
+     priority: 
+     1. /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15/[JID] 
+     2. /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL/[JID] 
+

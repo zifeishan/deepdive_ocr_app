@@ -1,11 +1,12 @@
+import os, sys
+
 if __name__ == "__main__": 
   if len(sys.argv) == 3:
     inputurls = sys.argv[1]
     output_base = sys.argv[2]
 
     if not os.path.exists(output_base):
-    os.makedirs(output_base)
-
+      os.makedirs(output_base)
 
     fids = [s.split('\t')[0] for s in open(inputurls).readlines()]
 
@@ -13,7 +14,7 @@ if __name__ == "__main__":
     seconddir = '/lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL/'
 
     print fids[:100]
-    raw_input()
+    # raw_input()
 
     ferr = open('errlog.txt', 'w')
     for fid in fids:

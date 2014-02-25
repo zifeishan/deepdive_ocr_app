@@ -18,8 +18,8 @@ if __name__ == "__main__":
 
     ferr = open('errlog.txt', 'w')
     for fid in fids:
-      if os.path.exists(fistdir + fid):
-        path = fistdir + fid
+      if os.path.exists(firstdir + fid):
+        path = firstdir + fid
       elif os.path.exists(seconddir + fid):
         path = seconddir + fid 
       else:

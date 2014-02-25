@@ -19,9 +19,10 @@ if __name__ == "__main__":
     ferr = open('errlog.txt', 'w')
     for fid in fids:
       if os.path.exists(firstdir + fid):
-        path = firstdir + fid
+        path = firstdir + fid + '.pdf.task/'
+        print 'File in Feb15 directory:', path
       elif os.path.exists(seconddir + fid):
-        path = seconddir + fid 
+        path = seconddir + fid + '.pdf.task/'
       else:
         print 'Unable to find file:', fid
         print >>ferr, 'Unable to find file:', fid

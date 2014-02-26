@@ -20,13 +20,13 @@ def AlignBoxedFromPath(findpaths, docid, output_base):
   # AlignBoxedCunei(dirbase, output_base, isDir=True, boxedCunei = True)
 
   tess_dir = ''
-  for f in findpaths:
+  for dirbase in findpaths:
     if os.path.exists(dirbase + 'input.text'):
       tess_dir = dirbase + 'input.text'
       break
 
   cuni_dir = ''
-  for f in findpaths:
+  for dirbase in findpaths:
     if os.path.exists(dirbase + 'fonts.text'):
       cuni_dir = dirbase + 'fonts.text'
       break

@@ -1,4 +1,5 @@
 import os, sys
+from alignment import *
 
 if __name__ == "__main__": 
   if len(sys.argv) == 3:
@@ -18,17 +19,8 @@ if __name__ == "__main__":
 
     ferr = open('errlog.txt', 'w')
     for fid in fids:
-      if os.path.exists(firstdir + fid):
-        path = firstdir + fid + '.pdf.task/'
-        print 'File in Feb15 directory:', path
-      elif os.path.exists(seconddir + fid):
-        path = seconddir + fid + '.pdf.task/'
-      else:
-        print 'Unable to find file:', fid
-        print >>ferr, 'Unable to find file:', fid
-        ferr.flush()
-        continue
-      AlignBoxedFromPath(path, fid, output_base)
+      findpaths = [firstdir + fid + '.pdf.task/', seconddir + fid + '.pdf.task/']
+      Align.AlignBoxedFromPath(findpaths, fid, output_base)
 
     # AlignBoxedFromPath(path, 'JOURNAL_28971', './test')
   else:

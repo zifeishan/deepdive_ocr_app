@@ -14,12 +14,27 @@ def AlignFromURL(urlbase, output_base):
 # use this for madmax data.. Ce's output
 # docid: identifier for doc, used in deepdive. e.g. 'JOURNAL_10'
 # output_base: a directory for storing
-def AlignBoxedFromPath(dirbase, docid, output_base):
+# findpaths: in priority, good.
+def AlignBoxedFromPath(findpaths, docid, output_base):
   # sample of dirbase: '../../input/'
   # AlignBoxedCunei(dirbase, output_base, isDir=True, boxedCunei = True)
 
-  tess_dir = dirbase + 'input.text'
-  cuni_dir = dirbase + 'fonts.text'
+  tess_dir = ''
+  for f in findpaths:
+    if os.path.exists(dirbase + 'input.text'):
+      tess_dir = dirbase + 'input.text'
+      break
+
+  cuni_dir = ''
+  for f in findpaths:
+    if os.path.exists(dirbase + 'fonts.text'):
+      cuni_dir = dirbase + 'fonts.text'
+      break
+
+  if tess_dir == '' or cuni_dir == '':
+    print 'Cannot find output file for Tess / Cuni:', [tess_dir, cuni_dir]
+    return
+    
   print 'Loading OCR outputs from', dirbase
   twords = TessReader.ReadPath(tess_dir)
   cwords = BoxedCuneiReader.ReadPath(cuni_dir)

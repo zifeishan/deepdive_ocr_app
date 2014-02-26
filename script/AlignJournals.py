@@ -9,7 +9,7 @@ if __name__ == "__main__":
     if not os.path.exists(output_base):
       os.makedirs(output_base)
 
-    fids = [s.split('\t')[0] for s in open(inputurls).readlines()]
+    fids = [s.strip().split('\t')[0] for s in open(inputurls).readlines()]
 
     firstdir = '/lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15/'
     seconddir = '/lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL/'

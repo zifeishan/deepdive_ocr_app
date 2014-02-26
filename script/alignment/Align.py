@@ -183,7 +183,7 @@ def Align(urlbase, output_base, isDir=False, boxedCunei = False):
 if __name__ == "__main__": 
   if len(sys.argv) == 2:
     path = sys.argv[1]
-    AlignBoxedFromPath(path, 'JOURNAL_28971', './test')
+    AlignBoxedFromPath([path], 'JOURNAL_145413', './test')
   else:
     print 'Usage:',sys.argv[0],'<path>'
     sys.exit(1)

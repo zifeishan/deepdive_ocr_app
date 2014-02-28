@@ -1,32 +1,92 @@
 from naivefeature import *
 import math
+import yaml
+import os
 
-# Extracta all features of ONE option
-def FeatureExtract(word, optnum, corpus = {}):
+# Input only 1 OPTION, extract all features
+# word: this candidate word
+def CandidateFeatureExtract(word, corpus = {}, confpath = ''):
   fnames = []
   fvals = []
+  configs = {}
+  if os.path.exists(confpath):
+    configs = yaml.load(open(confpath))
 
-  fnames.append('dict_'+str(optnum))
-  fvals.append(DictValid(word))
-  fnames.append('wl_'+str(optnum))
-  fvals.append(WordLength(word))
-  # fnames.append('occur_'+str(optnum))
-  # fvals.append(Occur(word))
-  fnames.append('upp_'+str(optnum))
-  fvals.append(UpperPunish(word))
-  fnames.append('upc_'+str(optnum))
-  fvals.append(ChangeTime(word))
+  if 'dict' in configs:
+    fnames.append('dict')
+    fvals.append(DictValid(word))
+  if 'wl' in configs:
+    fnames.append('wl')
+    fvals.append(WordLength(word))
+  if 'weboccur' in configs: 
+    fnames.append('occur')
+    fvals.append(Occur(word))
+  if 'upp' in configs:
+    fnames.append('upp')
+    fvals.append(UpperPunish(word))
+  if 'upc' in configs:
+    fnames.append('upc')
+    fvals.append(ChangeTime(word))
 
-  # fnames.append('Corpus_'+str(optnum))
-  # count = 0
-  # if word in corpus:
-  #   count = math.log(corpus[word] + 1)
-  # fvals.append(count)
+  if 'corpus' in configs:
+    fnames.append('Corpus')
+    count = 0
+    if word in corpus:
+      count = math.log(corpus[word] + 1)
+    fvals.append(count)
 
   # subs, values = CntAllSubstr(word)
-  subs, values = CntReducedSubStr(word)
-  fnames += [s+'_'+str(optnum) for s in subs]
-  fvals += values
+  if 'char1gram' in configs or 'char2gram' in configs:
+    c1g = ''
+    c2g = []
+    if 'char1gram' in configs: c1g = configs['char1gram']
+    if 'char2gram' in configs: c2g = configs['char2gram']
+    subs, values = CntReducedSubStr(word, c1g, c2g)
+    fnames += [s for s in subs]
+    fvals += values
+
+  return fnames, fvals
+
+# Extracta all features of ONE option
+def FeatureExtract(word, optnum, corpus = {}, confpath = ''):
+  fnames = []
+  fvals = []
+  configs = {}
+  if os.path.exists(confpath):
+    configs = yaml.load(open(confpath))
+
+  if 'dict' in configs:
+    fnames.append('dict_'+str(optnum))
+    fvals.append(DictValid(word))
+  if 'wl' in configs:
+    fnames.append('wl_'+str(optnum))
+    fvals.append(WordLength(word))
+  if 'weboccur' in configs: 
+    fnames.append('occur_'+str(optnum))
+    fvals.append(Occur(word))
+  if 'upp' in configs:
+    fnames.append('upp_'+str(optnum))
+    fvals.append(UpperPunish(word))
+  if 'upc' in configs:
+    fnames.append('upc_'+str(optnum))
+    fvals.append(ChangeTime(word))
+
+  if 'corpus' in configs:
+    fnames.append('Corpus_'+str(optnum))
+    count = 0
+    if word in corpus:
+      count = math.log(corpus[word] + 1)
+    fvals.append(count)
+
+  # subs, values = CntAllSubstr(word)
+  if 'char1gram' in configs or 'char2gram' in configs:
+    c1g = ''
+    c2g = []
+    if 'char1gram' in configs: c1g = configs['char1gram']
+    if 'char2gram' in configs: c2g = configs['char2gram']
+    subs, values = CntReducedSubStr(word, c1g, c2g)
+    fnames += [s+'_'+str(optnum) for s in subs]
+    fvals += values
 
   return fnames, fvals
 

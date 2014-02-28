@@ -1,3 +1,69 @@
+create table candidate(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  wordid INT,
+  candid INT,
+  source TEXT,
+  word TEXT);
+
+-- JOURNAL_28971 1 0 C Cretaceous
+
+create table cand_box(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT, 
+  wordid INT, 
+  candid INT,
+  page INT,
+  l INT,
+  t INT,
+  r INT,
+  b INT);
+
+-- JOURNAL_28971 1 0 1 1003  202 1132  221
+
+create table cand_feature(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT, 
+  wordid INT, 
+  candid INT,
+  pos TEXT,
+  ner TEXT,
+  stem TEXT);
+
+-- JOURNAL_28971 1 1 JJ  ORGANIZATION  cretaceous
+
+create table feature(id BIGSERIAL PRIMARY KEY, 
+  candidateid BIGSERIAL REFERENCES candidate(id),
+  fname TEXT,
+  fval BOOLEAN);
+
+
+
+
+
+
+
+
+-----------
+
+create table labels(id bigserial primary key, 
+  docid TEXT, 
+  wordid INT, 
+  label_t BOOLEAN, 
+  label_c BOOLEAN);
+
+create table actual_words(id bigserial primary key, 
+  docid TEXT, 
+  wordid INT, 
+  word TEXT);
+
+create table options(id bigserial primary key, 
+  docid TEXT, 
+  wordid INT, 
+  option_t TEXT, 
+  option_c TEXT);
+
+
+
+--------------
+
 create table features(id BIGSERIAL PRIMARY KEY, 
   docid TEXT, 
   wordid INT, 

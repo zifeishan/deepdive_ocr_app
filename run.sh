@@ -3,28 +3,22 @@
 export DBNAME=ddocr
 export PGUSER=${PGUSER:-`whoami`}
 export PGPASSWORD=${PGPASSWORD:-}
-export PG_PORT=5432
+export PG_PORT=${PGPORT:5432}
 
 export DEEPDIVE_HOME=`cd $(dirname $0)/../..; pwd`
 export APP_HOME=`pwd`
 export JAVA_OPTS="-Xmx4g"
 
+# $APP_HOME/prepare_data.sh
 
-# cd data/raw/
-# ROOT_PATH=`pwd`
-# python gen_feature_table.py
-
-cd "$(dirname $0)/../../";
-ROOT_PATH=`pwd`
-
-# $ROOT_PATH/app/ocr/prepare_data.sh
-
-export CALI_FRACTION=0.25
+export CALI_FRACTION=0
 export KFOLD_ITER=1
-export KFOLD_NUM=1
+export KFOLD_NUM=4
+# Only fold a fraction of data, TODO
 
-SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
+export FEATURE_LIB_PATH=$APP_HOME/script/
+export FEATURE_CONF_PATH=$APP_HOME/script/extract-feature-list.conf
 
-# cd "$(dirname $0)"
-# ROOT_PATH=`pwd`
-# python feature-analysis.py
+cd $DEEPDIVE_HOME
+
+SBT_OPTS="-Xmx4g" sbt/sbt "run -c $APP_HOME/application.conf"

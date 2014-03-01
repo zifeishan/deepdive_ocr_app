@@ -45,3 +45,11 @@ HTML: (hold out 1/5 as ground truth and rest for distant supervision; run 5 time
      1. /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15/[JID] 
      2. /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL/[JID] 
 
+
+
+Dependencies
+----
+
+- python-Levenshtein
+- pyquery
+- snappy 0.8.5 or higher (http://snap.stanford.edu/snappy/0.8.5/)

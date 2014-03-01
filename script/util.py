@@ -171,7 +171,7 @@ def Strip(word):
 
 # TIMEOUT tool
 from functools import wraps
-from pyquery import PyQuery  # support url parsing
+# from pyquery import PyQuery  # support url parsing
 import errno
 import os
 import signal

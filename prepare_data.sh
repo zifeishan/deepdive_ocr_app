@@ -2,7 +2,7 @@
 
 # Configuration
 DB_NAME=ddocr
-PGPORT=${PGPORT:5432}
+# PGPORT=${PGPORT:5432}
 
 cd `dirname $0`
 BASE_DIR=`pwd`

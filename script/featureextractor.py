@@ -5,6 +5,7 @@ import os
 
 # Input only 1 OPTION, extract all features
 # word: this candidate word
+# Do not change vals to bools
 def CandidateFeatureExtract(word, corpus = {}, confpath = ''):
   fnames = []
   fvals = []

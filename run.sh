@@ -21,4 +21,5 @@ export FEATURE_CONF_PATH=$APP_HOME/script/extract-feature-list.conf
 
 cd $DEEPDIVE_HOME
 
-SBT_OPTS="-Xmx4g" sbt/sbt "run -c $APP_HOME/application.conf"
+SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
+# SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application-old.conf"

@@ -1,10 +1,15 @@
 from util import *
 import re
 import snap  # Calc Connected Components
+import sys
 
 # Return a index of each page: index{1:[(b1,w1), (b2,w2)...], 2:[b10,b11..]}
 # The list is sorted by Box comparator.
 # If one word contains multiple boxes, they will be ALL indexed to the SAME word object.
+
+# CHANGE: If one word contains multiple boxes, they will be ONLY indexed into the FIRST word object.
+
+# TODO: do not do either: find someway better!!
 def BuildBoxIndexByPage(words):
   index = {}
   for w in words:
@@ -14,6 +19,7 @@ def BuildBoxIndexByPage(words):
       if p not in index:
         index[p] = []
       index[p].append((b, w))  # page P, add a pair: box B, word W
+      break
 
   # for p in index:
   #   index[p].sort() # Sort the list for every page, based on box ULRD.
@@ -74,6 +80,13 @@ def CombineWords(allwords, orderby = ['T', 'C']):
 
       for ocr_sub in range(0, len(index[pageid])):
         pair = index[pageid][ocr_sub]
+        box = pair[0]
+        word = pair[1]
+        # New: handle C bad outputs
+        if box.GetLeft() == 0 and box.GetUp() == 0 and ocrid == 'C':
+          print >>sys.stderr, box.GetPrinted(), word.GetContent()
+          continue  # Ignore this candidate
+
         page_cands[pageid].append( (ocrid,) + pair )  # (ocrid, box, word)
 
         # if ocrid == orderby:  # slow... TODO
@@ -82,8 +95,7 @@ def CombineWords(allwords, orderby = ['T', 'C']):
         # print page_cands_order
         # raw_input()
 
-
-
+  wccsizes = {}
   for pageid in page_cands:
     nodes = page_cands[pageid]  # [(ocrid, box, word), ...]
     graph = snap.PUNGraph.New()   # Undirected graph
@@ -106,7 +118,13 @@ def CombineWords(allwords, orderby = ['T', 'C']):
     wccs = snap.TCnComV()
     snap.GetWccs(graph, wccs)
     order_comp = {}
+
     for comp in wccs:
+      wccsz = comp.Len()
+      if wccsz not in wccsizes:
+        wccsizes[wccsz] = 0
+      wccsizes[wccsz] += 1
+
       # print "Size of component: %d" % comp.Len()
       # for arr in [[nodes[nid][0], nodes[nid][1].GetPrinted(), nodes[nid][2].GetContent()] for nid in comp]:
       #   print ' ', '\t'.join(arr)
@@ -165,7 +183,7 @@ def CombineWords(allwords, orderby = ['T', 'C']):
 
     page_words[pageid] = words
 
-  return page_words
+  return page_words, wccsizes 
 
 
 

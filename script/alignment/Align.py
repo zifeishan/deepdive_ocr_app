@@ -43,12 +43,20 @@ def AlignBoxedFromPath(findpaths, docid, output_base):
   cindex = Combiner.BuildBoxIndexByPage(cwords)
   allwords = {'T': tindex, 'C': cindex}
 
-  page_words = Combiner.CombineWords(allwords)
+  page_words, wccsizes = Combiner.CombineWords(allwords)
 
   if not os.path.exists(output_base):
     os.makedirs(output_base)
 
+
   foutbase = output_base + '/' + docid
+
+  # Count wcc sizes
+  fwcc = open(foutbase + '.wccsize', 'w')
+  for size in sorted(wccsizes.keys()):
+    print >>fwcc, str(size) + '\t' + str(wccsizes[size])
+  fwcc.close()
+
   fcand = open(foutbase + '.cand', 'w')
   fcandfeat = open(foutbase + '.candfeature', 'w')
   fcandbox = open(foutbase + '.candbox', 'w')
@@ -183,7 +191,7 @@ def Align(urlbase, output_base, isDir=False, boxedCunei = False):
 if __name__ == "__main__": 
   if len(sys.argv) == 2:
     path = sys.argv[1]
-    AlignBoxedFromPath([path], 'JOURNAL_145413', './test')
+    AlignBoxedFromPath([path], 'TEST_JOURNAL', './test')
   else:
     print 'Usage:',sys.argv[0],'<path>'
     sys.exit(1)

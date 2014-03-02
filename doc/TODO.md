@@ -19,6 +19,9 @@ X - Implement new alignment by bounding boxes
   - import all files in the list
 
 
+Fix error in Combiner.py: TODO!!
+
+
 Schema design:
 
 OCR(id, ocrid, docid, word) 

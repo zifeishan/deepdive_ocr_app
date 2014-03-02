@@ -4,6 +4,8 @@
 DB_NAME=ddocr
 # PGPORT=${PGPORT:5432}
 
+CAND_DIR=data/journals-test-output2
+
 cd `dirname $0`
 BASE_DIR=`pwd`
 
@@ -47,11 +49,11 @@ psql -c "create table cand_feature(id BIGSERIAL PRIMARY KEY, docid TEXT, wordid 
 # psql -c "create table feature_names(id bigserial primary key, feature_name TEXT);" $DB_NAME
 
 # prevent '\' crashing COPY.
-sed 's/\\/\\\\/g' data/journals-test-output/*.cand | psql -c "COPY candidate(docid, wordid, candid, source, word) FROM STDIN;" $DB_NAME
+sed 's/\\/\\\\/g' $CAND_DIR/*.cand | psql -c "COPY candidate(docid, wordid, candid, source, word) FROM STDIN;" $DB_NAME
 
-cat data/journals-test-output/*.candbox | psql -c "COPY cand_box(docid, wordid, candid, page, l, t, r, b) FROM STDIN;" $DB_NAME
+cat $CAND_DIR/*.candbox | psql -c "COPY cand_box(docid, wordid, candid, page, l, t, r, b) FROM STDIN;" $DB_NAME
   
-sed 's/\\/\\\\/g' data/journals-test-output/*.candfeature | psql -c "COPY cand_feature(docid, wordid, candid, pos, ner, stem) FROM STDIN;" $DB_NAME
+sed 's/\\/\\\\/g' $CAND_DIR/*.candfeature | psql -c "COPY cand_feature(docid, wordid, candid, pos, ner, stem) FROM STDIN;" $DB_NAME
   
 
 

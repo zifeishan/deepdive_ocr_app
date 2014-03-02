@@ -13,7 +13,7 @@ export JAVA_OPTS="-Xmx4g -XX:MaxHeapSize=256m"
 
 # $APP_HOME/prepare_data.sh
 
-export CALI_FRACTION=0
+export CALI_FRACTION=0.25
 export KFOLD_ITER=1
 export KFOLD_NUM=4
 # Only fold a fraction of data, TODO

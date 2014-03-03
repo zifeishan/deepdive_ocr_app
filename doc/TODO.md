@@ -5,8 +5,8 @@
     Ggl ngram
     paleo gram?
 
-  Supervision
-    1gram
+/ Supervision
+X   1gram
     2gram (pluggable)
 
   Evaluation

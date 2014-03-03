@@ -53,11 +53,11 @@ def Match(arr1, arr2):
 if __name__ == "__main__": 
   if len(sys.argv) == 3:
     f1 = sys.argv[1]
-    f2 = sys.argv[1]
+    f2 = sys.argv[2]
     arr1 = [l.strip() for l in open(f1).readlines()]
     arr2 = [l.strip() for l in open(f2).readlines()]
     print Match(arr1, arr2)
-    
+
   else:
     print 'Usage:',sys.argv[0],'<path1> <path2> (words split by \\n)'
     print 'Tetsing:'

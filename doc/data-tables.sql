@@ -1,3 +1,27 @@
+-- select distinct docid into document from candidate;
+drop table if exists document;
+create table document(id bigserial primary key, docid text);
+insert into document(docid) select distinct docid from candidate;
+
+
+create table html_1gram(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  word1 TEXT,
+  freq INT);
+
+create table html_2gram(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  word1 TEXT,
+  word2 TEXT,
+  freq INT);
+
+create table html_3gram(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  word1 TEXT,
+  word2 TEXT,
+  word3 TEXT,
+  freq INT);
+
 create table candidate(id BIGSERIAL PRIMARY KEY, 
   docid TEXT,
   wordid INT,

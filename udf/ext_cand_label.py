@@ -9,6 +9,7 @@ for row in fileinput.input():
   obj = json.loads(row)
   cid = obj["candidate.id"]
   print json.dumps({
-    "candid": cid
+    "candid": cid,
+    "label": None
   })
   # Cannot manually assign ID bigserial!!?

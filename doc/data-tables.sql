@@ -1,3 +1,8 @@
+-- NO NATURAL JOINS!!!!
+create table cand_label(id BIGSERIAL PRIMARY KEY, 
+  candid BIGSERIAL REFERENCES candidate(id),
+  label BOOLEAN);
+
 -- select distinct docid into document from candidate;
 drop table if exists document;
 create table document(id bigserial primary key, docid text);

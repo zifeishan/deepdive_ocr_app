@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
 
-psql -c """create view cand_with_label as select * from cand_label natural join candidate;""" ddocr
+psql -c """create view cand_with_label as select * from cand_label right join candidate on cand_label.candid = candidate.id;""" ddocr
 
 psql -c """update cand_label
   set label = true
   where id in 
-  (select cand_label.id from (cand_label natural join candidate) join html_1gram 
+  (select cand_label.id from (cand_label right join candidate on cand_label.candid = candidate.id) join html_1gram 
           on candidate.docid = html_1gram.docid and word = word1);
 """ ddocr
 

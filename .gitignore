@@ -8,3 +8,7 @@ script/web_occur_dict-backup.json
 data/raw/boolean-f52-c3-m620-backup/
 target/
 *tmp*
+script/test/
+data/html-labels-accurate/
+data/test-supervision/
+data/journals-test-output*/

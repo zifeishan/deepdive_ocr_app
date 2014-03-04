@@ -33,3 +33,10 @@ psql -c """update cand_label
     and c1.label = true
     and c2.label = true);
 """ ddocr
+
+
+# HOLD OUT
+psql -c """update cand_label 
+  set label = null 
+  where candidateid in (
+    select id from candidate where docid in (select docid from eval_docs));""" ddocr

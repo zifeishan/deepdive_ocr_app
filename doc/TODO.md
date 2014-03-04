@@ -1,3 +1,5 @@
+Removed rows in document JOURNAL_102371.
+
   Move alignment to Extractors?
 
   Feature engineering extractors?

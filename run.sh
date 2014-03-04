@@ -27,3 +27,5 @@ SBT_OPTS="-Xmx4g -XX:MaxHeapSize=256m" sbt/sbt "run -c $APP_HOME/application.con
 
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application-old.conf"
+
+psql -c """ copy (select * from inference_result_mapped_weight) to '/tmp/ocr-output-eval.tsv' """ $DBNAME

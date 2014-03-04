@@ -37,12 +37,6 @@ psql -c "create table candidate(id BIGSERIAL PRIMARY KEY, docid TEXT, wordid INT
 psql -c "create table cand_box(id BIGSERIAL PRIMARY KEY, docid TEXT, wordid INT, candid INT, page INT, l INT, t INT, r INT, b INT);" $DB_NAME
   
 psql -c "create table cand_feature(id BIGSERIAL PRIMARY KEY, docid TEXT, wordid INT, candid INT, pos TEXT, ner TEXT, stem TEXT);" $DB_NAME
-  
-psql -c "create table html_1gram(id BIGSERIAL PRIMARY KEY, docid TEXT, word1 TEXT, freq INT);" $DB_NAME
-
-psql -c "create table html_2gram(id BIGSERIAL PRIMARY KEY, docid TEXT, word1 TEXT, word2 TEXT, freq INT); " $DB_NAME
-
-psql -c "create table html_3gram(id BIGSERIAL PRIMARY KEY, docid TEXT, word1 TEXT, word2 TEXT, word3 TEXT, freq INT); " $DB_NAME
 
 # psql -c "create table features(id BIGSERIAL PRIMARY KEY, docid TEXT, wordid INT, feature_name TEXT, feature_val BOOLEAN);" $DB_NAME
 

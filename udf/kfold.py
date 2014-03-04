@@ -12,6 +12,8 @@
 
 # Should be used as AFTER function of an extractor that generates temporal_table_to_fold.
 
+# ASSUME: column "id" starts from 1.
+
 # Works better with a run script with iterations, changing input KFOLD_ITER.
 
 # e.g.: after: ${APP_HOME}"/udf/kfold.py "${KFOLD_NUM}" "${KFOLD_ITER}" filtered_labels label_t label_c"
@@ -39,8 +41,8 @@ numrows = 'select count(*) from ' + table
 updatequery = ' '.join(
   ['UPDATE', table, 'SET', 
    ','.join([var + '= NULL' for var in remove_vars]),
-   'where id < ('+ numrows + ') * ' + KFOLD_ITER + ' / '
-   + KFOLD_NUM + ' and id >= ('+ numrows + ') * (' + 
+   'where id <= ('+ numrows + ') * ' + KFOLD_ITER + ' / '
+   + KFOLD_NUM + ' and id > ('+ numrows + ') * (' + 
     KFOLD_ITER + ' - 1) / '+ KFOLD_NUM + ';'])
 
 sql_queries.append(updatequery)

@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
 
-psql -c """create view cand_with_label as select * from cand_label right join candidate on cand_label.candid = candidate.id;""" ddocr
+psql -c """create view cand_with_label as select label, candidate.* from cand_label right join candidate on cand_label.candidateid = candidate.id;""" ddocr
 
 psql -c """update cand_label
   set label = true
-  where id in 
-  (select cand_label.id from (cand_label right join candidate on cand_label.candid = candidate.id) join html_1gram 
+  where candidateid in 
+  (select candidate.id from candidate join html_1gram 
           on candidate.docid = html_1gram.docid and word = word1);
 """ ddocr
 
@@ -13,7 +13,7 @@ psql -c """update cand_label
 
 psql -c """update cand_label
   set label = false
-  where id in (
+  where candidateid in (
     select c2.id 
     from cand_with_label as c1 join cand_with_label as c2 
     on c1.docid = c2.docid and c1.wordid = c2.wordid 
@@ -25,7 +25,7 @@ psql -c """update cand_label
 
 psql -c """update cand_label
   set label = null
-  where id in (
+  where candidateid in (
     select c1.id
     from cand_with_label as c1 join cand_with_label as c2 
     on c1.docid = c2.docid and c1.wordid = c2.wordid 

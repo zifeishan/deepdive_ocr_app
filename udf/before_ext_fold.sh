@@ -6,3 +6,8 @@ psql -c "insert into document(docid) select distinct docid from candidate;" ddoc
 
 psql -c "drop table if exists document_backup cascade;" ddocr
 psql -c "select * into document_backup from document;" ddocr
+
+# HOLD OUT docs
+psql -c """create view eval_docs as
+select docid from document_backup where id in (select id from document where docid is null);
+""" ddocr

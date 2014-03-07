@@ -1,42 +1,82 @@
-#! /usr/bin/env python
-
-# Call: /udf/kfold.py "${KFOLD_NUM}" "${KFOLD_ITER}"filtered_labels label_t label_c
-
 import os, sys
 
-p_diff = '/tmp/ddocr_diff.tsv'
-p_corr = '/tmp/ddocr_correct.tsv'
-p_fixable = '/tmp/ddocr_fixable.tsv'
+dd_output = '/tmp/ocr-output-words.tsv'
+eval_path_base = 'data/test-supervision/'
+final_output_base = 'output/'
+if len(sys.argv) == 4:
+  dd_output = sys.argv[1]
+  eval_path_base = sys.argv[2]
+  final_output_base = sys.argv[3]
+else:
+  print 'Usage: python', sys.argv[0],'dd_output eval_path_base final_output_base'
+  print 'Use default settings.'
 
-q_stats = '''psql -c """
-  drop view if exists compare_results;
-  create view compare_results as
-  select lt.docid, lt.wordid, lt.probability as p_t, lc.probability as p_c
-  from filtered_labels_label_t_inference as lt INNER JOIN filtered_labels_label_c_inference as lc ON lt.docid =lc.docid and lt.wordid=lc.wordid;
+print 'Generating output from', dd_output,'to:',final_output_base
 
-  COPY (
-  select count(*) from compare_results INNER JOIN labels 
-    ON compare_results.docid = labels.docid and compare_results.wordid = labels.wordid) 
-  TO \'''' + p_diff + '''\';
+docids = []
+lastdocid = ''
+fout = None
+while True:
+  line = open(dd_output).readline()
+  if line == '': break
+  docid, wordid, word = line.strip().split('\t')
+  wordid = int(wordid)
 
-  COPY(
-  select count(*) from compare_results INNER JOIN labels 
-  ON compare_results.docid = labels.docid and compare_results.wordid = labels.wordid 
-  WHERE (label_t = True and p_t > p_c) 
-    OR (label_c = True and p_t < p_c)
-  ) TO \'''' + p_corr + '''\';
+  # New document encountered
+  if docid != lastdocid:
+    docids.append(docid)
+    if fout != None:
+      fout.close()
+    fout = open(final_output_base + '/' + docid + '.seq', 'w')
 
-  COPY(
-  select count(*) from compare_results INNER JOIN labels 
-  ON compare_results.docid = labels.docid and compare_results.wordid = labels.wordid WHERE (label_t = True OR label_c = True)
-  ) TO \'''' + p_fixable + '''\';
+  print >>fout, word
 
-  """ ddocr'''
+if fout != None:
+  fout.close()
 
-os.system(q_stats)
-diff = int(open(p_diff).readline().strip())
-corr = int(open(p_corr).readline().strip())
-fix = int(open(p_fixable).readline().strip())
+fout = open('eval-results.txt', 'w')
+sys.path.append('util/')
+import stringmatch  # Use our script here
 
-fout = open('/tmp/evaluation.tsv', 'a')
-print >>fout, '%d\t%d\t%d\t%.2f%%\t%.2f%%' % (diff, fix, corr, 100.0*corr/diff, 100.0*corr/fix)
+tot_ocrwords = 0
+tot_evalwords = 0
+tot_matchnum = 0
+
+for docid in docids:
+  ocrpath = final_output_base + '/' + docid + '.seq'
+  evalpath = eval_path_base + '/' + docid + '.seq'
+  if not os.path.exists(ocrpath):
+    print 'Error: cannot find path:',ocrpath
+    continue
+  if not os.path.exists(evalpath):
+    print 'Error: cannot find path:',evalpath
+    continue
+  ocrwords = [l.rstrip('\n') for l in open(ocrpath).readlines()]
+  evalwords = [l.rstrip('\n') for l in open(evalpath).readlines()]
+  matchnum = stringmatch.Match(ocrwords, evalwords)
+  tot_ocrwords += len(ocrwords)
+  tot_evalwords += len(evalwords)
+  tot_matchnum += matchnum
+
+  print '%s:\t OCR:%d\tReal:%d\tMatches:%d\tPrec:%.4f\tRec:%.4f' % [docid, 
+      len(ocrwords), 
+      len(evalwords), 
+      matchnum, 
+      matchnum / float(len(ocrwords)), 
+      matchnum / float(len(evalwords))]
+
+  print >>fout, '\t'.join ([str(x) for x in [docid, 
+          len(ocrwords), 
+          len(evalwords), 
+          matchnum, 
+          matchnum / float(len(ocrwords)), 
+          matchnum / float(len(evalwords))]])
+
+print 'TOTAL:\n%s:\t OCR:%d\tReal:%d\tMatches:%d\tPrec:%.4f\tRec:%.4f' % [docid, 
+      tot_ocrwords, 
+      tot_evalwords, 
+      tot_matchnum, 
+      tot_matchnum / float(tot_ocrwords), 
+      tot_matchnum / float(tot_evalwords)]
+
+fout.close()

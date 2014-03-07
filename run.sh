@@ -28,9 +28,8 @@ SBT_OPTS="-Xmx4g -XX:MaxHeapSize=256m" sbt/sbt "run -c $APP_HOME/application.con
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application-old.conf"
 
-psql -c """ copy (select * from cand_label_label_inference_bucketed right join candidate on candidateid=candidate.id) to '/tmp/ocr-output-eval.tsv'; """ $DBNAME
+cd $APP_HOME
 
+bash generate_ocr_result.sh
+pypy ocr-evaluation.py
 
- # select label, probability, bucket, candidate.* from cand_label_label_inference_bucketed right join candidate on candidateid=candidate.id;
-
- # select label, probability, bucket, candidate.* from cand_label_label_inference_bucketed right join candidate on candidateid=candidate.id where docid in (select * from eval_docs) and probability is not null;

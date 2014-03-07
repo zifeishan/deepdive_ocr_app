@@ -22,7 +22,7 @@ psql -c """create view output_words as
 ;""" ddocr
 
 psql -c """create view output_words as
-  select * from output_candidates join maxp
+  select output_candidates.* from output_candidates join maxp
   on  output_candidates.docid = maxp.docid
   and output_candidates.wordid = maxp.wordid
   and output_candidates.probability = maxp.maxp

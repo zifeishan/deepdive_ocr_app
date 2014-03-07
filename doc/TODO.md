@@ -1,3 +1,9 @@
+Deal with mul words in a (T) box:
+
+  13474 |       | JOURNAL_107511 |    248 |      1 | T      | Bipedalism
+  13475 |       | JOURNAL_107511 |    248 |      2 | T      | ;
+
+
 Removed rows in document JOURNAL_102371.
 
   Move alignment to Extractors?

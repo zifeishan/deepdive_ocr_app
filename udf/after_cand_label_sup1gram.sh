@@ -22,7 +22,7 @@ psql -c """update cand_label
     and c2.label is null);""" ddocr
 
 # Break ties with "unknown"...
-
+# But allow multiple SAME words to be true
 psql -c """update cand_label
   set label = null
   where candidateid in (
@@ -35,6 +35,8 @@ psql -c """update cand_label
 """ ddocr
 
 
+
+#############################
 # HOLD OUT
 psql -c """update cand_label 
   set label = null 

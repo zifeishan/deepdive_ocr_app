@@ -16,15 +16,18 @@ print 'Generating output from', dd_output,'to:',final_output_base
 docids = []
 lastdocid = ''
 fout = None
+fin = open(dd_output)
 while True:
-  line = open(dd_output).readline()
+  line = fin.readline()
   if line == '': break
   docid, wordid, word = line.strip().split('\t')
   wordid = int(wordid)
 
   # New document encountered
   if docid != lastdocid:
+    print 'Reading doc:', docid
     docids.append(docid)
+    lastdocid = docid
     if fout != None:
       fout.close()
     fout = open(final_output_base + '/' + docid + '.seq', 'w')
@@ -58,12 +61,13 @@ for docid in docids:
   tot_evalwords += len(evalwords)
   tot_matchnum += matchnum
 
-  print '%s:\t OCR:%d\tReal:%d\tMatches:%d\tPrec:%.4f\tRec:%.4f' % [docid, 
+  print '%s:\t OCR:%d\tReal:%d\tMatches:%d\tPrec:%.4f\tRec:%.4f' % (docid, 
       len(ocrwords), 
       len(evalwords), 
       matchnum, 
       matchnum / float(len(ocrwords)), 
-      matchnum / float(len(evalwords))]
+      matchnum / float(len(evalwords))
+      )
 
   print >>fout, '\t'.join ([str(x) for x in [docid, 
           len(ocrwords), 
@@ -72,11 +76,11 @@ for docid in docids:
           matchnum / float(len(ocrwords)), 
           matchnum / float(len(evalwords))]])
 
-print 'TOTAL:\n%s:\t OCR:%d\tReal:%d\tMatches:%d\tPrec:%.4f\tRec:%.4f' % [docid, 
+print 'TOTAL:\n%s:\t OCR:%d\tReal:%d\tMatches:%d\tPrec:%.4f\tRec:%.4f' % (docid, 
       tot_ocrwords, 
       tot_evalwords, 
       tot_matchnum, 
       tot_matchnum / float(tot_ocrwords), 
-      tot_matchnum / float(tot_evalwords)]
+      tot_matchnum / float(tot_evalwords))
 
 fout.close()

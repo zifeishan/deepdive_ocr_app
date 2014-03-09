@@ -30,7 +30,6 @@ SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application-old.conf"
 
-cd $APP_HOME
-
+# cd $APP_HOME
 # bash generate_ocr_result.sh
 # pypy ocr-evaluation.py

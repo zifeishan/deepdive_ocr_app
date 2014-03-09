@@ -18,6 +18,7 @@ if __name__ == "__main__":
     
     # Align each file
     for fid in fids:
+      print 'Aligning', fid,'...'
       # Already aligned (cand file not empty), skip
       candpath = output_base + '/' + fid + '.cand'
       if os.path.exists(candpath) and os.path.getsize(candpath) > 0:

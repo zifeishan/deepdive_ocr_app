@@ -14,14 +14,6 @@ from output_candidates group by docid,wordid;
 """ ddocr
 
 psql -c """create view output_words as
-  select * from output_candidates join maxp
-  on  output_candidates.docid = maxp.docid
-  and output_candidates.wordid = maxp.wordid
-  and output_candidates.probability = maxp.maxp
-  and output_candidates.random_number = maxp.maxrand
-;""" ddocr
-
-psql -c """create view output_words as
   select output_candidates.* from output_candidates join maxp
   on  output_candidates.docid = maxp.docid
   and output_candidates.wordid = maxp.wordid

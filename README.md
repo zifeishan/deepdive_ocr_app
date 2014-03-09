@@ -18,7 +18,12 @@ How to run the system
 - Create a *ddocr* database (`createdb ddocr`)
 - Change the application.conf `db.default.user` entry to yours.
 - If necessary, add database connection details to `run.sh`
-- Execute `run.sh`
+- Prepare your OCR output data, Google ngram data, distant supervision data.
+- Execute `prepare_supv_data.sh` to load supervision data into database
+- Execute `load_ngram_to_db.sh` to load Google Ngram data into database
+- Do OCR Alignment by `script/AlignJournals.py`
+- Execute `prepare_data.sh` to load aligned OCR outputs to databse.
+- Execute `run.sh`.
 
 
 

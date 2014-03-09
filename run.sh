@@ -7,7 +7,8 @@ export PG_PORT=${PGPORT:5432}
 
 export DEEPDIVE_HOME=`cd $(dirname $0)/../..; pwd`
 export APP_HOME=`pwd`
-export JAVA_OPTS="-Xmx4g -XX:MaxHeapSize=256m"
+# export JAVA_OPTS="-Xmx128g -XX:MaxHeapSize=256m"
+export JAVA_OPTS="-Xmx128g -XX:MaxHeapSize=8g"
 
 # java $JAVA_OPTS -version
 
@@ -23,13 +24,13 @@ export FEATURE_CONF_PATH=$APP_HOME/script/extract-feature-list.conf
 
 cd $DEEPDIVE_HOME
 
-SBT_OPTS="-Xmx4g -XX:MaxHeapSize=256m" sbt/sbt "run -c $APP_HOME/application.conf"
+# SBT_OPTS="-Xmx128g -XX:MaxHeapSize=8g" sbt/sbt "run -c $APP_HOME/application.conf"
+SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
 
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application-old.conf"
 
 cd $APP_HOME
 
-bash generate_ocr_result.sh
-pypy ocr-evaluation.py
-
+# bash generate_ocr_result.sh
+# pypy ocr-evaluation.py

@@ -16,21 +16,21 @@ BASE_DIR=`pwd`
 # psql -c "drop schema if exists public cascade; create schema public;" $DB_NAME
 
 # psql -c "drop table labels, features, feature_names, actual_words, options CASCADE;" $DB_NAME
-psql -c "drop table factor_variables CASCADE;" $DB_NAME
-psql -c "drop table factors CASCADE;" $DB_NAME
-psql -c "drop table inference_result CASCADE;" $DB_NAME
-psql -c "drop table inference_result_weights CASCADE;" $DB_NAME
-psql -c "drop table variables CASCADE;" $DB_NAME
-psql -c "drop table weights cascade;" $DB_NAME
-psql -c "drop table features CASCADE;" $DB_NAME 
-psql -c "drop table feature_names CASCADE;" $DB_NAME 
-psql -c "drop table labels CASCADE;" $DB_NAME 
-psql -c "drop table actual_words CASCADE;" $DB_NAME 
-psql -c "drop table options CASCADE;" $DB_NAME
+psql -c "drop table if exists factor_variables CASCADE;" $DB_NAME
+psql -c "drop table if exists factors CASCADE;" $DB_NAME
+psql -c "drop table if exists inference_result CASCADE;" $DB_NAME
+psql -c "drop table if exists inference_result_weights CASCADE;" $DB_NAME
+psql -c "drop table if exists variables CASCADE;" $DB_NAME
+psql -c "drop table if exists weights cascade;" $DB_NAME
+psql -c "drop table if exists features CASCADE;" $DB_NAME 
+psql -c "drop table if exists feature_names CASCADE;" $DB_NAME 
+psql -c "drop table if exists labels CASCADE;" $DB_NAME 
+psql -c "drop table if exists actual_words CASCADE;" $DB_NAME 
+psql -c "drop table if exists options CASCADE;" $DB_NAME
 
-psql -c "drop table candidate CASCADE;" $DB_NAME
-psql -c "drop table cand_box CASCADE;" $DB_NAME
-psql -c "drop table cand_feature CASCADE;" $DB_NAME
+psql -c "drop table if exists candidate CASCADE;" $DB_NAME
+psql -c "drop table if exists cand_box CASCADE;" $DB_NAME
+psql -c "drop table if exists cand_feature CASCADE;" $DB_NAME
 
 psql -c "create table candidate(id BIGSERIAL PRIMARY KEY, docid TEXT, wordid INT, candid INT, source TEXT, word TEXT);" $DB_NAME
 

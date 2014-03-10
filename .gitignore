@@ -19,3 +19,6 @@ data-lfs
 nohup.out
 eval-results.txt
 data/test-supervision*
+eval-results*.txt
+output-cuni/
+output-tess/

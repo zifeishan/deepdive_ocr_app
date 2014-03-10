@@ -36,7 +36,8 @@ if __name__ == "__main__":
   for f in files:
     fpath = os.path.abspath(path+'/'+f)
     print 'Copying file:'+ fpath
-    pq = 'COPY '+table_name+'(gram, count) FROM \''+fpath+'\''
+    pq = 'COPY '+table_name+'(gram, count) FROM \''+fpath+'\' LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000 ROWS;'
+    # Ignore (at most 1k) errors and put errors into table err
     os.system('psql -c "'+pq+'" '+dbname)
 
   print 'Done.'

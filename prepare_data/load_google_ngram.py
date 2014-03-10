@@ -33,6 +33,12 @@ if __name__ == "__main__":
     
   os.system('psql -c "'+pq+'" '+dbname)
 
+  # Create error table
+  pq = '''CREATE TABLE err (cmdtime timestamp with time zone, relname text, filename text, linenum integer, bytenum integer, errmsg text, rawdata text, rawbytes bytea)'''
+  print pq
+  os.system('psql -c "'+pq+'" '+dbname)
+
+  # Copy and neglect errors
   for f in files:
     fpath = os.path.abspath(path+'/'+f)
     print 'Copying file:'+ fpath

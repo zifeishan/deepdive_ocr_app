@@ -16,3 +16,6 @@ data-lfs
 *.log
 *.swp
 ./eval-results.txt
+nohup.out
+eval-results.txt
+data/test-supervision*

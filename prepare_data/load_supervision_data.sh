@@ -1,8 +1,6 @@
 DB_NAME=ddocr
-SUPV_DIR=data/test-supervision
-
-cd `dirname $0`
-BASE_DIR=`pwd`
+# SUPV_DIR=../data/test-supervision
+SUPV_DIR=`cd $(dirname $0)/../data/test-supervision; pwd`
 
 psql -c "DROP TABLE IF EXISTS html_1gram CASCADE;" $DB_NAME
 psql -c "DROP TABLE IF EXISTS html_2gram CASCADE;" $DB_NAME

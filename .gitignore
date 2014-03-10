@@ -12,3 +12,7 @@ script/test/
 data/html-labels-accurate/
 data/test-supervision/
 data/journals-test-output*/
+data-lfs
+*.log
+*.swp
+./eval-results.txt

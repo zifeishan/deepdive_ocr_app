@@ -1,14 +1,21 @@
 import os, sys
 
+# Use stanford tokenizer to segment before alignment
+SEGMENT_CMD = 'CLASSPATH=util/stanford-parser.jar java edu.stanford.nlp.process.PTBTokenizer -options "ptb3Escaping=false" '
+
 dd_output = '/tmp/ocr-output-words.tsv'
 eval_path_base = 'data/test-supervision/'
 final_output_base = 'output/'
-if len(sys.argv) == 4:
+output_stat_path = 'eval-results.txt'
+
+if len(sys.argv) == 5:
   dd_output = sys.argv[1]
   eval_path_base = sys.argv[2]
   final_output_base = sys.argv[3]
+  output_stat_path = sys.argv[4]
 else:
-  print 'Usage: python', sys.argv[0],'dd_output eval_path_base final_output_base'
+  print 'Usage: python', sys.argv[0],'dd_output eval_path_base final_output_base output_stat_path'
+  print 'e.g. pypy ocr-evaluation.py /tmp/ocr-output-words-cuneiform.tsv data/test-supervision/ output-cuni/ eval-results-cuni.txt'
   print 'Use default settings.'
 
 print 'Generating output from', dd_output,'to:',final_output_base
@@ -30,14 +37,15 @@ while True:
     lastdocid = docid
     if fout != None:
       fout.close()
-    fout = open(final_output_base + '/' + docid + '.seq', 'w')
+    fout = open(final_output_base + '/' + docid + '.seq_unsegmented', 'w')
 
   print >>fout, word
 
 if fout != None:
   fout.close()
+fin.close()
 
-fout = open('eval-results.txt', 'w')
+fout = open(output_stat_path, 'w')
 sys.path.append('util/')
 import stringmatch  # Use our script here
 
@@ -46,7 +54,7 @@ tot_evalwords = 0
 tot_matchnum = 0
 
 for docid in docids:
-  ocrpath = final_output_base + '/' + docid + '.seq'
+  ocrpath = final_output_base + '/' + docid + '.seq_unsegmented'
   evalpath = eval_path_base + '/' + docid + '.seq'
   if not os.path.exists(ocrpath):
     print 'Error: cannot find path:',ocrpath
@@ -54,7 +62,12 @@ for docid in docids:
   if not os.path.exists(evalpath):
     print 'Error: cannot find path:',evalpath
     continue
-  ocrwords = [l.rstrip('\n') for l in open(ocrpath).readlines()]
+  os.system(SEGMENT_CMD +' <' + final_output_base + '/' + docid + '.seq_unsegmented' + ' >' + final_output_base + '/' + docid + '.seq' )
+
+  ocrpath_segmented = final_output_base + '/' + docid + '.seq'
+
+  ocrwords = [l.rstrip('\n') for l in open(ocrpath_segmented).readlines()]
+
   evalwords = [l.rstrip('\n') for l in open(evalpath).readlines()]
   matchnum = stringmatch.Match(ocrwords, evalwords)
   tot_ocrwords += len(ocrwords)

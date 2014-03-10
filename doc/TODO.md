@@ -1,3 +1,7 @@
+Get supervision numbers:
+1. #examples of each, and quality
+2. conflicts?
+
 Deal with mul words in a (T) box:
 
   13474 |       | JOURNAL_107511 |    248 |      1 | T      | Bipedalism

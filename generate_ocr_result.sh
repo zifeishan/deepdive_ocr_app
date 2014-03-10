@@ -23,3 +23,11 @@ psql -c """create view output_words as
 
 psql -c """copy (select docid, wordid, word from output_words order by docid, wordid) 
 to '/tmp/ocr-output-words.tsv';""" ddocr
+
+psql -c """copy (select docid, wordid, word from candidate 
+  where source = 'T' and docid in (select * from eval_docs)
+  order by docid, wordid, candid) to '/tmp/ocr-output-words-tesseract.tsv';""" ddocr
+
+psql -c """copy (select docid, wordid, word from candidate 
+  where source = 'C' and docid in (select * from eval_docs)
+  order by docid, wordid, candid) to '/tmp/ocr-output-words-cuneiform.tsv';""" ddocr

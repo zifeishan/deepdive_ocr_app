@@ -6,17 +6,19 @@ import csv
 import os
 import sys
 import json
-import yaml
+# import yaml
 from collections import defaultdict
 
 flibpath = ''
 if 'FEATURE_LIB_PATH' in os.environ:
   flibpath = os.environ['FEATURE_LIB_PATH']
   sys.path.append(flibpath)
+else:
+  sys.path.append('script')
 
 print >>sys.stderr, 'FEATURE_LIB_PATH:', flibpath
 
-from alignment import *
+# from alignment import *
 from naivefeature import *
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -28,11 +30,21 @@ def CandidateFeatureExtract(word, corpus = {}, confpath = ''):
   fvals = []
   configs = {}
 
-  if confpath == '' and 'FEATURE_CONF_PATH' in os.environ:
-    confpath = os.environ['FEATURE_CONF_PATH']
+  # if confpath == '' and 'FEATURE_CONF_PATH' in os.environ:
+  #   confpath = os.environ['FEATURE_CONF_PATH']
 
-  if os.path.exists(confpath):
-    configs = yaml.load(open(confpath))
+  # if os.path.exists(confpath):
+  #   configs = yaml.load(open(confpath))
+
+  configs = {
+    'char1gram': '-,.?![]"{}',
+    'char2gram': ['fi','fl','rn', 'rm','nn'],
+    'dict': True,
+    'upp': True,
+    'upc': True,
+    'wl': True,
+    'bool_dict': {'wl': 5, 'occur': 3, 'upp': 0.5}}
+
 
   if 'dict' in configs:
     fnames.append('dict')

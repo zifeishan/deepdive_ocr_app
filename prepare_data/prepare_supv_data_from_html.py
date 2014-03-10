@@ -19,7 +19,7 @@ def visible(element):
     return True
 
 
-SEGMENT_CMD = 'CLASSPATH=../util/stanford-parser.jar java edu.stanford.nlp.process.PTBTokenizer'
+SEGMENT_CMD = 'CLASSPATH=../util/stanford-parser.jar java edu.stanford.nlp.process.PTBTokenizer -options "ptb3Escaping=false" '
 
 path = '.'
 outbase = 'output/'
@@ -28,6 +28,7 @@ if len(sys.argv) == 3:
   outbase = sys.argv[2]
 else:
   print 'Usage:',sys.argv[0],'<path> <outbase>'
+  print 'e.g. ./prepare_supv_data_from_html.py ../data/html-labels-accurate/html/test-30docs/ ../data/test-supervision/'
   sys.exit(1)
 
 files = os.listdir(path)
@@ -65,6 +66,10 @@ for f in files:
     fragtext = frag.findAll(text=True)
     visible_texts = filter(visible, fragtext)
     text += ' '.join(visible_texts) + ' '
+
+    re.sub('&nbsp;', ' ', text)  # handle html non-breaking spaces
+    re.sub(' +', ' ', text)  # Multiple spaces to only one
+
     # text += '\n'  # between each fragment
 
   # text = pq.find('.page_fragment').text()
@@ -80,9 +85,11 @@ for f in files:
   print '-- Segment on',outpath + '.seq_unsegmented'
   os.system(SEGMENT_CMD + ' <' + outpath + '.seq_unsegmented >'
     + outpath + '.seq')
-  print '-- Done, saved to',outpath + '.seq'
+  print '-- Done, saved to', outpath + '.seq'
 
-  words = text.split(' ')
+
+  words = [l.rstrip('\n') for l in codecs.open(outpath + '.seq', 'r', 'utf-8').readlines()]
+
   print len(words), 'words parsed.'
 
   for ngram in range(1, 4):

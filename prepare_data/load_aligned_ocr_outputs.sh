@@ -4,11 +4,12 @@
 DB_NAME=ddocr
 # PGPORT=${PGPORT:5432}
 
-CAND_DIR=data/journals-test-output2
-SUPV_DIR=data/test-supervision
+cd `dirname $0/../`
+APP_HOME=`pwd`
 
-cd `dirname $0`
-BASE_DIR=`pwd`
+CAND_DIR=$APP_HOME/data/journals-test-output2
+SUPV_DIR=$APP_HOME/data/test-supervision
+
 
 ## Do not discard previous db: load ngram data takes time..
 # dropdb $DB_NAME

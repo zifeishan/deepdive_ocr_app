@@ -8,7 +8,7 @@ export PG_PORT=${PGPORT:5432}
 export DEEPDIVE_HOME=`cd $(dirname $0)/../..; pwd`
 export APP_HOME=`pwd`
 # export JAVA_OPTS="-Xmx128g -XX:MaxHeapSize=256m"
-export JAVA_OPTS="-Xmx128g -XX:MaxHeapSize=8g"
+# export JAVA_OPTS="-Xmx128g -XX:MaxHeapSize=8g"
 
 # java $JAVA_OPTS -version
 
@@ -25,11 +25,15 @@ export FEATURE_CONF_PATH=$APP_HOME/script/extract-feature-list.conf
 cd $DEEPDIVE_HOME
 
 # SBT_OPTS="-Xmx128g -XX:MaxHeapSize=8g" sbt/sbt "run -c $APP_HOME/application.conf"
-SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
+SBT_OPTS="-Xmx256g" sbt/sbt "run -c $APP_HOME/application.conf"
 
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application-old.conf"
 
-# cd $APP_HOME
-# bash generate_ocr_result.sh
-# pypy ocr-evaluation.py
+cd $APP_HOME
+bash generate_ocr_result.sh
+pypy ocr-evaluation.py
+echo 'Evaluating Tesseract:'
+pypy ocr-evaluation.py /tmp/ocr-output-words-tesseract.tsv data/test-supervision/ output-tess/ eval-results-tess.txt
+echo 'Evaluating Cuneiform:'
+pypy ocr-evaluation.py /tmp/ocr-output-words-cuneiform.tsv data/test-supervision/ output-cuni/ eval-results-cuni.txt

@@ -17,7 +17,7 @@ psql -c """update cand_label
     select c2.id 
     from cand_with_label as c1 join cand_with_label as c2 
     on c1.docid = c2.docid and c1.wordid = c2.wordid 
-    and c1.candid != c2.candid and c1.word != c2.word  -- redundant
+    and c1.candid != c2.candid and c1.word != c2.word 
     and c1.label = true
     and c2.label is null);""" ddocr
 

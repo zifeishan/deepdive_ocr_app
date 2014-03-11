@@ -4,8 +4,7 @@
 DB_NAME=ddocr
 # PGPORT=${PGPORT:5432}
 
-cd `dirname $0/../`
-APP_HOME=`pwd`
+APP_HOME=`cd $(dirname $0)/../; pwd`
 
 CAND_DIR=$APP_HOME/data/journals-test-output2
 SUPV_DIR=$APP_HOME/data/test-supervision

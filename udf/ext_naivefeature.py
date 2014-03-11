@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 # Input only 1 OPTION, extract all features
 # word: this candidate word
-def CandidateFeatureExtract(word, corpus = {}, confpath = ''):
+def CandidateFeatureExtract(word, source, corpus = {}, confpath = ''):
   fnames = []
   fvals = []
   configs = {}
@@ -50,16 +50,16 @@ def CandidateFeatureExtract(word, corpus = {}, confpath = ''):
     fnames.append('dict')
     fvals.append(DictValid(word))
   if 'wl' in configs:
-    fnames.append('wl')
+    fnames.append('wl_'+source)
     fvals.append(WordLength(word))
   if 'weboccur' in configs: 
     fnames.append('occur')
     fvals.append(Occur(word))
   if 'upp' in configs:
-    fnames.append('upp')
+    fnames.append('upp_'+source)
     fvals.append(UpperPunish(word))
   if 'upc' in configs:
-    fnames.append('upc')
+    fnames.append('upc_'+source)
     fvals.append(ChangeTime(word))
 
   if 'corpus' in configs:
@@ -76,7 +76,7 @@ def CandidateFeatureExtract(word, corpus = {}, confpath = ''):
     if 'char1gram' in configs: c1g = configs['char1gram']
     if 'char2gram' in configs: c2g = configs['char2gram']
     subs, values = CntReducedSubStr(word, c1g, c2g)
-    fnames += [s for s in subs]
+    fnames += [s + '_' + source for s in subs]
     fvals += values
 
   # To boolean: default dict
@@ -89,7 +89,8 @@ def CandidateFeatureExtract(word, corpus = {}, confpath = ''):
   if 'bool_dict' in configs:
     bool_dict = configs['bool_dict']
     for i in range(0, len(fnames)):
-      name = fnames[i]
+      # name = fnames[i]
+      name = fnames[i].split('_')[0]
 
       threshold = 1
       if name in bool_dict:
@@ -108,7 +109,8 @@ for row in fileinput.input():
   # print >>sys.stderr, obj
   # {u'candidate.docid': u'JOURNAL_102371', u'candidate.id': 839, u'candidate.source': u'C', u'candidate.word': u'human', u'candidate.candid': 0, u'candidate.wordid': 818}
   word = obj["candidate.word"]
-  fnames, fvals = CandidateFeatureExtract(word)
+  source = obj["candidate.source"]
+  fnames, fvals = CandidateFeatureExtract(word, source)
   for i in range(0, len(fnames)):
     if fvals[i] == False:
       continue

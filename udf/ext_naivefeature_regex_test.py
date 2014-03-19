@@ -8,6 +8,7 @@ import sys
 import json
 # import yaml
 from collections import defaultdict
+import re
 
 flibpath = ''
 if 'FEATURE_LIB_PATH' in os.environ:
@@ -45,6 +46,10 @@ def CandidateFeatureExtract(word, source, corpus = {}, confpath = ''):
     'wl': True,
     'bool_dict': {'wl': 5, 'occur': 3, 'upp': 0.5}}
 
+  fnames.append('test')
+  # for c in 'abcdedfgh'
+  for cc in [chr(c) for c in range(ord('a'), ord('z')+1)]:
+    fvals.append(bool(re.match('^.*'+cc+'.*'+cc+'.*$', word)))
 
   if 'dict' in configs:
     fnames.append('dict')
@@ -108,18 +113,14 @@ for row in fileinput.input():
   obj = json.loads(row)
   # print >>sys.stderr, obj
   # {u'candidate.docid': u'JOURNAL_102371', u'candidate.id': 839, u'candidate.source': u'C', u'candidate.word': u'human', u'candidate.candid': 0, u'candidate.wordid': 818}
-  # word = obj["candidate.word"]
-  # source = obj["candidate.source"]
-  word = obj["cand_word.word"]
+  word = obj["candidate.word"]
   source = obj["candidate.source"]
-  
   fnames, fvals = CandidateFeatureExtract(word, source)
   for i in range(0, len(fnames)):
     if fvals[i] == False:
       continue
     print json.dumps({
-      # "candidateid": obj["candidate.id"],
-      "cand_word_id": obj["cand_word.id"],
+      "candidateid": obj["candidate.id"],
       "fname": fnames[i],
       "fval": fvals[i]
     })

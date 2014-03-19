@@ -1,5 +1,4 @@
 #! /bin/bash
-alias java='/lfs/local/0/dbritz/software/jdk1.7.0_51/bin/java'
 export DBNAME=ddocr
 export PGUSER=${PGUSER:-`whoami`}
 export PGPASSWORD=${PGPASSWORD:-}
@@ -13,7 +12,7 @@ export APP_HOME=`pwd`
 # java $JAVA_OPTS -version
 
 # $APP_HOME/prepare_data.sh
-
+export MAX_PARALLELISM=8
 export CALI_FRACTION=0.25
 export KFOLD_ITER=1
 export KFOLD_NUM=4
@@ -26,7 +25,7 @@ export LD_LIBRARY_PATH="/dfs/rulk/0/hazy_share/lib64/:/dfs/rulk/0/hazy_share/lib
 cd $DEEPDIVE_HOME
 
 # SBT_OPTS="-Xmx128g -XX:MaxHeapSize=8g" sbt/sbt "run -c $APP_HOME/application.conf"
-SBT_OPTS="-Xmx32g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
+SBT_OPTS="-Xmx256g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
 
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application-old.conf"
@@ -38,3 +37,4 @@ SBT_OPTS="-Xmx32g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
 # pypy ocr-evaluation.py /tmp/ocr-output-words-tesseract.tsv data/test-supervision/ output-tess/ eval-results-tess.txt
 # echo 'Evaluating Cuneiform:'
 # pypy ocr-evaluation.py /tmp/ocr-output-words-cuneiform.tsv data/test-supervision/ output-cuni/ eval-results-cuni.txt
+

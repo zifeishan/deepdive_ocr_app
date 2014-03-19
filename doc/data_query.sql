@@ -13,8 +13,7 @@ from
   dd_inference_result_weights as resw,
   dd_graph_edges as e,
   dd_graph_factors as f,
-  -- dd_graph_weights as w
-  dd_inference_result_variables_mapped_weights as w
+  dd_graph_weights as w
 where e.variable_id = v.id
   and e.factor_id = f.id
   and f.weight_id = w.id

@@ -3,7 +3,7 @@ psql -c "DROP TABLE IF EXISTS cand_label CASCADE;" ddocr
 
 # Exact same lables with candidate
 psql -c """create table cand_label(id BIGSERIAL PRIMARY KEY, 
-  candidateid BIGSERIAL REFERENCES candidate(id),
+  candidate_id BIGSERIAL REFERENCES candidate(id),
   label BOOLEAN);""" ddocr
 
 echo "Evaluation document set:"

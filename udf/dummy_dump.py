@@ -4,12 +4,10 @@ import fileinput
 import json
 from collections import defaultdict
 
+fout = open('/tmp/dd_raw_json_naive.json', 'a')
 # For each input tuple
 for row in fileinput.input():
-  obj = json.loads(row)
-  cid = obj["candidate.id"]
-  print json.dumps({
-    "candidate_id": cid,
-    "label": None
-  })
+  print >>fout, row.strip()
   # Cannot manually assign ID bigserial!!?
+
+fout.close()

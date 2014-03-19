@@ -1,6 +1,5 @@
 -- NO NATURAL JOINS!!!!
 create table cand_label(id BIGSERIAL PRIMARY KEY, 
-  candid BIGSERIAL REFERENCES candidate(id),
   label BOOLEAN);
 
 -- select distinct docid into document from candidate;
@@ -27,31 +26,46 @@ create table html_3gram(id BIGSERIAL PRIMARY KEY,
   word3 TEXT,
   freq INT);
 
-create table candidate(id BIGSERIAL PRIMARY KEY, 
+create table candidate_with_word(
   docid TEXT,
-  wordid INT,
-  candid INT,
+  boxid INT,
+  candid_tot INT,
   source TEXT,
   word TEXT);
 
+TODO: 
+select docid, boxid, array_agg(word), array_agg(candid_tot), array_agg(source) from candidate_with_word group by docid, boxid limit 300;
+
+
+create table candidate(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  boxid INT,
+  candid INT,
+  source TEXT);
+
+create table cand_word(id BIGSERIAL PRIMARY KEY, 
+  candidate_id BIGSERIAL REFERENCES candidate(id),
+  wordid INT,
+  word TEXT);
+
+
 -- JOURNAL_28971 1 0 C Cretaceous
 
+-- create table cand_box(id BIGSERIAL PRIMARY KEY, docid TEXT, candid INT, wordid INT, page INT, l INT, t INT, r INT, b INT);
+
 create table cand_box(id BIGSERIAL PRIMARY KEY, 
-  docid TEXT, 
-  wordid INT, 
-  candid INT,
+  cand_word_id BIGSERIAL REFERENCES cand_word(id),
   page INT,
   l INT,
   t INT,
   r INT,
   b INT);
 
+
 -- JOURNAL_28971 1 0 1 1003  202 1132  221
 
 create table cand_feature(id BIGSERIAL PRIMARY KEY, 
-  docid TEXT, 
-  wordid INT, 
-  candid INT,
+  cand_word_id BIGSERIAL REFERENCES cand_word(id),
   pos TEXT,
   ner TEXT,
   stem TEXT);
@@ -59,14 +73,19 @@ create table cand_feature(id BIGSERIAL PRIMARY KEY,
 -- JOURNAL_28971 1 1 JJ  ORGANIZATION  cretaceous
 
 create table feature(id BIGSERIAL PRIMARY KEY, 
-  candidateid BIGSERIAL REFERENCES candidate(id),
+  cand_word_id BIGSERIAL REFERENCES cand_word(id),
   fname TEXT,
   fval BOOLEAN);
 
+-- One label for each new "candidate"
+create table cand_label(id BIGSERIAL PRIMARY KEY, 
+  candidate_id BIGSERIAL REFERENCES candidate(id),
+  label BOOLEAN);
 
 
 
 
+-- ================ Very old =====================
 
 
 

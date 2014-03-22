@@ -5,7 +5,8 @@ import codecs
 
 import sys, os
 # from pyquery import PyQuery
-import BeautifulSoup
+# import BeautifulSoup
+from BeautifulSoup import BeautifulSoup, Comment
 import re
 
 from HTMLParser import HTMLParser
@@ -39,8 +40,16 @@ for f in files:
   print 'Processing', docid
   htmlpath = path + '/' + f
   html = open(htmlpath).read()
+  html = re.sub('\&lt;', '<', html)
+  html = re.sub('\&gt;', '>', html)
+  html = re.sub('&nbsp;', ' ', html)  # handle html non-breaking spaces
+
   # pq = PyQuery(html)
-  soup = BeautifulSoup.BeautifulSoup(html)
+  soup = BeautifulSoup(html)
+
+  # Remove comments
+  comments = soup.findAll(text=lambda text:isinstance(text, Comment))
+  [comment.extract() for comment in comments]
 
   # title = pq.find('.title')
   # if title != None: 
@@ -59,16 +68,20 @@ for f in files:
     title = ''
 
   text = title + ' '
-  # text += '\n'
-  # soup.find('page_fragment').text
   allfrags = soup.findAll('div', {'class': 'page_fragment'})
   for frag in allfrags:
+    # Filter figures and tables and references
+    divs = frag('div')
+    for div in divs:
+      if div.has_key('class') and ('figTblUpiOuter' in div['class'] 
+        # or 'btnHolder' in div['class']
+        or 'refText' in div['class']):  # ignore references
+        div.extract()
+
     fragtext = frag.findAll(text=True)
     visible_texts = filter(visible, fragtext)
     text += ' '.join(visible_texts) + ' '
-
-    re.sub('&nbsp;', ' ', text)  # handle html non-breaking spaces
-    re.sub(' +', ' ', text)  # Multiple spaces to only one
+    text = re.sub(' +', ' ', text)  # Multiple spaces to only one
 
     # text += '\n'  # between each fragment
 

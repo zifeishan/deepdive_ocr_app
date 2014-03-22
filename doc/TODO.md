@@ -1,3 +1,14 @@
+OCR New idea: (CE)
+- How do fonts change from time?
+- Can we build a model to capture font changes, and use today's data to train previous ones?
+
+
+AI2:
+- Waffman Alpha
+- See how Watson win the test. Can Watson do AI2?
+- Set up break Plan!
+
+
 Get supervision numbers:
 1. #examples of each, and quality
 2. conflicts?

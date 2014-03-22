@@ -1,3 +1,36 @@
+------- NEW DESIGN
+-- Remember: all attributes in same table;
+-- Remember BCNF.
+
+create table variable(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  varid INT,
+  label INT);
+
+create table candidate(id BIGSERIAL PRIMARY KEY, 
+  variable_id BIGSERIAL,
+  candid INT,
+  source INT,
+  label BOOLEAN);
+
+create table cand_word(id BIGSERIAL PRIMARY KEY, 
+  -- candidate_id BIGSERIAL,
+  docid TEXT,
+  varid INT, # start from 1
+  candid INT, # start from 0, multinomial, according to source
+  source TEXT,
+  wordid INT, # start from 0
+  word TEXT,
+  page INT, 
+  l INT, 
+  t INT, 
+  r INT, 
+  b INT,  
+  pos TEXT,
+  ner TEXT,
+  stem TEXT);
+
+
 -- NO NATURAL JOINS!!!!
 create table cand_label(id BIGSERIAL PRIMARY KEY, 
   label BOOLEAN);

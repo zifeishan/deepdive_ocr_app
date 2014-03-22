@@ -4,11 +4,11 @@
 DB_NAME=ddocr
 # PGPORT=${PGPORT:5432}
 
-cd `dirname $0/../`
-APP_HOME=`pwd`
+APP_HOME=`cd $(dirname $0)/..; pwd`
+echo $APP_HOME
 
-CAND_DIR=$APP_HOME/data/journals-test-output2
-SUPV_DIR=$APP_HOME/data/test-supervision
+CAND_DIR=$APP_HOME/data/journals-test-output2-new
+# SUPV_DIR=$APP_HOME/data/test-supervision
 
 
 ## Do not discard previous db: load ngram data takes time..
@@ -16,72 +16,72 @@ SUPV_DIR=$APP_HOME/data/test-supervision
 # createdb $DB_NAME
 # psql -c "drop schema if exists public cascade; create schema public;" $DB_NAME
 
-# psql -c "drop table labels, features, feature_names, actual_words, options CASCADE;" $DB_NAME
-psql -c "drop table if exists factor_variables CASCADE;" $DB_NAME
-psql -c "drop table if exists factors CASCADE;" $DB_NAME
-psql -c "drop table if exists inference_result CASCADE;" $DB_NAME
-psql -c "drop table if exists inference_result_weights CASCADE;" $DB_NAME
-psql -c "drop table if exists variables CASCADE;" $DB_NAME
-psql -c "drop table if exists weights cascade;" $DB_NAME
 
-psql -c "drop table if exists candidate CASCADE;" $DB_NAME
-psql -c "drop table if exists candidate_with_word CASCADE;" $DB_NAME
+# READ cand_word table from data
 psql -c "drop table if exists cand_word CASCADE;" $DB_NAME
-psql -c "drop table if exists cand_box CASCADE;" $DB_NAME
-psql -c "drop table if exists cand_feature CASCADE;" $DB_NAME
+psql -c """create table cand_word(id BIGSERIAL PRIMARY KEY, 
+  candidate_id BIGSERIAL,
+  docid TEXT,
+  varid INT, -- start from 1
+  candid INT, -- start from 0, multinomial, according to source
+  source TEXT, -- 1-1 mapping to source
+  wordid INT, -- start from 0
+  word TEXT,
+  page INT, 
+  l INT, 
+  t INT, 
+  r INT, 
+  b INT,  
+  pos TEXT,
+  ner TEXT,
+  stem TEXT);""" $DB_NAME
 
+sed 's/\\/\\\\/g' $CAND_DIR/*.cand_word | psql -c "COPY cand_word(docid, varid, candid, source, wordid, word, page, l, t, r, b, pos, ner, stem) FROM STDIN;" $DB_NAME
 
+# Variable table
+psql -c "drop table if exists variable cascade;" $DB_NAME
+psql -c """create table variable(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  varid INT,
+  label INT);""" $DB_NAME
+psql -c """insert into variable(docid, varid) select distinct docid, varid from cand_word order by docid, varid;""" $DB_NAME
 
-# TODO!!! finish this and use extractors if needed...
-
+# Candidate table
+psql -c "drop table if exists candidate cascade;" $DB_NAME
 psql -c """create table candidate(id BIGSERIAL PRIMARY KEY, 
-  docid TEXT,
-  boxid INT,
+  variable_id BIGSERIAL,
+  docid TEXT, -- redundancy
+  varid INT,  -- redundancy
   candid INT,
-  source TEXT);""" $DB_NAME
-
-psql -c """create table candidate_with_word(
-  docid TEXT,
-  wordid INT,
-  candid_tot INT,
   source TEXT,
-  word TEXT);
+  label BOOLEAN);""" $DB_NAME
+psql -c """insert into candidate(variable_id, docid, varid, candid, source) 
+  select distinct variable.id as variable_id, variable.docid, variable.varid, candid, source
+  from cand_word, variable 
+    where variable.docid = cand_word.docid
+      and variable.varid = cand_word.varid
+  order by variable_id, candid, source;
+  """ $DB_NAME
+
+# Update cand_word
+psql -c """update cand_word 
+  set candidate_id = candidate.id
+  from candidate
+  where cand_word.docid = candidate.docid
+    and cand_word.varid = candidate.varid
+    and cand_word.candid = candidate.candid
+  ;
 """ $DB_NAME
 
-psql -c """create table cand_word(id BIGSERIAL PRIMARY KEY, 
-  candidate_id BIGSERIAL REFERENCES candidate(id),
-  wordid INT,
-  word TEXT);""" $DB_NAME
 
-psql -c "create table cand_box(id BIGSERIAL PRIMARY KEY, docid TEXT, candid INT, wordid INT, page INT, l INT, t INT, r INT, b INT);" $DB_NAME
+
+
+################ PREVIOUS DESIGN ###############
+
+# # prevent '\' crashing COPY.
+# sed 's/\\/\\\\/g' $CAND_DIR/*.cand | psql -c "COPY candidate_with_word(docid, wordid, candid_tot, source, word) FROM STDIN;" $DB_NAME
+
+# cat $CAND_DIR/*.candbox | psql -c "COPY cand_box(docid, wordid, candid, page, l, t, r, b) FROM STDIN;" $DB_NAME
   
-psql -c "create table cand_feature(id BIGSERIAL PRIMARY KEY, docid TEXT, candid INT, wordid INT, pos TEXT, ner TEXT, stem TEXT);" $DB_NAME
-
-# psql -c "create table features(id BIGSERIAL PRIMARY KEY, docid TEXT, wordid INT, feature_name TEXT, feature_val BOOLEAN);" $DB_NAME
-
-# psql -c "create table labels(id bigserial primary key, docid TEXT, wordid INT, label_t BOOLEAN, label_c BOOLEAN);" $DB_NAME
-
-# psql -c "create table actual_words(id bigserial primary key, docid TEXT, wordid INT, word TEXT);" $DB_NAME
-
-# psql -c "create table options(id bigserial primary key, docid TEXT, wordid INT, option_t TEXT, option_c TEXT);" $DB_NAME
-
-# psql -c "create table feature_names(id bigserial primary key, feature_name TEXT);" $DB_NAME
-
-# prevent '\' crashing COPY.
-sed 's/\\/\\\\/g' $CAND_DIR/*.cand | psql -c "COPY candidate_with_word(docid, wordid, candid_tot, source, word) FROM STDIN;" $DB_NAME
-
-cat $CAND_DIR/*.candbox | psql -c "COPY cand_box(docid, wordid, candid, page, l, t, r, b) FROM STDIN;" $DB_NAME
-  
-sed 's/\\/\\\\/g' $CAND_DIR/*.candfeature | psql -c "COPY cand_feature(docid, wordid, candid, pos, ner, stem) FROM STDIN;" $DB_NAME
-  
-
-
-# cat data/processed-tables/*.features.txt | psql -c "COPY features(docid, wordid, feature_name, feature_val) FROM STDIN;" $DB_NAME
-
-# cat data/processed-tables/*.labels.txt | psql -c "COPY labels(docid, wordid, label_t, label_c) FROM STDIN;" $DB_NAME
-
-# cat data/processed-tables/*.corrected_words.txt | psql -c "COPY actual_words(docid, wordid, word) FROM STDIN;" $DB_NAME
-
-# cat data/processed-tables/*.options.txt | psql -c "COPY options(docid, wordid, option_t, option_c) FROM STDIN;" $DB_NAME
-
-# cat data/processed-tables/*.features.txt | psql -c "COPY features(docid, wordid, feature_name, feature_val) FROM STDIN;" $DB_NAME
+# sed 's/\\/\\\\/g' $CAND_DIR/*.candfeature | psql -c "COPY cand_feature(docid, wordid, candid, pos, ner, stem) FROM STDIN;" $DB_NAME
+#   

@@ -9,17 +9,19 @@ create table variable(id BIGSERIAL PRIMARY KEY,
 
 create table candidate(id BIGSERIAL PRIMARY KEY, 
   variable_id BIGSERIAL,
+  docid TEXT, -- redundancy
+  varid INT,  -- redundancy
   candid INT,
-  source INT,
+  source TEXT,
   label BOOLEAN);
 
 create table cand_word(id BIGSERIAL PRIMARY KEY, 
-  -- candidate_id BIGSERIAL,
+  candidate_id BIGSERIAL,
   docid TEXT,
-  varid INT, # start from 1
-  candid INT, # start from 0, multinomial, according to source
-  source TEXT,
-  wordid INT, # start from 0
+  varid INT, -- start from 1
+  candid INT, -- start from 0, multinomial, according to source
+  source TEXT, -- 1-1 mapping to source
+  wordid INT, -- start from 0
   word TEXT,
   page INT, 
   l INT, 
@@ -30,6 +32,29 @@ create table cand_word(id BIGSERIAL PRIMARY KEY,
   ner TEXT,
   stem TEXT);
 
+create table document(id bigserial primary key, 
+  docid text);
+
+-- INSERTS
+insert into document(docid) select distinct docid from cand_word;
+
+insert into variable(docid, varid) select distinct docid, varid from cand_word order by docid, varid;
+
+insert into candidate(variable_id, docid, varid, candid, source) 
+  select distinct variable.id as variable_id, variable.docid, variable.varid, candid, source
+  from cand_word, variable 
+    where variable.docid = cand_word.docid
+      and variable.varid = cand_word.varid
+  order by variable_id, candid, source;
+
+-- Update cand_word
+update cand_word 
+  set candidate_id = candidate.id
+  from candidate
+  where cand_word.docid = candidate.docid
+    and cand_word.varid = candidate.varid
+    and cand_word.candid = candidate.candid
+  ;
 
 -- NO NATURAL JOINS!!!!
 create table cand_label(id BIGSERIAL PRIMARY KEY, 

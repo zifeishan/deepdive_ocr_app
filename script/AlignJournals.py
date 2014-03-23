@@ -11,8 +11,10 @@ if __name__ == "__main__":
 
     fids = [s.strip().split('\t')[0] for s in open(inputurls).readlines()]
 
-    firstdir = '/dfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15/'
-    seconddir = '/dfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL/'
+    # firstdir = '/dfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15/'
+    # seconddir = '/dfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL/'
+    firstdir = '/dfs/madmax/0/zifei/cleanpaleo/TORUNEXT_feb15/'
+    seconddir = '/dfs/madmax/0/zifei/cleanpaleo/TORUNEXT_JOURNAL/'
 
     print fids[:100]
     

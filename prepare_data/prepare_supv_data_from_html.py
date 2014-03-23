@@ -24,13 +24,29 @@ SEGMENT_CMD = 'CLASSPATH=../util/stanford-parser.jar java edu.stanford.nlp.proce
 
 path = '.'
 outbase = 'output/'
-if len(sys.argv) == 3:
-  path = sys.argv[1]
-  outbase = sys.argv[2]
+if len(sys.argv) == 4:
+  supv_or_eval = sys.argv[1]
+  path = sys.argv[2]
+  outbase = sys.argv[3]
 else:
-  print 'Usage:',sys.argv[0],'<path> <outbase>'
-  print 'e.g. ./prepare_supv_data_from_html.py ../data/html-labels-accurate/html/test-30docs/ ../data/test-supervision/'
+  print 'Usage:',sys.argv[0],'<supv_or_eval> <path> <outbase>'
+  print 'e.g. ./prepare_supv_data_from_html.py supv ../data/html-labels-accurate/html/test-30docs/ ../data/test-supervision/'
+  print 'e.g. ./prepare_supv_data_from_html.py eval ../data/html-labels-accurate/html/test-30docs/ ../data/test-evaluation/'
   sys.exit(1)
+
+# Parse whether escape References / figures / tables for evaluation
+ESCAPE_FOR_EVAL = False
+if 'supv' in supv_or_eval:
+  ESCAPE_FOR_EVAL = False
+elif 'eval' in supv_or_eval:
+  ESCAPE_FOR_EVAL = True
+else:
+  print 'Error parsing supv / eval argument.'
+  sys.exit(1)
+
+
+if not os.path.exists(outbase):
+  os.makedirs(outbase)
 
 files = os.listdir(path)
 

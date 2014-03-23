@@ -57,7 +57,7 @@ def AlignBoxedFromPath(findpaths, docid, output_base):
     print >>fwcc, str(size) + '\t' + str(wccsizes[size])
   fwcc.close()
 
-  fcandword = open(outputbase + fid + '.cand_word', 'w')
+  fcandword = open(foutbase + '.cand_word', 'w')
   lastdocid = ''
   lastvarid = ''
   source_candid = {}
@@ -75,11 +75,40 @@ def AlignBoxedFromPath(findpaths, docid, output_base):
       # '\t'.join([can[0], can[1].GetPrinted(), can[2].GetContent()])
       # wordid += 1  # Start from 1!!!
       varid += 1  # Start from 1!!!
+
+      # Only output distinct candidates
+      source_cand_map = {}
+      for candid_tot in range(0, len(wcc)):
+        cand = wcc[candid_tot]
+        source = cand[0]
+        if source not in source_cand_map:
+          source_cand_map[source] = []
+        source_cand_map[source].append(cand[2].GetContent())
+      # Select distinct candidates
+      distinct_cands = {}
+      source_to_cand_map = {}
+      for source in source_cand_map:
+        cand = '\t'.join(source_cand_map[source])
+        if cand not in distinct_cands:
+          distinct_cands[cand] = ''
+        distinct_cands[cand] += source
+
+
       for candid_tot in range(0, len(wcc)):
         cand = wcc[candid_tot]
 
         # ocrid = cand[0]
         source = cand[0]
+
+        # Test Distinct
+        candstr = '\t'.join(source_cand_map[source])
+        sourcestr = distinct_cands[candstr]
+
+        if len(sourcestr) > 1 and source != 'T':  # agree, CT, only output T
+          continue
+
+        source = sourcestr
+
         # candword = cand[2].GetContent()
         word = cand[2].GetContent()
         page = cand[1].GetPage()
@@ -122,7 +151,7 @@ def AlignBoxedFromPath(findpaths, docid, output_base):
         #   ]])
 
 
-  print 'Total words:',wordid
+  print 'Total words:',varid
 
   # fcand.close()
   # fcandfeat.close()

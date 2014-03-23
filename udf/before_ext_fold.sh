@@ -2,9 +2,9 @@
 echo "Running script: BEFORE EXT FOLD"
 
 # Document table
-psql -c "drop table if exists document cascade;" $DB_NAME
-psql -c "create table document(id bigserial primary key, docid text);" $DB_NAME
-psql -c "insert into document(docid) select distinct docid from cand_word order by docid;" $DB_NAME
+psql -c "drop table if exists document cascade;" ddocr
+psql -c "create table document(id bigserial primary key, docid text);" ddocr
+psql -c "insert into document(docid) select distinct docid from cand_word order by docid;" ddocr
 
 psql -c "drop table if exists document_backup cascade;" ddocr
 psql -c "select * into document_backup from document;" ddocr

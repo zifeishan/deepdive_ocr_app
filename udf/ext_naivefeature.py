@@ -110,8 +110,8 @@ for row in fileinput.input():
   # {u'candidate.docid': u'JOURNAL_102371', u'candidate.id': 839, u'candidate.source': u'C', u'candidate.word': u'human', u'candidate.candid': 0, u'candidate.wordid': 818}
   # word = obj["candidate.word"]
   # source = obj["candidate.source"]
-  word = obj["cand_word.word"]
-  source = obj["candidate.source"]
+  word = obj["word"]
+  source = obj["source"]
   
   fnames, fvals = CandidateFeatureExtract(word, source)
   for i in range(0, len(fnames)):
@@ -119,7 +119,7 @@ for row in fileinput.input():
       continue
     print json.dumps({
       # "candidateid": obj["candidate.id"],
-      "cand_word_id": obj["cand_word.id"],
+      "cand_word_id": obj["id"],
       "fname": fnames[i],
       "fval": fvals[i]
     })

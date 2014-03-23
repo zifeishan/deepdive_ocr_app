@@ -8,6 +8,6 @@ psql -c "DROP TABLE IF EXISTS feature CASCADE;" ddocr
 #   fval BOOLEAN);""" ddocr
 
 psql -c """create table feature(id BIGSERIAL PRIMARY KEY, 
-  cand_word_id BIGSERIAL REFERENCES cand_word(id),
+  cand_word_id BIGSERIAL,
   fname TEXT,
   fval BOOLEAN);""" ddocr

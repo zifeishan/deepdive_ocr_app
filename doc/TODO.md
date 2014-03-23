@@ -1,3 +1,5 @@
+Fix after scripts?
+
 OCR New idea: (CE)
 - How do fonts change from time?
 - Can we build a model to capture font changes, and use today's data to train previous ones?

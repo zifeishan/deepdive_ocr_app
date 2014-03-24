@@ -1,5 +1,7 @@
 #! /bin/bash
 export DBNAME=ddocr
+# export DBNAME=ddocr_large
+export DB_NAME=${DBNAME}
 export PGUSER=${PGUSER:-`whoami`}
 export PGPASSWORD=${PGPASSWORD:-}
 export PG_PORT=${PGPORT:5432}

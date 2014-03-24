@@ -1,35 +1,53 @@
 #! /usr/bin/env bash
 
-psql -c """create view cand_with_label as select label, candidate.* from cand_label right join candidate on cand_label.candidateid = candidate.id;""" ddocr
+# psql -c """create view cand_with_label as select label, candidate.* from cand_label right join candidate on cand_label.candidateid = candidate.id;""" ddocr
 
-psql -c """update cand_label
-  set label = true
-  where candidateid in 
-  (select candidate.id from candidate join html_1gram 
-          on candidate.docid = html_1gram.docid and word = word1);
+## NOTE: This step is redundant
+# # If any (all) word is true, label its (father) candidate as true
+# psql -c """update candidate
+#   set label = true
+#   where id in 
+#   (select candidate_id from cand_word 
+#     where (docid, word) in 
+#     (select docid, word1 from html_1gram)
+#     );
+# """ ddocr
+
+# If one word is false, label candidate as false
+
+ 
+# # AVOID NOT IN, SLOW!!
+# psql -c """update candidate
+#   set label = false
+#   where id in 
+#   (select distinct candidate_id from cand_word 
+#     where (docid, word) not in (select docid, word1 from html_1gram)
+#   );
+# """ ddocr
+
+psql -c """update candidate
+  set label = false
+  where id in 
+  (select distinct candidate_id from cand_word 
+    where not exists 
+    (select docid, word1 from html_1gram 
+      where docid = cand_word.docid 
+        and word1 = word)
+    );
+  update candidate set label = true where label is null;
 """ ddocr
 
-# If some candidate in the word is true, others are false
-
-psql -c """update cand_label
-  set label = false
-  where candidateid in (
-    select c2.id 
-    from cand_with_label as c1 join cand_with_label as c2 
-    on c1.docid = c2.docid and c1.wordid = c2.wordid 
-    and c1.candid != c2.candid and c1.word != c2.word 
-    and c1.label = true
-    and c2.label is null);""" ddocr
-
 # Break ties with "unknown"...
-# But allow multiple SAME words to be true
-psql -c """update cand_label
+#### But allow multiple SAME words to be true
+# Do not allow multiple SAME words to be true! Distinct candidates!
+psql -c """update candidate
   set label = null
-  where candidateid in (
+  where id in (
     select c1.id
-    from cand_with_label as c1 join cand_with_label as c2 
-    on c1.docid = c2.docid and c1.wordid = c2.wordid 
-    and c1.word != c2.word
+    from candidate as c1 join candidate as c2 
+    on c1.variable_id = c2.variable_id
+    -- and c1.word != c2.word
+    and c1.id != c2.id
     and c1.label = true
     and c2.label = true);
 """ ddocr
@@ -38,7 +56,6 @@ psql -c """update cand_label
 
 #############################
 # HOLD OUT
-psql -c """update cand_label 
+psql -c """update candidate 
   set label = null 
-  where candidateid in (
-    select id from candidate where docid in (select docid from eval_docs));""" ddocr
+  where docid in (select docid from eval_docs);""" ddocr

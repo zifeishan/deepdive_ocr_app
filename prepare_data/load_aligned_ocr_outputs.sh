@@ -1,13 +1,16 @@
 #! /bin/bash
 
 # Configuration
-DB_NAME=ddocr
+# export DB_NAME=ddocr
+export DB_NAME=ddocr_large
 # PGPORT=${PGPORT:5432}
 
 APP_HOME=`cd $(dirname $0)/..; pwd`
 echo $APP_HOME
 
-CAND_DIR=$APP_HOME/data/journals-test-output2-new
+# CAND_DIR=$APP_HOME/data/journals-test-output2-new
+# CAND_DIR=$APP_HOME/data/journal-test-output3-distinct
+CAND_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/journals-output
 # SUPV_DIR=$APP_HOME/data/test-supervision
 
 

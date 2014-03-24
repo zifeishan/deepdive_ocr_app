@@ -30,8 +30,8 @@ if len(sys.argv) == 4:
   outbase = sys.argv[3]
 else:
   print 'Usage:',sys.argv[0],'<supv_or_eval> <path> <outbase>'
-  print 'e.g. ./prepare_supv_data_from_html.py supv ../data/html-labels-accurate/html/test-30docs/ ../data/test-supervision/'
-  print 'e.g. ./prepare_supv_data_from_html.py eval ../data/html-labels-accurate/html/test-30docs/ ../data/test-evaluation/'
+  print 'e.g. pypy ./prepare_supv_data_from_html.py supv ../data/html-labels-accurate/html/test-30docs/ ../data/test-supervision/'
+  print 'e.g. pypy ./prepare_supv_data_from_html.py eval ../data/html-labels-accurate/html/test-30docs/ ../data/test-evaluation/'
   sys.exit(1)
 
 # Parse whether escape References / figures / tables for evaluation
@@ -89,7 +89,7 @@ for f in files:
     # Filter figures and tables and references
     divs = frag('div')
     for div in divs:
-      if div.has_key('class') and ('figTblUpiOuter' in div['class'] 
+      if ESCAPE_FOR_EVAL and div.has_key('class') and ('figTblUpiOuter' in div['class'] 
         # or 'btnHolder' in div['class']
         or 'refText' in div['class']):  # ignore references
         div.extract()

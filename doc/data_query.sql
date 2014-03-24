@@ -1,3 +1,7 @@
+select max(candidate.docid) as docid, max(candidate.varid) as varid, max(candidate.candid) as candid, max(candidate.source) as source, max(candidate_id) as candidate_id, array_agg(word), label from candidate, cand_word where candidate.id = candidate_id group by candidate_id,label order by docid, varid, candid;
+
+select candidate_id from cand_word as c, html_1gram as h where c.docid = h.docid and c.word = h.word1
+
 SELECT dd_graph_weights.*, dd_inference_result_weights.weight FROM dd_graph_weights JOIN dd_inference_result_weights ON dd_graph_weights.id = dd_inference_result_weights.id ORDER BY abs(weight)
 
 -- A General script for reasoning and examining the calibration plot

@@ -2,46 +2,68 @@ export EXPORT_ROOT='/tmp'
 
 psql -c """drop table if exists output_candidates cascade; """ ddocr
 
-psql -c """select cand_label_label_inference_bucketed.id as id, candidate.id as candidateid, docid, wordid, candid, source, word, expectation, bucket, random() as random_number
+# psql -c """select cand_label_label_inference_bucketed.id as id, candidate.id as candidateid, docid, wordid, candid, source, word, expectation, bucket, random() as random_number
+# into output_candidates
+# from cand_label_label_inference_bucketed right join candidate on candidateid=candidate.id 
+#  where docid in (select * from eval_docs) 
+#  order by docid, wordid, random_number
+# ;
+# """ ddocr
+
+psql -c """select c.*, array_agg(word order by wordid) as word, random() as random_number
 into output_candidates
-from cand_label_label_inference_bucketed right join candidate on candidateid=candidate.id 
- where docid in (select * from eval_docs) 
- order by docid, wordid, random_number
+from candidate_label_inference_bucketed as c, cand_word
+ where c.docid in (select * from eval_docs) 
+ and cand_word.candidate_id = c.id
+ group by 
+ c.id, c.variable_id, c.docid, c.varid, c.candid, c.source, c.label, c.category, c.expectation, c.bucket, cand_word.candidate_id
+ order by c.docid, c.varid, random_number
 ;
 """ ddocr
 
+
 psql -c """create view maxp as 
-select docid, wordid, max(expectation) as maxp, max(random_number) as maxrand 
-from output_candidates group by docid, wordid;
+select variable_id, max(docid) as docid, max(varid) as varid, max(expectation) as maxp, max(random_number) as maxrand 
+from output_candidates group by variable_id;
 """ ddocr
 
-psql -c """create view output_words as
-  select output_candidates.* from output_candidates join maxp
-  on  output_candidates.docid = maxp.docid
-  and output_candidates.wordid = maxp.wordid
+psql -c """
+  select output_candidates.*
+  into output_words
+  from output_candidates join maxp
+  on  output_candidates.variable_id = maxp.variable_id
   and output_candidates.expectation = maxp.maxp
-  and output_candidates.random_number = maxp.maxrand
+  -- and output_candidates.random_number = maxp.maxrand
 ;""" ddocr
 
-psql -c """copy (select docid, wordid, word from output_words order by docid, wordid) 
+# break ties
+psql -c """delete from output_words
+where id in 
+(select w1.id from output_words as w1,output_words as w2 where w1.random_number < w2.random_number and w1.variable_id = w2.variable_id)
+;
+""" ddocr
+
+psql -c """copy (select docid, varid || '-' || source || '-' || wordid, word from cand_word where candidate_id in (select id from output_words) order by docid, varid, candid, wordid) 
 to '$EXPORT_ROOT/ocr-output-words.tsv'""" ddocr
 
-psql -c """copy (select docid, wordid, word from candidate 
-  where source = 'T' and docid in (select * from eval_docs)
-  order by docid, wordid, candid) to '$EXPORT_ROOT/ocr-output-words-tesseract.tsv'""" ddocr
+psql -c """copy (select docid, varid, word from cand_word 
+  where (source = 'T' or source = 'CT' or source = 'TC')
+  and docid in (select * from eval_docs)
+  order by docid, varid, candid, wordid) to '$EXPORT_ROOT/ocr-output-words-tesseract.tsv'""" ddocr
 
-psql -c """copy (select docid, wordid, word from candidate 
-  where source = 'C' and docid in (select * from eval_docs)
-  order by docid, wordid, candid) to '$EXPORT_ROOT/ocr-output-words-cuneiform.tsv';""" ddocr
+psql -c """copy (select docid, varid, word from cand_word 
+  where (source = 'C' or source = 'CT' or source = 'TC')
+  and docid in (select * from eval_docs)
+  order by docid, varid, candid, wordid) to '$EXPORT_ROOT/ocr-output-words-cuneiform.tsv';""" ddocr
 
 psql -c """drop view if exists reasoning;""" ddocr
 
 psql -c """create view reasoning as
 select
-  c.candidateid,
+  c.id,
   e.factor_id,
   c.docid,
-  c.wordid,
+  c.varid,
   c.candid,
   c.source,
   c.word,
@@ -57,5 +79,5 @@ select
 where e.variable_id = c.id
   and e.factor_id = f.id
   and f.weight_id = w.id
-order by c.id
+order by c.docid, c.varid, c.candid
 ;""" ddocr

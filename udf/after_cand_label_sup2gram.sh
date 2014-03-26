@@ -60,6 +60,7 @@ and not exists
 );
 """ ddocr
 
+echo 'TODO: NOT RIGHT!! SHOULD USE DP!!!'
 
 # 2gram supervision
 
@@ -94,7 +95,6 @@ psql -c """update candidate
 
 #############################
 # HOLD OUT
-psql -c """update cand_label 
+psql -c """update candidate 
   set label = null 
-  where candidateid in (
-    select id from candidate where docid in (select docid from eval_docs));""" ddocr
+  where docid in (select docid from eval_docs);""" ddocr

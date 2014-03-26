@@ -1,5 +1,6 @@
 #! /usr/bin/python
 # Sample usage: <this> <html_path> <outbase>
+# NEW: ignore existing files in output dir
 
 import codecs
 
@@ -53,6 +54,11 @@ files = os.listdir(path)
 for f in files:
   if not f.endswith('.html'): continue
   docid = f[:-len('.html')]
+
+  if os.path.exists(outbase + '/' + docid + '.seq_unsegmented'):
+    print 'Skipping', docid
+    continue
+
   print 'Processing', docid
   htmlpath = path + '/' + f
   html = open(htmlpath).read()

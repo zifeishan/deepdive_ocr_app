@@ -1,3 +1,11 @@
+TODO: WHY not all variables? 
+    
+    ddocr=# select * from candidate_label_inference order by docid,varid limit 10;
+
+TODO less than 1000 supv data; fix cases where words too few! (not real supv data)
+
+--
+
 Fix after scripts?
 
 OCR New idea: (CE)

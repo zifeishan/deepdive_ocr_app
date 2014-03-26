@@ -4,7 +4,7 @@ import os, sys
 SEGMENT_CMD = 'CLASSPATH=util/stanford-parser.jar java edu.stanford.nlp.process.PTBTokenizer -options "ptb3Escaping=false" '
 
 dd_output = '/tmp/ocr-output-words.tsv'
-eval_path_base = 'data/test-supervision/'
+eval_path_base = 'data/test-evaluation/'
 final_output_base = 'output/'
 output_stat_path = 'eval-results.txt'
 
@@ -15,7 +15,7 @@ if len(sys.argv) == 5:
   output_stat_path = sys.argv[4]
 else:
   print 'Usage: python', sys.argv[0],'dd_output eval_path_base final_output_base output_stat_path'
-  print 'e.g. pypy ocr-evaluation.py /tmp/ocr-output-words-cuneiform.tsv data/test-supervision/ output-cuni/ eval-results-cuni.txt'
+  print 'e.g. pypy ocr-evaluation.py /tmp/ocr-output-words-cuneiform.tsv data/test-evaluation/ output-cuni/ eval-results-cuni.txt'
   print 'Use default settings.'
 
 print 'Generating output from', dd_output,'to:',final_output_base
@@ -28,7 +28,7 @@ while True:
   line = fin.readline()
   if line == '': break
   docid, wordid, word = line.strip().split('\t')
-  wordid = int(wordid)
+  # wordid = int(wordid)
 
   # New document encountered
   if docid != lastdocid:

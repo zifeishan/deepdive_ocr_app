@@ -1,6 +1,6 @@
 export EXPORT_ROOT='/tmp'
 
-psql -c """drop table if exists output_candidates cascade; """ ddocr
+psql -c """drop table if exists output_candidates, output_words cascade; """ ddocr
 
 # psql -c """select cand_label_label_inference_bucketed.id as id, candidate.id as candidateid, docid, wordid, candid, source, word, expectation, bucket, random() as random_number
 # into output_candidates

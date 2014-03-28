@@ -1,8 +1,16 @@
-TODO: WHY not all variables? 
+TODO: DEBUG order aware supervision. Test dirty cases?
+TODO: Add NLP features
+TODO: Run on larger dataset
+
+DONE: Why does constraint increast T weight? (AND is ok)
+
+DONE: why copy to tsv do not include all words??
+
+DONE: WHY not all variables? --ANSWER: evidence!
     
     ddocr=# select * from candidate_label_inference order by docid,varid limit 10;
 
-TODO less than 1000 supv data; fix cases where words too few! (not real supv data)
+DONE less than 1000 supv data; fix cases where words too few! (not real supv data)
 
 --
 

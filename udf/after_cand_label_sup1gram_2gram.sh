@@ -8,7 +8,7 @@ psql -c """update candidate
     where (docid, word) in 
     (select docid, word1 from html_1gram)
     );
-""" ddocr
+""" $DB_NAME
 
 # If one word is false, label candidate as false
 # # AVOID NOT IN, SLOW!!
@@ -21,7 +21,7 @@ psql -c """update candidate
       where docid = cand_word.docid 
         and word1 = word)
     );
-""" ddocr
+""" $DB_NAME
 
 # Break ties with "unknown"...
 #### But allow multiple SAME words to be true
@@ -36,7 +36,7 @@ psql -c """update candidate
     and c1.id != c2.id
     and c1.label = true
     and c2.label = true);
-""" ddocr
+""" $DB_NAME
 
 
 
@@ -55,17 +55,17 @@ and c1.wordid = c2.wordid - 1
 and c1.word = word1
 and c2.word = word2
 );
-""" ddocr
+""" $DB_NAME
 
 # 2gram supervision
 
 psql -c """drop table if exists toupdate;
 select distinct \"c1.id\" as id into toupdate from html_2gram_supv_result;
-insert into toupdate (select distinct \"c2.id\" as id from html_2gram_supv_result);""" ddocr
+insert into toupdate (select distinct \"c2.id\" as id from html_2gram_supv_result);""" $DB_NAME
 
 psql -c """update cand_label
   set label = true
-  where candidateid in (select * from toupdate);""" ddocr
+  where candidateid in (select * from toupdate);""" $DB_NAME
 
 # Break ties with "unknown"...
 # But allow multiple SAME words to be true
@@ -78,13 +78,13 @@ psql -c """update cand_label
     and c1.word != c2.word
     and c1.label = true
     and c2.label = true);
-""" ddocr
+""" $DB_NAME
 
 
 
-#############################
-# HOLD OUT
-psql -c """update cand_label 
-  set label = null 
-  where candidateid in (
-    select id from candidate where docid in (select docid from eval_docs));""" ddocr
+# #############################
+# # HOLD OUT
+# psql -c """update cand_label 
+#   set label = null 
+#   where candidateid in (
+#     select id from candidate where docid in (select docid from eval_docs));""" $DB_NAME

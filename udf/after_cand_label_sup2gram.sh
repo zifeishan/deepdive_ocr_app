@@ -6,9 +6,9 @@
 # two continuous cand_words
 # TODO: Consider words across variables!!
 
-psql -c """drop view if exists html_2gram_supv_incand, html_2gram_supv_crosscand cascade;""" ddocr 
+psql -c """drop view if exists html_2gram_supv_incand, html_2gram_supv_crosscand cascade;""" $DB_NAME 
 
-psql -c "drop table if exists candidate_max_wordid cascade;" ddocr
+psql -c "drop table if exists candidate_max_wordid cascade;" $DB_NAME
 # Inside candidate
 psql -c """create view html_2gram_supv_incand as (
   select c1.id as c1id, c2.id as c2id, c1.candidate_id, c1.docid, c1.varid, c1.word as c1word, c2.word as c2word
@@ -24,12 +24,12 @@ and not exists
   and c1.word = word1
   and c2.word = word2)
 );
-""" ddocr
+""" $DB_NAME
 
 psql -c """select candidate_id, max(wordid) as max_wordid
   into candidate_max_wordid
   from cand_word 
-  group by candidate_id;""" ddocr
+  group by candidate_id;""" $DB_NAME
 
 # Cross candidates
 # c1: wordid last, varid (x-1)
@@ -58,7 +58,7 @@ and not exists
   and c1.word = word1
   and c2.word = word2)
 );
-""" ddocr
+""" $DB_NAME
 
 echo 'TODO: NOT RIGHT!! SHOULD USE DP!!!'
 
@@ -69,14 +69,14 @@ psql -c """drop table if exists toupdate;
 select distinct candidate_id into toupdate from html_2gram_supv_incand;
 insert into toupdate (select distinct c1_cand_id as candidate_id from html_2gram_supv_crosscand);
 insert into toupdate (select distinct c2_cand_id as candidate_id from html_2gram_supv_crosscand);
-  """ ddocr
+  """ $DB_NAME
 
 psql -c """update candidate
   set label = false
-  where id in (select * from toupdate);""" ddocr
+  where id in (select * from toupdate);""" $DB_NAME
 
 # Positive: others
-psql -c """update candidate set label = true where label is null;""" ddocr
+psql -c """update candidate set label = true where label is null;""" $DB_NAME
 
 # Break ties with "unknown"...
 # But allow multiple SAME words to be true
@@ -89,12 +89,12 @@ psql -c """update candidate
     and c1.id != c2.id
     and c1.label = true
     and c2.label = true);
-""" ddocr
+""" $DB_NAME
 
 
 
-#############################
-# HOLD OUT
-psql -c """update candidate 
-  set label = null 
-  where docid in (select docid from eval_docs);""" ddocr
+# #############################
+# # HOLD OUT
+# psql -c """update candidate 
+#   set label = null 
+#   where docid in (select docid from eval_docs);""" $DB_NAME

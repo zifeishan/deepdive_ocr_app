@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# psql -c """create view cand_with_label as select label, candidate.* from cand_label right join candidate on cand_label.candidateid = candidate.id;""" ddocr
+# psql -c """create view cand_with_label as select label, candidate.* from cand_label right join candidate on cand_label.candidateid = candidate.id;""" $DB_NAME
 
 ## NOTE: This step is redundant
 # # If any (all) word is true, label its (father) candidate as true
@@ -11,7 +11,7 @@
 #     where (docid, word) in 
 #     (select docid, word1 from html_1gram)
 #     );
-# """ ddocr
+# """ $DB_NAME
 
 # If one word is false, label candidate as false
 
@@ -23,7 +23,7 @@
 #   (select distinct candidate_id from cand_word 
 #     where (docid, word) not in (select docid, word1 from html_1gram)
 #   );
-# """ ddocr
+# """ $DB_NAME
 
 psql -c """update candidate
   set label = false
@@ -35,7 +35,7 @@ psql -c """update candidate
         and word1 = word)
     );
   update candidate set label = true where label is null;
-""" ddocr
+""" $DB_NAME
 
 # Break ties with "unknown"...
 #### But allow multiple SAME words to be true
@@ -50,12 +50,12 @@ psql -c """update candidate
     and c1.id != c2.id
     and c1.label = true
     and c2.label = true);
-""" ddocr
+""" $DB_NAME
 
 
 
-#############################
-# HOLD OUT
-psql -c """update candidate 
-  set label = null 
-  where docid in (select docid from eval_docs);""" ddocr
+# #############################
+# # HOLD OUT
+# psql -c """update candidate 
+#   set label = null 
+#   where docid in (select docid from eval_docs);""" $DB_NAME

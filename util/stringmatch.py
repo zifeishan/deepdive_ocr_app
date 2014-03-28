@@ -61,14 +61,17 @@ if __name__ == "__main__":
   else:
     print 'Usage:',sys.argv[0],'<path1> <path2> (words split by \\n)'
     print 'Tetsing:'
-    print Match([1],[5,1,2])
+    # print Match([1],[5,1,2])
+    print 'path:','../data/journal-test-output3-distinct/JOURNAL_14255.cand_word'
 
-    tess = [l.strip().split('\t')[-1] for l in open('../data/journals-test-output/JOURNAL_102371.cand').readlines()]
-    lines = [l.strip() for l in open('../data/test-supervision/JOURNAL_102371.seq').readlines()]
+    # tess = [l.strip().split('\t')[-1] for l in open('../data/journals-test-output/JOURNAL_102371.cand').readlines()]
+    # lines = [l.strip() for l in open('../data/test-supervision/JOURNAL_102371.seq').readlines()]
+    tess = [l.strip().split('\t')[5] for l in open('../data/journal-test-output3-distinct/JOURNAL_14255.cand_word').readlines()]
+    lines = [l.strip() for l in open('../data/test-evaluation/JOURNAL_14255.seq').readlines()]
     print 'Matching 1000 words:'
     print Match(tess[:1000], lines[:1000])
     print 'Matching all words:', len(tess), len(lines)
     print Match(tess, lines)
-    # sys.exit(1)
+    # # sys.exit(1)
 
 

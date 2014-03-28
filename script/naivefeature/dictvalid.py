@@ -3,6 +3,8 @@ from util import *
 # dictionary = enchant.Dict("en_US")
 
 DICT_FILE = '/usr/share/dict/words'
+if 'DICT_FILE' in os.environ:
+  DICT_FILE = os.environ['DICT_FILE']
 
 dict_en = set([l.strip() for l in open(DICT_FILE).readlines()])
 

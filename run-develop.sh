@@ -1,5 +1,14 @@
 #! /bin/bash
-export DBNAME=ddocr
+
+if [ $# = 1 ]; then
+  echo 'Set DB_NAME to $1.'
+  export DBNAME=$1
+else
+  echo 'Set DB_NAME to ddocr.'
+  export DBNAME=ddocr
+fi
+
+# export DBNAME=ddocr
 # export DBNAME=ddocr_large
 export DB_NAME=${DBNAME}
 export PGUSER=${PGUSER:-`whoami`}
@@ -14,7 +23,7 @@ export APP_HOME=`pwd`
 # java $JAVA_OPTS -version
 
 # $APP_HOME/prepare_data.sh
-export MAX_PARALLELISM=8
+export MAX_PARALLELISM=16
 export CALI_FRACTION=0.25
 export KFOLD_ITER=1
 export KFOLD_NUM=4
@@ -23,11 +32,18 @@ export KFOLD_NUM=4
 export FEATURE_LIB_PATH=$APP_HOME/script/
 export FEATURE_CONF_PATH=$APP_HOME/script/extract-feature-list.conf
 export LD_LIBRARY_PATH="/dfs/rulk/0/hazy_share/lib64/:/dfs/rulk/0/hazy_share/lib/protobuf/lib/:/dfs/rulk/0/hazy_share/lib/tclap/lib/:$LD_LIBRARY_PATH"
+export DICT_FILE=$APP_HOME/util/words
+
+export SUPV_DIR=$APP_HOME/data/test-supervision
+# export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
+# LARGE
+# export SUPV_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/supervision-data
 
 cd $DEEPDIVE_HOME
 
 # SBT_OPTS="-Xmx128g -XX:MaxHeapSize=8g" sbt/sbt "run -c $APP_HOME/application.conf"
 SBT_OPTS="-Xmx256g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
+
 
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application-old.conf"

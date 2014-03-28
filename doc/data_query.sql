@@ -1,3 +1,19 @@
+
+select count(*) as supv_label from output_candidates as c right outer join orderaware_supv_label as s on c.id = s.candidate_id 
+where s.label =true
+;
+-- super group by
+
+select docid,
+array_agg(id order by varid, candid, wordid) as arr_id,
+array_agg(candidate_id order by varid, candid, wordid) as arr_candidate_id,
+array_agg(varid order by varid, candid, wordid) as arr_varid,
+array_agg(candid order by varid, candid, wordid) as arr_candid,
+array_agg(wordid order by varid, candid, wordid) as arr_wordid,
+array_agg(word order by varid, candid, wordid) as arr_word
+from cand_word
+group by docid
+
 select max(candidate.docid) as docid, max(candidate.varid) as varid, max(candidate.candid) as candid, max(candidate.source) as source, max(candidate_id) as candidate_id, array_agg(word), label from candidate, cand_word where candidate.id = candidate_id group by candidate_id,label order by docid, varid, candid;
 
 select candidate_id from cand_word as c, html_1gram as h where c.docid = h.docid and c.word = h.word1

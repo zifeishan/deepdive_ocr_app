@@ -1,3 +1,9 @@
+create table orderaware_supv_label(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  candidate_id BIGSERIAL,
+  label BOOLEAN
+  );
+
 ------- NEW DESIGN
 -- Remember: all attributes in same table;
 -- Remember BCNF.

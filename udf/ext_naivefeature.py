@@ -43,6 +43,7 @@ def CandidateFeatureExtract(word, source, corpus = {}, confpath = ''):
     'upp': True,
     'upc': True,
     'wl': True,
+    'isascii': True,
     'bool_dict': {'wl': 5, 'occur': 3, 'upp': 0.5}}
 
 
@@ -61,6 +62,10 @@ def CandidateFeatureExtract(word, source, corpus = {}, confpath = ''):
   if 'upc' in configs:
     fnames.append('upc_'+source)
     fvals.append(ChangeTime(word))
+  if 'isascii' in configs:
+    fnames.append('isascii_'+source)
+    fvals.append(IsASCII(word))
+
 
   if 'corpus' in configs:
     fnames.append('Corpus')

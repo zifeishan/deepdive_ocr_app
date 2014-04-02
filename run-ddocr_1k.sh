@@ -3,7 +3,7 @@
 if [ $# = 1 ]; then
   export DBNAME=$1
 else
-  export DBNAME=ddocr
+  export DBNAME=ddocr_1k
 fi
 echo "Set DB_NAME to ${DBNAME}."
 
@@ -35,9 +35,9 @@ export LD_LIBRARY_PATH="/dfs/rulk/0/hazy_share/lib64/:/dfs/rulk/0/hazy_share/lib
 export DICT_FILE=$APP_HOME/util/words
 
 # export SUPV_DIR=$APP_HOME/data/test-supervision
-export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
+# export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
 # LARGE
-# export SUPV_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/supervision-data
+export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/evaluation
 
 cd $DEEPDIVE_HOME
 

@@ -1,6 +1,14 @@
+if [ $# = 1 ]; then
+  export DBNAME=$1
+else
+  export DBNAME=ddocr
+fi
+echo "Set DB_NAME to ${DBNAME}."
+
+
 export EXPORT_ROOT='/tmp'
 
-psql -c """drop table if exists output_candidates, output_words cascade; """ ddocr
+psql -c """drop table if exists output_candidates, output_words cascade; """ $DBNAME
 
 # psql -c """select cand_label_label_inference_bucketed.id as id, candidate.id as candidateid, docid, wordid, candid, source, word, expectation, bucket, random() as random_number
 # into output_candidates
@@ -8,7 +16,7 @@ psql -c """drop table if exists output_candidates, output_words cascade; """ ddo
 #  where docid in (select * from eval_docs) 
 #  order by docid, wordid, random_number
 # ;
-# """ ddocr
+# """ $DBNAME
 
 psql -c """select c.*, array_agg(word order by wordid) as word, random() as random_number
 into output_candidates
@@ -19,13 +27,13 @@ from candidate_label_inference_bucketed as c, cand_word
  c.id, c.variable_id, c.docid, c.varid, c.candid, c.source, c.label, c.category, c.expectation, c.bucket, cand_word.candidate_id
  order by c.docid, c.varid, random_number
 ;
-""" ddocr
+""" $DBNAME
 
 
 psql -c """create view maxp as 
 select variable_id, max(docid) as docid, max(varid) as varid, max(expectation) as maxp, max(random_number) as maxrand 
 from output_candidates group by variable_id;
-""" ddocr
+""" $DBNAME
 
 psql -c """
   select output_candidates.*
@@ -34,29 +42,29 @@ psql -c """
   on  output_candidates.variable_id = maxp.variable_id
   and output_candidates.expectation = maxp.maxp
   -- and output_candidates.random_number = maxp.maxrand
-;""" ddocr
+;""" $DBNAME
 
 # break ties
 psql -c """delete from output_words
 where id in 
 (select w1.id from output_words as w1,output_words as w2 where w1.random_number < w2.random_number and w1.variable_id = w2.variable_id)
 ;
-""" ddocr
+""" $DBNAME
 
 psql -c """copy (select docid, varid || '-' || source || '-' || wordid, word from cand_word where candidate_id in (select id from output_words) order by docid, varid, candid, wordid) 
-to '$EXPORT_ROOT/ocr-output-words.tsv'""" ddocr
+to '$EXPORT_ROOT/ocr-output-words.tsv'""" $DBNAME
 
 psql -c """copy (select docid, varid, word from cand_word 
   where (source = 'T' or source = 'CT' or source = 'TC')
   and docid in (select * from eval_docs)
-  order by docid, varid, candid, wordid) to '$EXPORT_ROOT/ocr-output-words-tesseract.tsv'""" ddocr
+  order by docid, varid, candid, wordid) to '$EXPORT_ROOT/ocr-output-words-tesseract.tsv'""" $DBNAME
 
 psql -c """copy (select docid, varid, word from cand_word 
   where (source = 'C' or source = 'CT' or source = 'TC')
   and docid in (select * from eval_docs)
-  order by docid, varid, candid, wordid) to '$EXPORT_ROOT/ocr-output-words-cuneiform.tsv';""" ddocr
+  order by docid, varid, candid, wordid) to '$EXPORT_ROOT/ocr-output-words-cuneiform.tsv';""" $DBNAME
 
-psql -c """drop view if exists reasoning;""" ddocr
+psql -c """drop view if exists reasoning;""" $DBNAME
 
 psql -c """create view reasoning as
 select
@@ -80,4 +88,4 @@ where e.variable_id = c.id
   and e.factor_id = f.id
   and f.weight_id = w.id
 order by c.docid, c.varid, c.candid
-;""" ddocr
+;""" $DBNAME

@@ -1,3 +1,12 @@
+TODO: 
+
+    python load_supervision_data_from_list.py ddocr_1k /lfs/local/0/zifei/deepdive/app/ocr/data/evaluation/ ../data/doclist-1k.txt
+
+TODO: try fuzzy matching (in [:10]?)
+
+TODO: Write a general script to label with Ngram, used for both and!
+Infolab Physical cores: Cores / 2.
+
 TODO: DEBUG order aware supervision. Test dirty cases?
 TODO: Add NLP features
 TODO: Run on larger dataset

@@ -8,6 +8,7 @@ import sys
 import json
 # import yaml
 from collections import defaultdict
+import codecs
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -91,6 +92,26 @@ for row in fileinput.input():
   matches, matched_candidate_ids, f, path, records = candmatch.Match(data, supervision_sequence)
 
   print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
+
+  statdir = '/lfs/local/0/zifei/bestpick-result/'
+  if not os.path.exists(statdir):
+    os.makedirs(statdir)
+  fout = open(statdir + docid + '.stat', 'w')
+  print >>fout, '\t'.join([str(s) for s in [
+    docid, matches, len(supervision_sequence), 
+    '(%.4f)' % (matches / float(len(supervision_sequence)))
+    ]])
+  fout.close()
+
+  fout = codecs.open(statdir + docid + '.seq', 'w', 'utf-8')
+  matched_candidate_ids_index = set(matched_candidate_ids)
+  for var in data:
+    for cand in var:
+      if cand[0] in matched_candidate_ids_index:
+        for w in cand[1]:
+          print >>fout, w
+  fout.close()
+
 
   for cid in matched_candidate_ids:
     print json.dumps({

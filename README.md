@@ -30,9 +30,33 @@ How to run the system
 Datasets
 ----
 
+## Raw OCR Results
+
     140,982  /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL
      43,487  /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15
      14,646  /lfs/madmax3/0/czhang/cleanpaleo/NLPRS_jan20_overlap.22/
+
+## Candidates
+
+    /dfs/madmax3/0/zifei/deepdive/app/ocr/data/journals-output-new
+    OR:
+    /dfs/madmax/0/zifei/deepdive/app/ocr/data/journals-output
+
+## Supervision HTMLs
+
+first half:
+
+    17,506  /dfs/madmax5/0/zifei/deepdive/app/ocr/data/output-140508
+
+second half:
+
+    20,040  /dfs/madmax5/0/zifei/deepdive/app/ocr/data/output-secondhalf
+
+## Processed supervision data
+
+
+
+/dfs/madmax3/0/
 
 
 

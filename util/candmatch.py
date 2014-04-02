@@ -1,10 +1,10 @@
 #! /usr/bin/python
 
-import os, sys
+import os, sys, codecs
 
 # e1: a variable. [cid, [wordseq]]
 # match each dandidate in cands, with supvseq[index]!
-# return: (T/F, [(candidate_id, cand_length_words)])
+# return: (T/F, [(candidate_id, cand_length_words, matchnum)])
 def ElemMatch(cands, supvseq, index):
   # print 'Elemmatch:',cands, index  # DEBUG
   matches = []
@@ -16,15 +16,21 @@ def ElemMatch(cands, supvseq, index):
     if len(cand_arr) > len(supvseq) - index:
       # print 'Candidate too long:',cand_arr, 'for supv:',supvseq[index:index + len(cand_arr)]
       continue
-    match = True
+    # match = True
+    matchnum = 0
+
     words_tomatch = supvseq[index : index + len(cand_arr)]
     for i in range(len(words_tomatch)):
-      if cand_arr[i] != words_tomatch[i]:
-        match = False
-        break
+      ###### DO NOT BREAK IF ONE WORD IS WRONG!
+      ###### Allow partial errors in matches.
+      # if cand_arr[i] != words_tomatch[i]:
+      #   match = False
+      #   break
+      if cand_arr[i] == words_tomatch[i]:
+        matchnum += 1
 
-    if match:
-      matches.append( (candidate_id, len(cand_arr)) )
+    if matchnum > 0:
+      matches.append( (candidate_id, len(cand_arr), matchnum) )
 
   # print matches   # DEBUG
       
@@ -43,23 +49,36 @@ def Match(data, supvseq):
   n2 = len(arr2)
   if n1 == 0 or n2 == 0: return 0, []
 
-  if type(arr1[0]) != list:  # process 1-d cases
-    arr1 = [ [(0, [x])] for x in data]
-  
+  if type(data[0]) != list:  # process 1-d cases
+    arr1 = []
+    # [ [(0, [x])] for x in data]
+    for i in range(len(data)):
+      arr1.append( [(i, [data[i]])] )
+
+  # Create an index for arbitrary matching (not assuming neighbors)
+  # Format: {word : [index1, index2, ...]} 
+  supvseq_index = {}
+  for i in range(len(supvseq)):
+    word = supvseq[i]
+    if word not in supvseq_index: 
+      supvseq_index[word] = []
+    supvseq_index[word].append(i)
+
+
   # f = [[0] * (n2)] * (n1)  # Python array is weird....
-  f = [[0] * n2 for _ in range(n1)] # This is correct way, do not give a shallow copy!!
+  f = [[0 for _2 in range(n2)] for _ in range(n1)] # This is correct way, do not give a shallow copy!!
 
   # record a search path to retrieve all candidate_ids.
-  path = [[(-1,-1)] * n2 for _ in range(n1)]
+  path = [[(-1,-1) for _2 in range(n2)] for _ in range(n1)]
   # retrieve what candidate to choose when optimizing f[i][j].
-  cand_records = [[-1] * n2 for _ in range(n1)]
+  cand_records = [[-1 for _2 in range(n2)] for _ in range(n1)]
 
   # Init
-  succ, matches = ElemMatch(arr1[0], arr2, 0)
+  succ, matches = ElemMatch(arr1[0], arr2, 0, supvseq_index)
   for pair in matches:
-    candid, length = pair
+    candid, length, matchnum = pair
     newj = 0 + length - 1
-    f[0][newj] = length
+    f[0][newj] = matchnum
     path[0][newj] = (-1, -1)  # next is root
     cand_records[0][newj] = candid
     # print 'Update',0,newj,':',candid
@@ -76,12 +95,12 @@ def Match(data, supvseq):
       # cand_records[i][0] = cand_records[i-1][0]
       cand_records[i][0] = -1
 
-    succ, matches = ElemMatch(arr1[i], arr2, 0)
+    succ, matches = ElemMatch(arr1[i], arr2, 0, supvseq_index)
     for pair in matches:
-      candid, length = pair
+      candid, length, matchnum = pair
       newj = 0 + length - 1
-      if f[i][newj] < f[i][0] + length:
-        f[i][newj] = length
+      if f[i][newj] < f[i][0] + matchnum:
+        f[i][newj] = matchnum
         path[i][newj] = (-1, -1)
         cand_records[i][newj] = candid
 
@@ -98,12 +117,12 @@ def Match(data, supvseq):
       # cand_records[0][j] = cand_records[0][j-1]
       cand_records[0][j] = -1
 
-    succ, matches = ElemMatch(arr1[0], arr2, j)
+    succ, matches = ElemMatch(arr1[0], arr2, j, supvseq_index)
     for pair in matches:
-      candid, length = pair
+      candid, length, matchnum = pair
       newj = j + length - 1
-      if f[0][newj] < f[0][j] + length:
-        f[0][newj] = length
+      if f[0][newj] < f[0][j] + matchnum:
+        f[0][newj] = matchnum
         path[0][newj] = (-1, -1)
         cand_records[0][newj] = candid
 
@@ -112,12 +131,12 @@ def Match(data, supvseq):
   for i in range(0, n1):
     for j in range(0, n2):
       if i + 1 < n1 and j + 1 < n2:
-        succ, matches = ElemMatch(arr1[i+1], arr2, j+1)
+        succ, matches = ElemMatch(arr1[i+1], arr2, j+1, supvseq_index)
         for pair in matches:
-          candid, length = pair
+          candid, length, matchnum = pair
           newj = j + length # j+1 + length - 1
-          if f[i+1][newj] < f[i][j] + length:  # refresh optimal
-            f[i+1][newj] = f[i][j] + length
+          if f[i+1][newj] < f[i][j] + matchnum:  # refresh optimal
+            f[i+1][newj] = f[i][j] + matchnum
             path[i+1][newj] = (i, j)
             cand_records[i+1][newj] = candid
 
@@ -151,19 +170,49 @@ def Match(data, supvseq):
   # return f[n1 - 1][n2 - 1], matched_candids
   return f[n1 - 1][n2 - 1], matched_candids, f, path, cand_records
 
+def IsASCII(s):
+  return all(ord(c) < 128 for c in s)
+
+def MatchMarkSeq(dataseq, supvseq):
+  if type(dataseq[0]) != list:  # process 1-d cases
+    arr1 = []
+    # [ [(0, [x])] for x in dataseq]
+    for i in range(len(dataseq)):
+      arr1.append( [(i, [dataseq[i]])] )
+    data = arr1
+
+  matches, matched_candidate_ids, f, path, records = Match(data, supvseq)
+
+  fout = codecs.open('test-mark.tmp', 'w', 'utf-8')
+  matched_candidate_ids_index = set(matched_candidate_ids)
+
+
+  print 'M:', matches 
+  for var in data:
+    for cand in var:
+      if cand[0] in matched_candidate_ids_index:
+        for w in cand[1]:
+          print >>fout, '1', w.decode('utf-8')
+      else:
+        for w in cand[1]:
+          print >>fout, '0', w.decode('utf-8')
+  fout.close()
+
+
 def TestMatch(data, supvseq):
   m,can,f,path,cand_records = Match(data, supvseq)
   print 'M:',m
-  print 'Can:',can[::-1]
+  print 'Can:',can[::-1][:50],'...'
   for i in range(len(f)):
     for j in range(len(f[i])):
       thiscanword =  ''
       for can in data[i]:
         if can[0] == cand_records[i][j]:
-          thiscanword = ' '.join([str(s) for s in can[1]])
+          thiscanword = ' '.join([s for s in can[1]])
 
-      print ' ',i,j,'\t',f[i][j],'\t','%3d,%3d'%(path[i][j][0],path[i][j][1]), '\t', cand_records[i][j], '\t%10s %10s'%(str(thiscanword), str(supvseq[j]))
-  
+      if cand_records[i][j] != -1 and (not IsASCII(supvseq[j]) or not IsASCII(thiscanword)):
+        print ' ',i,j,'\t',f[i][j],'\t','%3d,%3d'%(path[i][j][0],path[i][j][1]), '\t', cand_records[i][j], '\t%10s %10s'%(thiscanword, supvseq[j])
+
 if __name__ == "__main__": 
   if len(sys.argv) == 3:
     f1 = sys.argv[1]
@@ -173,8 +222,16 @@ if __name__ == "__main__":
     m,can,f,path,cand_records =  Match(arr1, arr2)
     print m
 
+  elif len(sys.argv) == 4 and sys.argv[3] == 'mark':
+    f1 = sys.argv[1]
+    f2 = sys.argv[2]
+    arr1 = [l.strip() for l in open(f1).readlines()]
+    arr2 = [l.strip() for l in open(f2).readlines()]
+    MatchMarkSeq(arr1, arr2)
+
   else:
     print 'Usage:',sys.argv[0],'<path1> <path2> (words split by \\n)'
+    print 'OR:',sys.argv[0],'<path1> <path2> mark'
     print 'Testing:'
     data = [
       [ 

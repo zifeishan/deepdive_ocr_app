@@ -8,16 +8,20 @@ eval_path_base = 'data/test-evaluation/'
 final_output_base = 'output/'
 output_stat_path = 'eval-results.txt'
 
-if len(sys.argv) == 5:
+if len(sys.argv) >= 5:
   dd_output = sys.argv[1]
   eval_path_base = sys.argv[2]
   final_output_base = sys.argv[3]
   output_stat_path = sys.argv[4]
 else:
-  print 'Usage: python', sys.argv[0],'dd_output eval_path_base final_output_base output_stat_path'
+  print 'Usage: python', sys.argv[0],'dd_output eval_path_base final_output_base output_stat_path [docid_list]'
   print 'e.g. pypy ocr-evaluation.py /tmp/ocr-output-words-cuneiform.tsv data/test-evaluation/ output-cuni/ eval-results-cuni.txt'
   print 'Use default settings.'
 
+docid_filter = None
+if len(sys.argv) == 6:
+  docidlist_path = sys.argv[5]
+  docid_filter = [l.strip() for l in open(docidlist_path).readlines()] 
 print 'Generating output from', dd_output,'to:',final_output_base
 
 docids = []
@@ -53,6 +57,13 @@ tot_ocrwords = 0
 tot_evalwords = 0
 tot_matchnum = 0
 
+# Only evaluate these documents
+if docid_filter != None:
+  docids = docid_filter
+
+
+'NOTICE: DO NOT RESEGMENT.'
+
 for docid in docids:
   ocrpath = final_output_base + '/' + docid + '.seq_unsegmented'
   evalpath = eval_path_base + '/' + docid + '.seq'
@@ -62,9 +73,12 @@ for docid in docids:
   if not os.path.exists(evalpath):
     print 'Error: cannot find path:',evalpath
     continue
-  os.system(SEGMENT_CMD +' <' + final_output_base + '/' + docid + '.seq_unsegmented' + ' >' + final_output_base + '/' + docid + '.seq' )
+  # # DO NOT RESEGMENT
+  # os.system(SEGMENT_CMD +' <' + final_output_base + '/' + docid + '.seq_unsegmented' + ' >' + final_output_base + '/' + docid + '.seq' )
 
-  ocrpath_segmented = final_output_base + '/' + docid + '.seq'
+  # ocrpath_segmented = final_output_base + '/' + docid + '.seq'
+  # # DO NOT RESEGMENT
+  ocrpath_segmented = final_output_base + '/' + docid + '.seq_unsegmented'
 
   ocrwords = [l.rstrip('\n') for l in open(ocrpath_segmented).readlines()]
 

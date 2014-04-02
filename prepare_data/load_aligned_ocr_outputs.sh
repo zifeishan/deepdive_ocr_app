@@ -2,7 +2,9 @@
 
 # Configuration
 # export DB_NAME=ddocr
-export DB_NAME=ddocr_large
+# export DB_NAME=ddocr_large
+export DB_NAME=$1
+echo "DBNAME is $1"
 # PGPORT=${PGPORT:5432}
 
 APP_HOME=`cd $(dirname $0)/..; pwd`
@@ -10,8 +12,8 @@ echo $APP_HOME
 
 # CAND_DIR=$APP_HOME/data/journals-test-output2-new
 # CAND_DIR=$APP_HOME/data/journal-test-output3-distinct
-CAND_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/journals-output
-# SUPV_DIR=$APP_HOME/data/test-supervision
+# CAND_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/journals-output
+CAND_DIR=/lfs/local/0/zifei/deepdive/app/ocr/data/journals-output-new
 
 
 ## Do not discard previous db: load ngram data takes time..
@@ -19,6 +21,8 @@ CAND_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/journals-output
 # createdb $DB_NAME
 # psql -c "drop schema if exists public cascade; create schema public;" $DB_NAME
 
+# Create error table
+psql -c """DROP TABLE IF EXISTS err; CREATE TABLE err (cmdtime timestamp with time zone, relname text, filename text, linenum integer, bytenum integer, errmsg text, rawdata text, rawbytes bytea);""" $DB_NAME
 
 # READ cand_word table from data
 psql -c "drop table if exists cand_word CASCADE;" $DB_NAME
@@ -39,7 +43,8 @@ psql -c """create table cand_word(id BIGSERIAL PRIMARY KEY,
   ner TEXT,
   stem TEXT);""" $DB_NAME
 
-sed 's/\\/\\\\/g' $CAND_DIR/*.cand_word | psql -c "COPY cand_word(docid, varid, candid, source, wordid, word, page, l, t, r, b, pos, ner, stem) FROM STDIN;" $DB_NAME
+# sed 's/\\/\\\\/g' $CAND_DIR/*.cand_word | psql -c "COPY cand_word(docid, varid, candid, source, wordid, word, page, l, t, r, b, pos, ner, stem) FROM STDIN;" $DB_NAME
+sed 's/\\/\\\\/g' $CAND_DIR/JOURNAL_10*.cand_word | psql -c "COPY cand_word(docid, varid, candid, source, wordid, word, page, l, t, r, b, pos, ner, stem) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000000000 ROWS;" $DB_NAME
 
 # Variable table
 psql -c "drop table if exists variable cascade;" $DB_NAME

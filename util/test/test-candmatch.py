@@ -66,7 +66,7 @@ for var in data:
 fout.close()
 
 print 'Test Match:'
-candmatch.TestMatch(data[:1000], supervision_sequence[:1000])
+candmatch.TestMatch(data[:100], supervision_sequence[:100])
 
 print 'Real matching...'
 matches, matched_candidate_ids, f, path, records = candmatch.Match(data, supervision_sequence)
@@ -84,16 +84,16 @@ for var in data:
         print >>fout, w
 fout.close()
 
-# TESS ONLY
-print 'TESS ONLY:'
-tdata = [[v[-1]] for v in data]
-matches, matched_candidate_ids, f, path, records = candmatch.Match(tdata, supervision_sequence)
+# # TESS ONLY
+# print 'TESS ONLY:'
+# tdata = [[v[-1]] for v in data]
+# matches, matched_candidate_ids, f, path, records = candmatch.Match(tdata, supervision_sequence)
 
-print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
+# print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
 
-fout = codecs.open('test-tesseract-diff.tmp', 'w', 'utf-8')
-for var in tdata:
-  for w in var[0][1]:
-    print >>fout, w
-fout.close()
+# fout = codecs.open('test-tesseract-diff.tmp', 'w', 'utf-8')
+# for var in tdata:
+#   for w in var[0][1]:
+#     print >>fout, w
+# fout.close()
 

@@ -1,21 +1,29 @@
-TODO: 
+X Evaluate:
 
-    python load_supervision_data_from_list.py ddocr_1k /lfs/local/0/zifei/deepdive/app/ocr/data/evaluation/ ../data/doclist-1k.txt
+    bash generate_all_ocr_results.sh ddocr
+  OR: (after getting /tmp/...)
+    pypy ocr-evaluation-strict.py /tmp/ocr-output-words-tesseract-all.tsv data/test-evaluation/ eval-results-tess-all.txt
 
-TODO: try fuzzy matching (in [:10]?)
+- 
 
-TODO: Write a general script to label with Ngram, used for both and!
-Infolab Physical cores: Cores / 2.
+X  python load_supervision_data_from_list.py ddocr_1k /lfs/local/0/zifei/deepdive/app/ocr/data/evaluation/ ../data/doclist-1k.txt
 
-TODO: DEBUG order aware supervision. Test dirty cases?
-TODO: Add NLP features
-TODO: Run on larger dataset
+/ try fuzzy matching (in [:10]?)
 
-DONE: Why does constraint increast T weight? (AND is ok)
+* Write a general script to label with Ngram, used for both and!
+    Infolab Physical cores: Cores / 2.
 
-DONE: why copy to tsv do not include all words??
+X DEBUG order aware supervision. 
+/   Test dirty cases?
 
-DONE: WHY not all variables? --ANSWER: evidence!
+* Add NLP features
+/ Run on larger dataset
+
+X Why does constraint increast T weight? (AND is ok)
+
+X why copy to tsv do not include all words??
+
+X WHY not all variables? --ANSWER: evidence!
     
     ddocr=# select * from candidate_label_inference order by docid,varid limit 10;
 

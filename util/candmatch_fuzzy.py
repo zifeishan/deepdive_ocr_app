@@ -1,36 +1,100 @@
 #! /usr/bin/python
 
+'''TODO NOT CORRECT'''
+
 import os, sys, codecs
 
+from bisect import bisect_left
+from itertools import combinations
+
+def find_ge(a, key):
+    '''Find smallest item greater-than or equal to key.
+    Raise ValueError if no such item exists.
+    If multiple keys are equal, return the leftmost.
+
+    '''
+    i = bisect_left(a, key)
+    if i == len(a):
+      return -1
+        # raise ValueError('No item found with key at or above: %r' % (key,))
+    return a[i]
+
+
 # e1: a variable. [cid, [wordseq]]
-# match each dandidate in cands, with supvseq[index]!
+# match each dandidate in cands, starting from supvseq[index]!
 # return: (T/F, [(candidate_id, cand_length_words, matchnum)])
-def ElemMatch(cands, supvseq, index):
+def ElemMatch(cands, supvseq, index, inverted_index):
   # print 'Elemmatch:',cands, index  # DEBUG
   matches = []
   for pair in cands:
     candidate_id = pair[0]
     cand_arr = pair[1]
-    
-    # not enough words to match
-    if len(cand_arr) > len(supvseq) - index:
-      # print 'Candidate too long:',cand_arr, 'for supv:',supvseq[index:index + len(cand_arr)]
-      continue
-    # match = True
-    matchnum = 0
 
-    words_tomatch = supvseq[index : index + len(cand_arr)]
-    for i in range(len(words_tomatch)):
-      ###### DO NOT BREAK IF ONE WORD IS WRONG!
-      ###### Allow partial errors in matches.
-      # if cand_arr[i] != words_tomatch[i]:
-      #   match = False
-      #   break
-      if cand_arr[i] == words_tomatch[i]:
-        matchnum += 1
+    # Greddy match:
+    #  return a sorted combination of cand_words with length L
+    #  that achieves M matches
+    #  while minimizing last_index value.
 
-    if matchnum > 0:
-      matches.append( (candidate_id, len(cand_arr), matchnum) )
+    matchmap = {}  # M : (LASTINDEX, combination)
+
+    for M in range(1, len(cand_arr) + 1):  # M: length of comb
+      for comb in combinations(cand_arr, M):
+        index_tofind = index
+        index_last = -1
+        allmatch = True
+        for word in comb:
+          # Already not optimal
+          if M in matchmap and matchmap[M][0] < index_tofind:
+            allmatch = False
+            break
+
+          # Cannot match word
+          if word not in inverted_index:
+            allmatch = False
+            break
+          found = find_ge(inverted_index[word], index_tofind)
+          if found == -1: # cannot find a larger index that matches
+            allmatch = False
+            break
+          index_last = found
+          index_tofind = index_last + 1
+
+
+        if allmatch: # succeed
+          if M not in matchmap:
+            matchmap[M] = (index_last, comb)
+          else:
+            if matchmap[M][0] > index_last:
+              matchmap[M] = (index_last, comb)
+
+    for M in matchmap:
+      index_last, comb = matchmap[M]
+      matches.append( (candidate_id, index_last - index + 1, M) )
+
+    # TODO generate result from matchmap
+    # TODO PRUME: matchmap[len(comb)][0]  must > lastindex, or stop
+    # TODO PRINT AND DEBUG
+
+
+    # # not enough words to match
+    # if len(cand_arr) > len(supvseq) - index:
+    #   # print 'Candidate too long:',cand_arr, 'for supv:',supvseq[index:index + len(cand_arr)]
+    #   continue
+    # # match = True
+    # matchnum = 0
+
+    # words_tomatch = supvseq[index : index + len(cand_arr)]
+    # for i in range(len(words_tomatch)):
+    #   ###### DO NOT BREAK IF ONE WORD IS WRONG!
+    #   ###### Allow partial errors in matches.
+    #   # if cand_arr[i] != words_tomatch[i]:
+    #   #   match = False
+    #   #   break
+    #   if cand_arr[i] == words_tomatch[i]:
+    #     matchnum += 1
+
+    # if matchnum > 0:
+    #   matches.append( (candidate_id, len(cand_arr), matchnum) )
 
   # print matches   # DEBUG
       
@@ -55,6 +119,16 @@ def Match(data, supvseq):
     for i in range(len(data)):
       arr1.append( [(i, [data[i]])] )
 
+  # Create an index for arbitrary matching (not assuming neighbors)
+  # Format: {word : [index1, index2, ...]} 
+  supvseq_index = {}
+  for i in range(len(supvseq)):
+    word = supvseq[i]
+    if word not in supvseq_index: 
+      supvseq_index[word] = []
+    supvseq_index[word].append(i)
+
+
   # f = [[0] * (n2)] * (n1)  # Python array is weird....
   f = [[0 for _2 in range(n2)] for _ in range(n1)] # This is correct way, do not give a shallow copy!!
 
@@ -64,7 +138,7 @@ def Match(data, supvseq):
   cand_records = [[-1 for _2 in range(n2)] for _ in range(n1)]
 
   # Init
-  succ, matches = ElemMatch(arr1[0], arr2, 0)
+  succ, matches = ElemMatch(arr1[0], arr2, 0, supvseq_index)
   for pair in matches:
     candid, length, matchnum = pair
     newj = 0 + length - 1
@@ -85,7 +159,7 @@ def Match(data, supvseq):
       # cand_records[i][0] = cand_records[i-1][0]
       cand_records[i][0] = -1
 
-    succ, matches = ElemMatch(arr1[i], arr2, 0)
+    succ, matches = ElemMatch(arr1[i], arr2, 0, supvseq_index)
     for pair in matches:
       candid, length, matchnum = pair
       newj = 0 + length - 1
@@ -107,7 +181,7 @@ def Match(data, supvseq):
       # cand_records[0][j] = cand_records[0][j-1]
       cand_records[0][j] = -1
 
-    succ, matches = ElemMatch(arr1[0], arr2, j)
+    succ, matches = ElemMatch(arr1[0], arr2, j, supvseq_index)
     for pair in matches:
       candid, length, matchnum = pair
       newj = j + length - 1
@@ -121,7 +195,7 @@ def Match(data, supvseq):
   for i in range(0, n1):
     for j in range(0, n2):
       if i + 1 < n1 and j + 1 < n2:
-        succ, matches = ElemMatch(arr1[i+1], arr2, j+1)
+        succ, matches = ElemMatch(arr1[i+1], arr2, j+1, supvseq_index)
         for pair in matches:
           candid, length, matchnum = pair
           newj = j + length # j+1 + length - 1
@@ -200,7 +274,9 @@ def TestMatch(data, supvseq):
         if can[0] == cand_records[i][j]:
           thiscanword = ' '.join([s for s in can[1]])
 
-      if cand_records[i][j] != -1 and (not IsASCII(supvseq[j]) or not IsASCII(thiscanword)):
+      if cand_records[i][j] != -1:
+      # and (not IsASCII(supvseq[j]) or not IsASCII(thiscanword))
+
         print ' ',i,j,'\t',f[i][j],'\t','%3d,%3d'%(path[i][j][0],path[i][j][1]), '\t', cand_records[i][j], '\t%10s %10s'%(thiscanword, supvseq[j])
 
 if __name__ == "__main__": 
@@ -225,28 +301,38 @@ if __name__ == "__main__":
     print 'Testing:'
     data = [
       [ 
-        (123, [1,2,3]),
-        (12, [1,2])
+        (123, ['1','2','3']),
+        (12, ['1','2'])
       ],
       [
-        (345, [3,4,5]),
-        (34, [3,4])
-      ],
-      [ 
-        (999, [1,2,3,4,5,6,8,9,10]),
-      ],
-      [ 
-        
-        (567, [5,6,7]),
-        (56, [5,6])
-      ],
-      [ 
-        
-        (98, [9,8]),
-        (89, [8,9])
+        (45678, ['4','5','6','7','8']),
       ]
     ]
-    supvdata = [1]
+    supvdata = ['1','4', '5', '2','3','4','5','6','8']
+    # data = [
+    #   [ 
+    #     (123, ['1','2','3']),
+    #     (12, ['1','2'])
+    #   ],
+    #   [
+    #     (345, ['3','4','5']),
+    #     (34, ['3','4'])
+    #   ],
+    #   [ 
+    #     (999, ['1','2','3','4','5','6','8','9','10']),
+    #   ],
+    #   [ 
+        
+    #     (567, ['5','6','7']),
+    #     (56, ['5','6'])
+    #   ],
+    #   [ 
+        
+    #     (98, ['9','8']),
+    #     (89, ['8','9'])
+    #   ]
+    # ]
+    # supvdata = ['1','2','3','4','5','6','8','9']
     TestMatch(data, supvdata)
     # m,can,f,path,cand_records = Match(data, supvdata)
     # print 'M:',m
@@ -270,7 +356,7 @@ if __name__ == "__main__":
     # print m
 
     import json
-    obj = json.load(open('../testgroupby-JOURNAL_14255.json'))
+    obj = json.load(open('../testgroupby/testgroupby-JOURNAL_14255.json'))
     docid = obj["docid"]
     arr_candidate_id = obj['arr_candidate_id']
     arr_varid = obj['arr_varid']

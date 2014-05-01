@@ -13,7 +13,7 @@ if len(sys.argv) == 4:
   doclist = sys.argv[3]
 else:
   print 'Usage:',sys.argv[0],'DBNAME SUPV_DIR DOCID_LIST'
-  print 'e.g. python load_aligned_ocr_outputs_from_list.py ddocr_1k /lfs/local/0/zifei/deepdive/app/ocr/data/supervision/supervision-data/ ../data/doclist-1k.txt'
+  print 'e.g. python load_aligned_ocr_outputs_from_list.py ddocr_100 /dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/ ../data/doclist/doclist-100.txt'
   sys.exit(1)
 
 
@@ -33,14 +33,20 @@ psql -c """DROP TABLE IF EXISTS err; CREATE TABLE err (cmdtime timestamp with ti
 ''')
 
 os.system('''
-psql -c "create table html_1gram(id BIGSERIAL PRIMARY KEY, docid TEXT, word1 TEXT, freq INT);" '''+dbname+'''
+psql -c """create table html_1gram(id BIGSERIAL, 
+    docid TEXT, word1 TEXT, freq INT) 
+    DISTRIBUTED BY (docid); """ '''+dbname+'''
 ''')
 os.system('''
-psql -c "create table html_2gram(id BIGSERIAL PRIMARY KEY, docid TEXT, word1 TEXT, word2 TEXT, freq INT); " '''+dbname+'''
+psql -c """create table html_2gram(id BIGSERIAL, 
+    docid TEXT, word1 TEXT, word2 TEXT, freq INT) 
+    DISTRIBUTED BY (docid); """ '''+dbname+'''
 ''')
 
 os.system('''
-psql -c "create table html_3gram(id BIGSERIAL PRIMARY KEY, docid TEXT, word1 TEXT, word2 TEXT, word3 TEXT, freq INT); " '''+dbname+'''
+psql -c """create table html_3gram(id BIGSERIAL, 
+    docid TEXT, word1 TEXT, word2 TEXT, word3 TEXT, freq INT) 
+    DISTRIBUTED BY (docid); """ '''+dbname+'''
 ''')
 
 for docid in ids:

@@ -23,8 +23,9 @@ ids = [s.strip() for s in open(doclist).readlines()]
 
 os.system('''psql -c """DROP TABLE IF EXISTS err; CREATE TABLE err (cmdtime timestamp with time zone, relname text, filename text, linenum integer, bytenum integer, errmsg text, rawdata text, rawbytes bytea);""" '''+dbname)
 os.system('''psql -c "drop table if exists cand_word CASCADE;" '''+dbname)
-os.system('''psql -c """create table cand_word(id BIGSERIAL PRIMARY KEY, 
-  candidate_id BIGSERIAL,
+os.system('''psql -c """create table cand_word(
+  id BIGSERIAL,
+  candidate_id BIGINT,
   docid TEXT,
   varid INT, -- start from 1
   candid INT, -- start from 0, multinomial, according to source
@@ -38,7 +39,8 @@ os.system('''psql -c """create table cand_word(id BIGSERIAL PRIMARY KEY,
   b INT,  
   pos TEXT,
   ner TEXT,
-  stem TEXT);""" '''+dbname)
+  stem TEXT)
+DISTRIBUTED BY (docid);""" '''+dbname)
 
 for docid in ids:
   filepath = path + '/' + docid + '.cand_word'
@@ -52,21 +54,25 @@ for docid in ids:
 os.system('''
   # Variable table
   psql -c "drop table if exists variable cascade;" '''+dbname+'''
-  psql -c """create table variable(id BIGSERIAL PRIMARY KEY, 
-    docid TEXT,
-    varid INT,
-    label INT);""" '''+dbname+'''
+  psql -c """create table variable(
+      id BIGSERIAL, 
+      docid TEXT,
+      varid INT,
+      label INT)
+    DISTRIBUTED BY (docid);""" '''+dbname+'''
   psql -c """insert into variable(docid, varid) select distinct docid, varid from cand_word order by docid, varid;""" '''+dbname+'''
 
   # Candidate table
   psql -c "drop table if exists candidate cascade;" '''+dbname+'''
-  psql -c """create table candidate(id BIGSERIAL PRIMARY KEY, 
-    variable_id BIGSERIAL,
-    docid TEXT, -- redundancy
-    varid INT,  -- redundancy
-    candid INT,
-    source TEXT,
-    label BOOLEAN);""" '''+dbname+'''
+  psql -c """create table candidate(
+      id BIGSERIAL, 
+      variable_id BIGINT,
+      docid TEXT,
+      varid INT,  -- redundancy
+      candid INT,
+      source TEXT,
+      label BOOLEAN)
+    DISTRIBUTED BY (docid);""" '''+dbname+'''
   psql -c """insert into candidate(variable_id, docid, varid, candid, source) 
     select distinct variable.id as variable_id, variable.docid, variable.varid, candid, source
     from cand_word, variable 

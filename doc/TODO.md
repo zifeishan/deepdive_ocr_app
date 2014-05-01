@@ -1,3 +1,5 @@
+  Fix -P 0 to -P 1!! Cannot use arbitrary long parallelism..
+
   Fix bash -> JDBC
   Fix SELECT "AS" in plpy
   New code path!

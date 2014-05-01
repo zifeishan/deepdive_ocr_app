@@ -1,5 +1,8 @@
+if [ "$#" -ne 1 ]; then
+    echo "Usage: ... <dbname>. (uses PGHOST)"
+fi
 bash generate_ocr_result.sh $1
-scp rocky:/tmp/ocr-output* /tmp/
+scp $PGHOST:/tmp/ocr-output* /tmp/
 ### pypy ocr-evaluation.py
 EVAL_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/evaluation/
 # EVAL_DIR=data/test-evaluation

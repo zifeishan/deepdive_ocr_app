@@ -18,15 +18,16 @@ psql -c """drop table if exists output_candidates, output_words cascade; """ $DB
 # ;
 # """ $DBNAME
 
-psql -c """select c.*, array_agg(word order by wordid) as word, random() as random_number
-into output_candidates
+psql -c """
+CREATE TABLE output_candidates AS
+select c.*, array_agg(word order by wordid) as word, random() as random_number
 from candidate_label_inference_bucketed as c, cand_word
  where c.docid in (select * from eval_docs) 
  and cand_word.candidate_id = c.id
  group by 
- c.id, c.variable_id, c.docid, c.varid, c.candid, c.source, c.label, c.category, c.expectation, c.bucket, cand_word.candidate_id
+ c.docid, c.id, c.variable_id, c.varid, c.candid, c.source, c.label, c.category, c.expectation, c.bucket, cand_word.candidate_id
  order by c.docid, c.varid, random_number
-;
+DISTRIBUTED BY (docid);
 """ $DBNAME
 
 
@@ -36,13 +37,14 @@ from output_candidates group by variable_id;
 """ $DBNAME
 
 psql -c """
-  select output_candidates.*
-  into output_words
-  from output_candidates join maxp
-  on  output_candidates.variable_id = maxp.variable_id
-  and output_candidates.expectation = maxp.maxp
-  -- and output_candidates.random_number = maxp.maxrand
-;""" $DBNAME
+  CREATE TABLE output_words AS 
+    select output_candidates.*
+    from output_candidates join maxp
+    on  output_candidates.variable_id = maxp.variable_id
+    and output_candidates.expectation = maxp.maxp
+    -- and output_candidates.random_number = maxp.maxrand
+  DISTRIBUTED BY (docid);
+""" $DBNAME
 
 # break ties
 psql -c """delete from output_words

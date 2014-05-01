@@ -26,8 +26,9 @@ psql -c """DROP TABLE IF EXISTS err; CREATE TABLE err (cmdtime timestamp with ti
 
 # READ cand_word table from data
 psql -c "drop table if exists cand_word CASCADE;" $DB_NAME
-psql -c """create table cand_word(id BIGSERIAL PRIMARY KEY, 
-  candidate_id BIGSERIAL,
+psql -c """create table cand_word(
+  id BIGSERIAL,
+  candidate_id BIGINT,
   docid TEXT,
   varid INT, -- start from 1
   candid INT, -- start from 0, multinomial, according to source
@@ -41,28 +42,36 @@ psql -c """create table cand_word(id BIGSERIAL PRIMARY KEY,
   b INT,  
   pos TEXT,
   ner TEXT,
-  stem TEXT);""" $DB_NAME
+  stem TEXT)
+DISTRIBUTED BY (docid);""" $DB_NAME
 
 # sed 's/\\/\\\\/g' $CAND_DIR/*.cand_word | psql -c "COPY cand_word(docid, varid, candid, source, wordid, word, page, l, t, r, b, pos, ner, stem) FROM STDIN;" $DB_NAME
 sed 's/\\/\\\\/g' $CAND_DIR/JOURNAL_*.cand_word | psql -c "COPY cand_word(docid, varid, candid, source, wordid, word, page, l, t, r, b, pos, ner, stem) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000000000 ROWS;" $DB_NAME
 
 # Variable table
 psql -c "drop table if exists variable cascade;" $DB_NAME
-psql -c """create table variable(id BIGSERIAL PRIMARY KEY, 
+psql -c """create table variable(
+  id BIGSERIAL, 
   docid TEXT,
   varid INT,
-  label INT);""" $DB_NAME
+  label INT)
+DISTRIBUTED BY (docid);
+""" $DB_NAME
+
 psql -c """insert into variable(docid, varid) select distinct docid, varid from cand_word order by docid, varid;""" $DB_NAME
 
 # Candidate table
 psql -c "drop table if exists candidate cascade;" $DB_NAME
-psql -c """create table candidate(id BIGSERIAL PRIMARY KEY, 
-  variable_id BIGSERIAL,
-  docid TEXT, -- redundancy
+psql -c """create table candidate(
+  id BIGSERIAL, 
+  variable_id BIGINT,
+  docid TEXT,
   varid INT,  -- redundancy
   candid INT,
   source TEXT,
-  label BOOLEAN);""" $DB_NAME
+  label BOOLEAN)
+DISTRIBUTED BY (docid);
+""" $DB_NAME
 psql -c """insert into candidate(variable_id, docid, varid, candid, source) 
   select distinct variable.id as variable_id, variable.docid, variable.varid, candid, source
   from cand_word, variable 

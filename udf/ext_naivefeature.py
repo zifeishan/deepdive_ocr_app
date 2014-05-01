@@ -110,21 +110,17 @@ def CandidateFeatureExtract(word, source, corpus = {}, confpath = ''):
 
 # For each input tuple
 for row in fileinput.input():
-  obj = json.loads(row)
-  # print >>sys.stderr, obj
-  # {u'candidate.docid': u'JOURNAL_102371', u'candidate.id': 839, u'candidate.source': u'C', u'candidate.word': u'human', u'candidate.candid': 0, u'candidate.wordid': 818}
-  # word = obj["candidate.word"]
-  # source = obj["candidate.source"]
-  word = obj["word"]
-  source = obj["source"]
-  
+  docid, cand_word_id, word, source = row.split('\t')
   fnames, fvals = CandidateFeatureExtract(word, source)
   for i in range(0, len(fnames)):
     if fvals[i] == False:
       continue
-    print json.dumps({
-      # "candidateid": obj["candidate.id"],
-      "cand_word_id": obj["id"],
-      "fname": fnames[i],
-      "fval": fvals[i]
-    })
+    # Weird: no strip there is '\n'???
+    print '\t'.join([str(_).strip() for _ in [docid, cand_word_id, fnames[i], fvals[i]]])
+
+    # print json.dumps({
+    #   # "candidateid": obj["candidate.id"],
+    #   "cand_word_id": obj["id"],
+    #   "fname": fnames[i],
+    #   "fval": fvals[i]
+    # })

@@ -86,7 +86,7 @@ for row in fileinput.input():
 
   if not os.path.exists(SUPV_DIR + '/' + docid + '.seq'):
     print >>sys.stderr, 'SUPERVISION DATA NOT EXISTS:',SUPV_DIR + '/' + docid + '.seq'
-    sys.exit(0);
+    sys.exit(1);
 
   supervision_sequence = [l.strip().decode('utf-8') for l in open(SUPV_DIR + '/' + docid + '.seq').readlines()]
   matches, matched_candidate_ids, f, path, records = candmatch.Match(data, supervision_sequence)

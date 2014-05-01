@@ -1,4 +1,29 @@
-X Evaluate:
+  Fix bash -> JDBC
+  Fix SELECT "AS" in plpy
+  New code path!
+
+  OCR: 
+  - PLOT comparisons with T/C/Best (evaluation/plot-*.py)
+  - TUNE ngram feature COUNT parameter
+
+X ext_people: >10X
+X ext_has_spouse_candidates: 20k -> 7664 ms (3X)
+X ext_has_spouse_features: >10X
+/ System bug: do not stop on errors!! (bash)
+
+X Feature Extraction:
+X - ddext.py: parse .py and save to /tmp/ext.py.sql(?), managed by scala
+X - write another script to take the "input" query and generate expected query. (maybe in Scala)
+
+X weight for deepdive
+X -skiplearn for deepdive!!
+
+  Write script: generate 2gram
+  Backup order-aware supv result
+
+  orderaware: 343 docs extracted; 60 docs not extracted (for eval!) 
+
+X Evaluate all OCR results: (experiment)
 
     bash generate_all_ocr_results.sh ddocr
   OR: (after getting /tmp/...)

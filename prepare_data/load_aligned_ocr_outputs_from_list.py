@@ -15,7 +15,7 @@ if len(sys.argv) == 4:
   doclist = sys.argv[3]
 else:
   print 'Usage:',sys.argv[0],'DBNAME CAND_DIR DOCID_LIST'
-  print 'e.g. python load_aligned_ocr_outputs_from_list.py ddocr_1k /lfs/local/0/zifei/deepdive/app/ocr/data/journals-output-new/ ../data/doclist-1k.txt'
+  print 'e.g. python load_aligned_ocr_outputs_from_list.py ddocr_1k /dfs/madmax/0/zifei/deepdive/app/ocr/data/journals-output/ ../data/doclist-1k.txt'
   sys.exit(1)
 
 

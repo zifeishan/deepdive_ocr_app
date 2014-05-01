@@ -52,4 +52,9 @@ for docid in ids:
   for thisgram in ['.1gram', '.2gram', '.3gram']:
     filepath = path + '/' + docid + thisgram
     print filepath
-    os.system('''sed \'s/\\\\/\\\\\\\\/g\' '''+filepath+''' | psql -c "COPY html_1gram(docid, freq, word1) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000 ROWS;" '''+ dbname)
+    if thisgram == '.1gram':
+      os.system('''sed \'s/\\\\/\\\\\\\\/g\' '''+filepath+''' | psql -c "COPY html_1gram(docid, freq, word1) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000 ROWS;" '''+ dbname)
+    elif thisgram == '.2gram':
+      os.system('''sed \'s/\\\\/\\\\\\\\/g\' '''+filepath+''' | psql -c "COPY html_2gram(docid, freq, word1, word2) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000 ROWS;" '''+ dbname)
+    elif thisgram == '.3gram':
+      os.system('''sed \'s/\\\\/\\\\\\\\/g\' '''+filepath+''' | psql -c "COPY html_3gram(docid, freq, word1, word2, word3) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000 ROWS;" '''+ dbname)

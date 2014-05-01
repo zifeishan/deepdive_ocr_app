@@ -51,15 +51,20 @@ where id in
 ;
 """ $DBNAME
 
-psql -c """copy (select docid, varid || '-' || source || '-' || wordid, word from cand_word where candidate_id in (select id from output_words) order by docid, varid, candid, wordid) 
+# psql -c """copy (select docid, varid || '-' || source || '-' || wordid, word from cand_word where candidate_id in (select id from output_words) order by docid, varid, candid, wordid) 
+# to '$EXPORT_ROOT/ocr-output-words.tsv'""" $DBNAME
+
+### TODO use same varid to enable strict evaluation matching
+psql -c """copy (select docid, candidate_id, word from cand_word where candidate_id in (select id from output_words) order by docid, varid, candid, wordid) 
 to '$EXPORT_ROOT/ocr-output-words.tsv'""" $DBNAME
 
-psql -c """copy (select docid, varid, word from cand_word 
+
+psql -c """copy (select docid, candidate_id, word from cand_word 
   where (source = 'T' or source = 'CT' or source = 'TC')
   and docid in (select * from eval_docs)
   order by docid, varid, candid, wordid) to '$EXPORT_ROOT/ocr-output-words-tesseract.tsv'""" $DBNAME
 
-psql -c """copy (select docid, varid, word from cand_word 
+psql -c """copy (select docid, candidate_id, word from cand_word 
   where (source = 'C' or source = 'CT' or source = 'TC')
   and docid in (select * from eval_docs)
   order by docid, varid, candid, wordid) to '$EXPORT_ROOT/ocr-output-words-cuneiform.tsv';""" $DBNAME

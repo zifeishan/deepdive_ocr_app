@@ -35,15 +35,18 @@ export LD_LIBRARY_PATH="/dfs/rulk/0/hazy_share/lib64/:/dfs/rulk/0/hazy_share/lib
 export DICT_FILE=$APP_HOME/util/words
 
 # export SUPV_DIR=$APP_HOME/data/test-supervision
-export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
+# # export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
+
 # LARGE
-# export SUPV_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/supervision-data
+export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
+# export SUPV_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/
 
 cd $DEEPDIVE_HOME
 
 echo 'Running SBT...'
 # SBT_OPTS="-Xmx128g -XX:MaxHeapSize=8g" sbt/sbt "run -c $APP_HOME/application.conf"
 SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
+# SBT_OPTS="-Xmx2g -XX:MaxHeapSize=2g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
 
 
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"

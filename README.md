@@ -38,7 +38,9 @@ Datasets
 
 ## Candidates
 
-    /dfs/madmax3/0/zifei/deepdive/app/ocr/data/journals-output-new
+    # /dfs/madmax3/0/zifei/deepdive/app/ocr/data/journals-output-new
+    <!-- THIS IS WRONG!!! -->
+
     OR:
     /dfs/madmax/0/zifei/deepdive/app/ocr/data/journals-output
 
@@ -54,9 +56,23 @@ second half:
 
 ## Processed supervision data
 
+    /dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
+    OR 
+    /dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/
 
+## Processed evaluation data
 
-/dfs/madmax3/0/
+    /dfs/madmax5/0/zifei/deepdive/app/ocr/data/evaluation/
+    OR 
+    /dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
+
+## Google Ngram
+    /dfs/madmax/0/zifei/google-ngram/1gram/
+    /dfs/madmax/0/zifei/google-ngram/2gram/
+    OR
+    /dfs/madmax5/0/zifei/deepdive/app/ocr/data/google-ngram/1gram/
+    /dfs/madmax5/0/zifei/deepdive/app/ocr/data/google-ngram/2gram/
+<!-- /dfs/madmax3/0/ -->
 
 
 

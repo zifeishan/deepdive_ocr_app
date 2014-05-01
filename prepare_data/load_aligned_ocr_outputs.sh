@@ -44,7 +44,7 @@ psql -c """create table cand_word(id BIGSERIAL PRIMARY KEY,
   stem TEXT);""" $DB_NAME
 
 # sed 's/\\/\\\\/g' $CAND_DIR/*.cand_word | psql -c "COPY cand_word(docid, varid, candid, source, wordid, word, page, l, t, r, b, pos, ner, stem) FROM STDIN;" $DB_NAME
-sed 's/\\/\\\\/g' $CAND_DIR/JOURNAL_10*.cand_word | psql -c "COPY cand_word(docid, varid, candid, source, wordid, word, page, l, t, r, b, pos, ner, stem) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000000000 ROWS;" $DB_NAME
+sed 's/\\/\\\\/g' $CAND_DIR/JOURNAL_*.cand_word | psql -c "COPY cand_word(docid, varid, candid, source, wordid, word, page, l, t, r, b, pos, ner, stem) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000000000 ROWS;" $DB_NAME
 
 # Variable table
 psql -c "drop table if exists variable cascade;" $DB_NAME

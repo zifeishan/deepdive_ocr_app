@@ -37,9 +37,10 @@ export DICT_FILE=$APP_HOME/util/words
 # export SUPV_DIR=$APP_HOME/data/test-supervision
 # # export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
 
-# LARGE
+# # LARGE
 export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
-# export SUPV_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/
+# for eval bestpick
+export EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
 
 cd $DEEPDIVE_HOME
 

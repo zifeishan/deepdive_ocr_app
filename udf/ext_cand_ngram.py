@@ -10,13 +10,6 @@ import json
 from collections import defaultdict
 import codecs
 
-BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-
-sys.path.append(BASE_DIR + '/../util')
-import candmatch
-
-SUPV_DIR = os.environ['SUPV_DIR']
-
 NGRAM = 2
 
 id_fgram_dict = {}

@@ -17,8 +17,16 @@ import candmatch
 
 SUPV_DIR = os.environ['SUPV_DIR']
 
+bestpick_dir = ''
+
+if len(sys.argv) >= 3:
+    bestpick_dir = sys.argv[1]
+    SUPV_DIR = sys.argv[2]
+    print >>sys.stderr, "Using EVAL_DIR as SUPV_DIR:", SUPV_DIR
+    print >>sys.stderr, "Storing bestpick results into:", bestpick_dir
+
 # For each input tuple
-for row in fileinput.input():
+for row in sys.stdin:
   obj = json.loads(row)
 
   # # DEBUG
@@ -93,15 +101,17 @@ for row in fileinput.input():
 
   print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
 
-  statdir = '/lfs/local/0/zifei/bestpick-result/'
-  if not os.path.exists(statdir):
-    os.makedirs(statdir)
-  fout = open(statdir + docid + '.stat', 'w')
-  print >>fout, '\t'.join([str(s) for s in [
-    docid, matches, len(supervision_sequence), 
-    '(%.4f)' % (matches / float(len(supervision_sequence)))
-    ]])
-  fout.close()
+  # If output dir specified, store bestpick results
+  if bestpick_dir != '':
+    statdir = bestpick_dir
+    if not os.path.exists(statdir):
+      os.makedirs(statdir)
+    fout = open(statdir + docid + '.stat', 'w')
+    print >>fout, '\t'.join([str(s) for s in [
+      docid, matches, len(supervision_sequence), 
+      '(%.4f)' % (matches / float(len(supervision_sequence)))
+      ]])
+    fout.close()
 
   fout = codecs.open(statdir + docid + '.seq', 'w', 'utf-8')
   matched_candidate_ids_index = set(matched_candidate_ids)

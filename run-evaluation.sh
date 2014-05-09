@@ -4,7 +4,8 @@ fi
 bash generate_ocr_result.sh $1
 scp $PGHOST:/tmp/ocr-output* /tmp/
 ### pypy ocr-evaluation.py
-EVAL_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/evaluation/
+# EVAL_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/evaluation/
+EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
 # EVAL_DIR=data/test-evaluation
 pypy ocr-evaluation-strict.py /tmp/ocr-output-words.tsv $EVAL_DIR eval-results.txt
 

@@ -6,6 +6,7 @@ else
   export DBNAME=ddocr
 fi
 echo "Set DB_NAME to ${DBNAME}."
+echo "HOST is ${PGHOST}, PORT is ${PGPORT}."
 
 # export DBNAME=ddocr
 # export DBNAME=ddocr_large

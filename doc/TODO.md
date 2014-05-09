@@ -1,12 +1,39 @@
-  Fix -P 0 to -P 1!! Cannot use arbitrary long parallelism..
+  Make tasks not cancellable?
+X spouse symmetry!
+/ changed grongdFactorGraph. Fix tests
 
-  Fix bash -> JDBC
-  Fix SELECT "AS" in plpy
-  New code path!
+  None??
+
+X -a 20 -l OptimalSize
+  DELETE FILES!!
+X db.default
+
+X Fix plpy!
+
+  GPLOAD: put into copy manager..
+
+  Finish tasks for code push!
+X - '\N' for TSV copy! document it!!
+X - IDs for spouse!
+X - documentation of walkthrough! new id!!
+X - Extarctors no longer help you fill IDs!
+X - in json_extractor you must return EVERY column!!
 
   OCR: 
-  - PLOT comparisons with T/C/Best (evaluation/plot-*.py)
+  - Change plot to Err Red rates
+  - Figure out whether it's supervision / feature problem
+    - (what's the plot like when supervised with optimal labels?)
+
+
+X Fix -P 0 to -P 1!! Cannot use arbitrary long parallelism..
+
+  Fix bash -> JDBC
+! Fix SELECT "AS" in plpy
+/ New code path!
+
+  OCR: 
   - TUNE ngram feature COUNT parameter
+X - PLOT comparisons with T/C/Best (evaluation/plot-*.py)
 
 X ext_people: >10X
 X ext_has_spouse_candidates: 20k -> 7664 ms (3X)

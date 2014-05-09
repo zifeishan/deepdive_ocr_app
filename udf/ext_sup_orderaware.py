@@ -113,14 +113,14 @@ for row in sys.stdin:
       ]])
     fout.close()
 
-  fout = codecs.open(statdir + docid + '.seq', 'w', 'utf-8')
-  matched_candidate_ids_index = set(matched_candidate_ids)
-  for var in data:
-    for cand in var:
-      if cand[0] in matched_candidate_ids_index:
-        for w in cand[1]:
-          print >>fout, w
-  fout.close()
+    fout = codecs.open(statdir + docid + '.seq', 'w', 'utf-8')
+    matched_candidate_ids_index = set(matched_candidate_ids)
+    for var in data:
+      for cand in var:
+        if cand[0] in matched_candidate_ids_index:
+          for w in cand[1]:
+            print >>fout, w
+    fout.close()
 
 
   for cid in matched_candidate_ids:

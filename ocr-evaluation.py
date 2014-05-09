@@ -1,5 +1,7 @@
 import os, sys
 
+print '''THIS SCRIPT IS DEPRECATED. Use ocr-evaluation-strict.py instead!!'''
+
 # Use stanford tokenizer to segment before alignment
 SEGMENT_CMD = 'CLASSPATH=util/stanford-parser.jar java edu.stanford.nlp.process.PTBTokenizer -options "ptb3Escaping=false" '
 

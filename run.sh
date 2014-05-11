@@ -1,10 +1,10 @@
 #! /bin/bash
 
-if [ $# = 1 ]; then
-  export DBNAME=$1
-# else
-#   export DBNAME=ddocr
+if [ $# = 2 ]; then
+  export SUPV_GRAM_LEN=$1
+  export DBNAME=$2
 fi
+
 export PGDATABASE=$DBNAME
 
 # export DBNAME=ddocr
@@ -16,6 +16,7 @@ export PG_PORT=${PGPORT:5432}
 
 echo "Set DB_NAME to ${DBNAME}."
 echo "HOST is ${PGHOST}, PORT is ${PGPORT}."
+echo "Supervision ngram: ${SUPV_GRAM_LEN}"
 
 export DEEPDIVE_HOME=`cd $(dirname $0)/../..; pwd`
 export APP_HOME=`pwd`
@@ -41,9 +42,11 @@ export DICT_FILE=$APP_HOME/util/words
 # # export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
 
 # # LARGE
-export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
+# export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
+export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision/
 # for eval bestpick
-export EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
+# export EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
+export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation/
 
 cd $DEEPDIVE_HOME
 

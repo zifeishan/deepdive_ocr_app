@@ -22,3 +22,4 @@ data/test-supervision*
 eval-results*.txt
 output-cuni/
 output-tess/
+eval-results/

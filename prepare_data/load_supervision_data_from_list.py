@@ -64,3 +64,7 @@ for docid in ids:
       os.system('''sed \'s/\\\\/\\\\\\\\/g\' '''+filepath+''' | psql -c "COPY html_2gram(docid, freq, word1, word2) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000 ROWS;" '''+ dbname)
     elif thisgram == '.3gram':
       os.system('''sed \'s/\\\\/\\\\\\\\/g\' '''+filepath+''' | psql -c "COPY html_3gram(docid, freq, word1, word2, word3) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000 ROWS;" '''+ dbname)
+
+os.system('''psql -c "ANALYZE html_1gram;" '''+dbname)
+os.system('''psql -c "ANALYZE html_2gram;" '''+dbname)
+os.system('''psql -c "ANALYZE html_3gram;" '''+dbname)

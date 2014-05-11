@@ -24,7 +24,7 @@ def AddEdge(edges, f, t):
   edges[f].append(t)
 
 # Start with DFS(edges, id, 1)
-def DFS(edges, nowid, res_array, arr_candidate_id, arr_feature, index_cwid_sub):
+def DFS(docid, edges, nowid, res_array, arr_candidate_id, arr_feature, index_cwid_sub):
 
   # Reaches N, finish generated a N-gram. 
   if len(res_array) == NGRAM:
@@ -48,17 +48,18 @@ def DFS(edges, nowid, res_array, arr_candidate_id, arr_feature, index_cwid_sub):
 
     # feature = ' '.join(str(f) for f in feature_tmp)  # word gram, pos gram, etc
     ### UTF-8 problem if "str"
-    feature = ' '.join(f for f in feature_tmp)  # word gram, pos gram, etc
+    feature = ' '.join([f for f in feature_tmp])  # word gram, pos gram, etc
 
     # Table format:
     # #   candidate_id BIGSERIAL, ### WRONG LOGIC
     #   cand_word_id BIGSERIAL, ### WRONG LOGIC
     #   feature_gram TEXT
     for cwid in res_array:
-      print json.dumps({
-        "cand_word_id": cwid,
-        "feature_gram": feature
-        })
+      print docid + '\t' + str(cwid) + '\t' + feature
+      # print json.dumps({
+      #   "cand_word_id": cwid,
+      #   "feature_gram": feature
+      #   })
 
     return   # Finished. Recurse.
 
@@ -77,7 +78,13 @@ def DFS(edges, nowid, res_array, arr_candidate_id, arr_feature, index_cwid_sub):
 for row in sys.stdin:
 # # DEBUG
 # for row in open('test/test-ext_cand_ngram.json').readlines():
-  obj = json.loads(row)
+
+  # obj = json.loads(row)
+  parts = row.rstrip('\n').split('\t')
+  if len(parts) != 6: 
+    print >>sys.stderr, 'ERROR: Failed to parse row:', row
+    continue
+
 
   # # DEBUG
   # # print >>sys.stderr, obj
@@ -95,13 +102,14 @@ for row in sys.stdin:
   #  "arr_id": [98112, 98113, 98114, 98115, 98116, 98117, 98118, 98119, 98120, 98121, 98122,
   
 
-  docid = obj["docid"]
+  docid = parts[0]
   # arr_id = obj['arr_id']
-  arr_candidate_id = obj['arr_candidate_id']
-  arr_cand_word_id = obj['arr_cand_word_id']
-  arr_varid = obj['arr_varid']
-  arr_candid = obj['arr_candid']
-  arr_feature = obj['arr_feature']    # TODO support WORD / POS
+  arr_candidate_id = [int(x) for x in parts[1].split(',')]
+  arr_cand_word_id = [int(x) for x in parts[2].split(',')]
+  arr_varid = [int(x) for x in parts[3].split(',')]
+  arr_candid = [int(x) for x in parts[4].split(',')]
+  arr_feature = parts[5].split('~^~')
+  # TODO support WORD / POS
 
   # Build inverted index
   index_cwid_sub = {}
@@ -165,80 +173,6 @@ for row in sys.stdin:
   res_array = []
   for startid in sorted(edges.keys()):
     res_array.append(startid)
-    DFS(edges, startid, res_array, arr_candidate_id, arr_feature, index_cwid_sub)
+    DFS(docid, edges, startid, res_array, arr_candidate_id, arr_feature, index_cwid_sub)
     res_array.pop()
 
-
-
-
-
-# TODO 
-# X 1. build directed graph
-# X 2. build edges across variable
-# 3. DFS output candidates
-# 4. Unit test
-
-
-  # # # MATCHING DATA FORMAT:
-  # # [ 
-  # #   # a variable (thisvar =)
-  # #   [
-  # #     (candidate_id1, [w1 w2... wn])  # a candidate
-  # #     (candidate_id2, [w1 w2... wn])  # a candidate
-  # #   ]
-  # # ]
-
-  # # GENERATE DATA with one pass
-  # for i in range(len(arr_candid)):
-  #   varid = arr_varid[i]
-  #   candidate_id = arr_cand_word_id[i]
-  #   word = arr_candid[i]
-
-  #   if candidate_id != last_candidate_id \
-  #       or varid != last_varid:  # redundant: candidate_id is unique
-  #     thisvar.append( (last_candidate_id, thiscand) )
-  #     last_candidate_id = candidate_id
-  #     thiscand = []
-
-  #   if varid != last_varid:
-  #     data.append(thisvar)
-  #     last_varid = varid
-  #     thisvar = []
-
-  #   thiscand.append(word)
-
-  # if not os.path.exists(SUPV_DIR + '/' + docid + '.seq'):
-  #   print >>sys.stderr, 'SUPERVISION DATA NOT EXISTS:',SUPV_DIR + '/' + docid + '.seq'
-  #   sys.exit(1);
-
-  # supervision_sequence = [l.strip().decode('utf-8') for l in open(SUPV_DIR + '/' + docid + '.seq').readlines()]
-  # matches, matched_candidate_ids, f, path, records = candmatch.Match(data, supervision_sequence)
-
-  # print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
-
-  # statdir = '/lfs/local/0/zifei/bestpick-result/'
-  # if not os.path.exists(statdir):
-  #   os.makedirs(statdir)
-  # fout = open(statdir + docid + '.stat', 'w')
-  # print >>fout, '\t'.join([str(s) for s in [
-  #   docid, matches, len(supervision_sequence), 
-  #   '(%.4f)' % (matches / float(len(supervision_sequence)))
-  #   ]])
-  # fout.close()
-
-  # fout = codecs.open(statdir + docid + '.seq', 'w', 'utf-8')
-  # matched_candidate_ids_index = set(matched_candidate_ids)
-  # for var in data:
-  #   for cand in var:
-  #     if cand[0] in matched_candidate_ids_index:
-  #       for w in cand[1]:
-  #         print >>fout, w
-  # fout.close()
-
-
-  # for cid in matched_candidate_ids:
-  #   print json.dumps({
-  #     "docid": docid,
-  #     "candidate_id": int(cid),
-  #     "label": True
-  #     })

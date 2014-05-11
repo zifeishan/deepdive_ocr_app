@@ -59,12 +59,16 @@ second half:
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
     OR 
     /dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/
+    OR
+    /dfs/hulk/0/zifei/ocr/supervision/
 
 ## Processed evaluation data
 
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/evaluation/
     OR 
     /dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
+    OR
+    /dfs/hulk/0/zifei/ocr/evaluation/
 
 ## Google Ngram
     /dfs/madmax/0/zifei/google-ngram/1gram/
@@ -72,6 +76,10 @@ second half:
     OR
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/google-ngram/1gram/
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/google-ngram/2gram/
+    OR 
+    /dfs/hulk/0/zifei/ocr/google-ngram/1gram/
+    /dfs/hulk/0/zifei/ocr/google-ngram/2gram/ngram_2_reduced.tsv
+
 <!-- /dfs/madmax3/0/ -->
 
 

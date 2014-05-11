@@ -27,7 +27,6 @@ if __name__ == "__main__":
   os.system('psql -c "'+pq+'" '+dbname)
 
   pq = 'create table '+table_name+'''(
-    id BIGSERIAL PRIMARY KEY,
     gram TEXT,
     count REAL);''' 
   print pq

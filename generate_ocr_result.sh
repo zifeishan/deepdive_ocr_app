@@ -79,29 +79,29 @@ psql -c """copy (select docid, candidate_id, word from cand_word
   and docid in (select * from eval_docs)
   order by docid, varid, candid, wordid) to '$EXPORT_ROOT/ocr-output-words-cuneiform.tsv';""" $DBNAME
 
-psql -c """drop view if exists reasoning;""" $DBNAME
+# psql -c """drop view if exists reasoning;""" $DBNAME
 
-psql -c """create view reasoning as
-select
-  c.id,
-  c.candidate_id,
-  e.factor_id,
-  c.docid,
-  c.varid,
-  c.candid,
-  c.source,
-  c.word,
-  c.expectation,
-  c.bucket,
-  w.description, 
-  w.weight
-  from 
-  output_candidates as c,
-  dd_graph_edges as e,
-  dd_graph_factors as f,
-  dd_inference_result_variables_mapped_weights as w
-where e.variable_id = c.id
-  and e.factor_id = f.id
-  and f.weight_id = w.id
-order by c.docid, c.varid, c.candid
-;""" $DBNAME
+# psql -c """create view reasoning as
+# select
+#   c.id,
+#   c.candidate_id,
+#   e.factor_id,
+#   c.docid,
+#   c.varid,
+#   c.candid,
+#   c.source,
+#   c.word,
+#   c.expectation,
+#   c.bucket,
+#   w.description, 
+#   w.weight
+#   from 
+#   output_candidates as c,
+#   dd_graph_edges as e,
+#   dd_graph_factors as f,
+#   dd_inference_result_variables_mapped_weights as w
+# where e.variable_id = c.id
+#   and e.factor_id = f.id
+#   and f.weight_id = w.id
+# order by c.docid, c.varid, c.candid
+# ;""" $DBNAME

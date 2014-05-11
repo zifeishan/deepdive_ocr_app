@@ -1,1 +1,0 @@
-from mylabelextractor import *

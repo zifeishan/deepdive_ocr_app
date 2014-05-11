@@ -2,11 +2,10 @@
 
 if [ $# = 1 ]; then
   export DBNAME=$1
-else
-  export DBNAME=ddocr
+# else
+#   export DBNAME=ddocr
 fi
-echo "Set DB_NAME to ${DBNAME}."
-echo "HOST is ${PGHOST}, PORT is ${PGPORT}."
+export PGDATABASE=$DBNAME
 
 # export DBNAME=ddocr
 # export DBNAME=ddocr_large
@@ -14,6 +13,9 @@ export DB_NAME=${DBNAME}
 export PGUSER=${PGUSER:-`whoami`}
 export PGPASSWORD=${PGPASSWORD:-}
 export PG_PORT=${PGPORT:5432}
+
+echo "Set DB_NAME to ${DBNAME}."
+echo "HOST is ${PGHOST}, PORT is ${PGPORT}."
 
 export DEEPDIVE_HOME=`cd $(dirname $0)/../..; pwd`
 export APP_HOME=`pwd`

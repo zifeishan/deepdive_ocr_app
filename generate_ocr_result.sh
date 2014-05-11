@@ -23,9 +23,9 @@ CREATE TABLE output_candidates AS
 select c.*, array_agg(word order by wordid) as word, random() as random_number
 from candidate_label_inference_bucketed as c, cand_word
  where c.docid in (select * from eval_docs) 
- and cand_word.candidate_id = c.id
+ and cand_word.candidate_id = c.candidate_id
  group by 
- c.docid, c.id, c.variable_id, c.varid, c.candid, c.source, c.label, c.category, c.expectation, c.bucket, cand_word.candidate_id
+ c.id, c.docid, c.candidate_id, c.variable_id, c.varid, c.candid, c.source, c.label, c.category, c.expectation, c.bucket, cand_word.candidate_id
  order by c.docid, c.varid, random_number
 DISTRIBUTED BY (docid);
 """ $DBNAME
@@ -49,15 +49,23 @@ psql -c """
 # break ties
 psql -c """delete from output_words
 where id in 
-(select w1.id from output_words as w1,output_words as w2 where w1.random_number < w2.random_number and w1.variable_id = w2.variable_id)
+(select w1.candidate_id
+  from output_words as w1,
+  output_words as w2 
+  where w1.random_number < w2.random_number 
+  and w1.variable_id = w2.variable_id)
 ;
 """ $DBNAME
 
 # psql -c """copy (select docid, varid || '-' || source || '-' || wordid, word from cand_word where candidate_id in (select id from output_words) order by docid, varid, candid, wordid) 
 # to '$EXPORT_ROOT/ocr-output-words.tsv'""" $DBNAME
 
+psql -c """COPY (SELECT * FROM eval_docs) 
+to STDOUT """ $DBNAME > $EXPORT_ROOT/ocr-eval-docs.tsv
+
+
 ### TODO use same varid to enable strict evaluation matching
-psql -c """copy (select docid, candidate_id, word from cand_word where candidate_id in (select id from output_words) order by docid, varid, candid, wordid) 
+psql -c """copy (select docid, candidate_id, word from cand_word where candidate_id in (select candidate_id from output_words) order by docid, varid, candid, wordid) 
 to '$EXPORT_ROOT/ocr-output-words.tsv'""" $DBNAME
 
 
@@ -76,6 +84,7 @@ psql -c """drop view if exists reasoning;""" $DBNAME
 psql -c """create view reasoning as
 select
   c.id,
+  c.candidate_id,
   e.factor_id,
   c.docid,
   c.varid,

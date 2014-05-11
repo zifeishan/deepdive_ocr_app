@@ -1,0 +1,3 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(/afs/cs.stanford.edu/u/zifei/repos/deepdive/src/main/resources/application.conf,/afs/cs.stanford.edu/u/zifei/repos/deepdive/target/scala-2.10/classes/application.conf)[0m
+[0m[[0mdebug[0m] [0m	(/afs/cs.stanford.edu/u/zifei/repos/deepdive/src/main/resources/logback.xml,/afs/cs.stanford.edu/u/zifei/repos/deepdive/target/scala-2.10/classes/logback.xml)[0m

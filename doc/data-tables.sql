@@ -1,28 +1,135 @@
-create table candidate(id BIGSERIAL PRIMARY KEY, 
+create table orderaware_supv_label(id BIGSERIAL PRIMARY KEY, 
   docid TEXT,
-  wordid INT,
+  candidate_id BIGSERIAL,
+  label BOOLEAN
+  );
+
+------- NEW DESIGN
+-- Remember: all attributes in same table;
+-- Remember BCNF.
+
+create table variable(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  varid INT,
+  label INT);
+
+create table candidate(id BIGSERIAL PRIMARY KEY, 
+  variable_id BIGSERIAL,
+  docid TEXT, -- redundancy
+  varid INT,  -- redundancy
   candid INT,
+  source TEXT,
+  label BOOLEAN);
+
+create table cand_word(id BIGSERIAL PRIMARY KEY, 
+  candidate_id BIGSERIAL,
+  docid TEXT,
+  varid INT, -- start from 1
+  candid INT, -- start from 0, multinomial, according to source
+  source TEXT, -- 1-1 mapping to source
+  wordid INT, -- start from 0
+  word TEXT,
+  page INT, 
+  l INT, 
+  t INT, 
+  r INT, 
+  b INT,  
+  pos TEXT,
+  ner TEXT,
+  stem TEXT);
+
+create table document(id bigserial primary key, 
+  docid text);
+
+-- INSERTS
+insert into document(docid) select distinct docid from cand_word;
+
+insert into variable(docid, varid) select distinct docid, varid from cand_word order by docid, varid;
+
+insert into candidate(variable_id, docid, varid, candid, source) 
+  select distinct variable.id as variable_id, variable.docid, variable.varid, candid, source
+  from cand_word, variable 
+    where variable.docid = cand_word.docid
+      and variable.varid = cand_word.varid
+  order by variable_id, candid, source;
+
+-- Update cand_word
+update cand_word 
+  set candidate_id = candidate.id
+  from candidate
+  where cand_word.docid = candidate.docid
+    and cand_word.varid = candidate.varid
+    and cand_word.candid = candidate.candid
+  ;
+
+-- NO NATURAL JOINS!!!!
+create table cand_label(id BIGSERIAL PRIMARY KEY, 
+  label BOOLEAN);
+
+-- select distinct docid into document from candidate;
+drop table if exists document;
+create table document(id bigserial primary key, docid text);
+insert into document(docid) select distinct docid from candidate;
+
+
+create table html_1gram(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  word1 TEXT,
+  freq INT);
+
+create table html_2gram(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  word1 TEXT,
+  word2 TEXT,
+  freq INT);
+
+create table html_3gram(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  word1 TEXT,
+  word2 TEXT,
+  word3 TEXT,
+  freq INT);
+
+create table candidate_with_word(
+  docid TEXT,
+  boxid INT,
+  candid_tot INT,
   source TEXT,
   word TEXT);
 
+TODO: 
+select docid, boxid, array_agg(word), array_agg(candid_tot), array_agg(source) from candidate_with_word group by docid, boxid limit 300;
+
+
+create table candidate(id BIGSERIAL PRIMARY KEY, 
+  docid TEXT,
+  boxid INT,
+  candid INT,
+  source TEXT);
+
+create table cand_word(id BIGSERIAL PRIMARY KEY, 
+  candidate_id BIGSERIAL REFERENCES candidate(id),
+  wordid INT,
+  word TEXT);
+
+
 -- JOURNAL_28971 1 0 C Cretaceous
 
+-- create table cand_box(id BIGSERIAL PRIMARY KEY, docid TEXT, candid INT, wordid INT, page INT, l INT, t INT, r INT, b INT);
+
 create table cand_box(id BIGSERIAL PRIMARY KEY, 
-  docid TEXT, 
-  wordid INT, 
-  candid INT,
+  cand_word_id BIGSERIAL REFERENCES cand_word(id),
   page INT,
   l INT,
   t INT,
   r INT,
   b INT);
 
+
 -- JOURNAL_28971 1 0 1 1003  202 1132  221
 
 create table cand_feature(id BIGSERIAL PRIMARY KEY, 
-  docid TEXT, 
-  wordid INT, 
-  candid INT,
+  cand_word_id BIGSERIAL REFERENCES cand_word(id),
   pos TEXT,
   ner TEXT,
   stem TEXT);
@@ -30,14 +137,19 @@ create table cand_feature(id BIGSERIAL PRIMARY KEY,
 -- JOURNAL_28971 1 1 JJ  ORGANIZATION  cretaceous
 
 create table feature(id BIGSERIAL PRIMARY KEY, 
-  candidateid BIGSERIAL REFERENCES candidate(id),
+  cand_word_id BIGSERIAL REFERENCES cand_word(id),
   fname TEXT,
   fval BOOLEAN);
 
+-- One label for each new "candidate"
+create table cand_label(id BIGSERIAL PRIMARY KEY, 
+  candidate_id BIGSERIAL REFERENCES candidate(id),
+  label BOOLEAN);
 
 
 
 
+-- ================ Very old =====================
 
 
 

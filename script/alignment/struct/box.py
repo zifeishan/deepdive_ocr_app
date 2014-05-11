@@ -41,7 +41,7 @@ class Box:
   def SetPage(self, page):
     self._page = int(page)
 
-  def SetThreshold(threshold):
+  def SetThreshold(self, threshold):
     self._threshold = threshold
 
   def IsEmpty(self):

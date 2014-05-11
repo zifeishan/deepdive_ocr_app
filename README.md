@@ -18,16 +18,69 @@ How to run the system
 - Create a *ddocr* database (`createdb ddocr`)
 - Change the application.conf `db.default.user` entry to yours.
 - If necessary, add database connection details to `run.sh`
-- Execute `run.sh`
+- Prepare your OCR output data, Google ngram data, distant supervision data.
+- Execute `prepare_supv_data.sh` to load supervision data into database
+- Execute `load_ngram_to_db.sh` to load Google Ngram data into database
+- Do OCR Alignment by `script/AlignJournals.py`
+- Execute `prepare_data.sh` to load aligned OCR outputs to databse.
+- Execute `run.sh`.
 
 
 
 Datasets
 ----
 
+## Raw OCR Results
+
     140,982  /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL
      43,487  /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15
      14,646  /lfs/madmax3/0/czhang/cleanpaleo/NLPRS_jan20_overlap.22/
+
+## Candidates
+
+    # /dfs/madmax3/0/zifei/deepdive/app/ocr/data/journals-output-new
+    <!-- THIS IS WRONG!!! -->
+
+    OR:
+    /dfs/madmax/0/zifei/deepdive/app/ocr/data/journals-output
+
+## Supervision HTMLs
+
+first half:
+
+    17,506  /dfs/madmax5/0/zifei/deepdive/app/ocr/data/output-140508
+
+second half:
+
+    20,040  /dfs/madmax5/0/zifei/deepdive/app/ocr/data/output-secondhalf
+
+## Processed supervision data
+
+    /dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
+    OR 
+    /dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/
+    OR
+    /dfs/hulk/0/zifei/ocr/supervision/
+
+## Processed evaluation data
+
+    /dfs/madmax5/0/zifei/deepdive/app/ocr/data/evaluation/
+    OR 
+    /dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
+    OR
+    /dfs/hulk/0/zifei/ocr/evaluation/
+
+## Google Ngram
+    /dfs/madmax/0/zifei/google-ngram/1gram/
+    /dfs/madmax/0/zifei/google-ngram/2gram/
+    OR
+    /dfs/madmax5/0/zifei/deepdive/app/ocr/data/google-ngram/1gram/
+    /dfs/madmax5/0/zifei/deepdive/app/ocr/data/google-ngram/2gram/
+    OR 
+    /dfs/hulk/0/zifei/ocr/google-ngram/1gram/
+    /dfs/hulk/0/zifei/ocr/google-ngram/2gram/ngram_2_reduced.tsv
+
+<!-- /dfs/madmax3/0/ -->
 
 
 

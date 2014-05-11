@@ -12,6 +12,8 @@
 
 # Should be used as AFTER function of an extractor that generates temporal_table_to_fold.
 
+# ASSUME: column [rowid_col] is sequential and starts from 1.
+
 # Works better with a run script with iterations, changing input KFOLD_ITER.
 
 # e.g.: after: ${APP_HOME}"/udf/kfold.py "${KFOLD_NUM}" "${KFOLD_ITER}" filtered_labels label_t label_c"
@@ -25,7 +27,8 @@ if len(sys.argv) >= 5:
   KFOLD_NUM = sys.argv[1]
   KFOLD_ITER = sys.argv[2]
   table = sys.argv[3]
-  remove_vars = sys.argv[4:]
+  rowid_col = sys.argv[4]
+  remove_vars = sys.argv[5:]
 
 else:
   print 'Usage:',sys.argv[0],'KFOLD_NUM KFOLD_ITER temporal_table_to_fold query_col_1 query_col_2 ...'
@@ -39,8 +42,8 @@ numrows = 'select count(*) from ' + table
 updatequery = ' '.join(
   ['UPDATE', table, 'SET', 
    ','.join([var + '= NULL' for var in remove_vars]),
-   'where id < ('+ numrows + ') * ' + KFOLD_ITER + ' / '
-   + KFOLD_NUM + ' and id >= ('+ numrows + ') * (' + 
+   'where '+ rowid_col +' <= ('+ numrows + ') * ' + KFOLD_ITER + ' / '
+   + KFOLD_NUM + ' and ' + rowid_col + ' > ('+ numrows + ') * (' + 
     KFOLD_ITER + ' - 1) / '+ KFOLD_NUM + ';'])
 
 sql_queries.append(updatequery)

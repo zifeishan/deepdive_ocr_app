@@ -3,7 +3,7 @@ import time
 from pyquery import PyQuery
 import codecs
 
-SLEEP_BETWEEN_REQUEST = 0
+SLEEP_BETWEEN_REQUEST = 10
 
 def ReadURL(url):
   trytime = 0

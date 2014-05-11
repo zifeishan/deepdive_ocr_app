@@ -19,8 +19,8 @@ UNSURE_ORI = 'UO'
 SURE_SUGG = 'SS'
 UNSURE_SUGG = 'US'
 
-import enchant
-dictionary = enchant.Dict("en_US")
+# import enchant
+# dictionary = enchant.Dict("en_US")
 import re
 strip_pattern = re.compile('\W')
 

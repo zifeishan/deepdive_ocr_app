@@ -43,49 +43,121 @@ def AlignBoxedFromPath(findpaths, docid, output_base):
   cindex = Combiner.BuildBoxIndexByPage(cwords)
   allwords = {'T': tindex, 'C': cindex}
 
-  page_words = Combiner.CombineWords(allwords)
+  page_words, wccsizes = Combiner.CombineWords(allwords)
 
   if not os.path.exists(output_base):
     os.makedirs(output_base)
 
+
   foutbase = output_base + '/' + docid
-  fcand = open(foutbase + '.cand', 'w')
-  fcandfeat = open(foutbase + '.candfeature', 'w')
-  fcandbox = open(foutbase + '.candbox', 'w')
+
+  # Count wcc sizes
+  fwcc = open(foutbase + '.wccsize', 'w')
+  for size in sorted(wccsizes.keys()):
+    print >>fwcc, str(size) + '\t' + str(wccsizes[size])
+  fwcc.close()
+
+  fcandword = open(foutbase + '.cand_word', 'w')
+  lastdocid = ''
+  lastvarid = ''
+  source_candid = {}
+  source_wordid_counter = {} # count how many words are in different candidates
+
+  # fcand = open(foutbase + '.cand', 'w')
+  # fcandfeat = open(foutbase + '.candfeature', 'w')
+  # fcandbox = open(foutbase + '.candbox', 'w')
   
-  wordid = 0
+  # wordid = 0
+  varid = 0
   for pageid in page_words: 
-    for word in page_words[pageid]:
+    for wcc in page_words[pageid]:
       # pageid : [[cand1, cand2], [cand1, cand2, cand3]..]
       # '\t'.join([can[0], can[1].GetPrinted(), can[2].GetContent()])
-      wordid += 1  # Start from 1!!!
-      for candid in range(0, len(word)):
-        cand = word[candid]
+      # wordid += 1  # Start from 1!!!
+      varid += 1  # Start from 1!!!
 
-        ocrid = cand[0]
-        candword = cand[2].GetContent()
+      # Only output distinct candidates
+      source_cand_map = {}
+      for candid_tot in range(0, len(wcc)):
+        cand = wcc[candid_tot]
+        source = cand[0]
+        if source not in source_cand_map:
+          source_cand_map[source] = []
+        source_cand_map[source].append(cand[2].GetContent())
+      # Select distinct candidates
+      distinct_cands = {}
+      source_to_cand_map = {}
+      for source in source_cand_map:
+        cand = '\t'.join(source_cand_map[source])
+        if cand not in distinct_cands:
+          distinct_cands[cand] = ''
+        distinct_cands[cand] += source
+
+
+      for candid_tot in range(0, len(wcc)):
+        cand = wcc[candid_tot]
+
+        # ocrid = cand[0]
+        source = cand[0]
+
+        # Test Distinct
+        candstr = '\t'.join(source_cand_map[source])
+        sourcestr = distinct_cands[candstr]
+
+        if len(sourcestr) > 1 and source != 'T':  # agree, CT, only output T
+          continue
+
+        source = sourcestr
+
+        # candword = cand[2].GetContent()
+        word = cand[2].GetContent()
         page = cand[1].GetPage()
         boxes = cand[1].GetBoxes()
         pos = cand[2].GetPOS()
         ner = cand[2].GetNER()
         lemma = cand[2].GetLemma()
 
-        print >>fcand, '\t'.join([str(s) for s in [
-          docid, wordid, candid, ocrid, candword
-          ]])
-        print >>fcandbox, '\t'.join([str(s) for s in [
-          docid, wordid, candid, page] + boxes
+        if lastdocid != docid or lastvarid != varid:  # clean counter
+          source_candid = {}
+          source_wordid_counter = {}
+
+        lastdocid = docid
+        lastvarid = varid
+
+        if source not in source_candid:
+          source_candid[source] = len(source_candid)  # start from 0
+          source_wordid_counter[source] = 0
+          # print docid, varid, source_candid, source_wordid_counter
+          # raw_input()
+
+        candid = str(source_candid[source])
+        wordid = str(source_wordid_counter[source])
+        source_wordid_counter[source] += 1
+
+        print >>fcandword, '\t'.join(
+          [str(s) for s in 
+            [docid, varid, candid, source, wordid, word, page] + boxes + [pos, ner, lemma]
           ])
-        if ocrid == 'T':
-          print >>fcandfeat, '\t'.join([str(s) for s in [
-          docid, wordid, candid, pos, ner, lemma
-          ]])
 
-  print 'Total words:',wordid
+        # print >>fcand, '\t'.join([str(s) for s in [
+        #   docid, wordid, candid_tot, ocrid, candword
+        #   ]])
+        # print >>fcandbox, '\t'.join([str(s) for s in [
+        #   docid, wordid, candid_tot, page] + boxes
+        #   ])
+        # if ocrid == 'T':
+        #   print >>fcandfeat, '\t'.join([str(s) for s in [
+        #   docid, wordid, candid_tot, pos, ner, lemma
+        #   ]])
 
-  fcand.close()
-  fcandfeat.close()
-  fcandbox.close()
+
+  print 'Total words:',varid
+
+  # fcand.close()
+  # fcandfeat.close()
+  # fcandbox.close()
+
+  fcandword.close()
 
 
 
@@ -183,7 +255,7 @@ def Align(urlbase, output_base, isDir=False, boxedCunei = False):
 if __name__ == "__main__": 
   if len(sys.argv) == 2:
     path = sys.argv[1]
-    AlignBoxedFromPath([path], 'JOURNAL_145413', './test')
+    AlignBoxedFromPath([path], 'TEST_JOURNAL', './test')
   else:
     print 'Usage:',sys.argv[0],'<path>'
     sys.exit(1)

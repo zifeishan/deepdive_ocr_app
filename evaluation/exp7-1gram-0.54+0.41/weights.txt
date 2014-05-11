@@ -1,0 +1,7 @@
+-936409637	0	false	f_1gram_pos()
+-936479201	0	false	f_1gram_neg()
+-958164149	0	false	f_same_equal()
+-438889396	0	false	f_agree_bonus()
+963570574	100000	true	f_simple_constraint()
+-1949063794	0	false	f_ocr_bias(candidate.source=Some(C))
+-1949063267	0	false	f_ocr_bias(candidate.source=Some(T))

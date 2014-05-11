@@ -1,0 +1,19 @@
+ddocr=# select * from inference_result_mapped_weights;
+     id      | initial_value | is_fixed |               description                |      weight
+-------------+---------------+----------+------------------------------------------+-------------------
+   963570574 |             0 | f        | f_simple_constraint()                    | -179780.542259326
+ -1949063794 |             0 | f        | f_ocr_bias(candidate.source=Some(C))     | -8927.98435515972
+ -1949063267 |             0 | f        | f_ocr_bias(candidate.source=Some(T))     |  4130.89760882995
+  -958164149 |             0 | f        | f_same_equal()                           |  3699.25723711029
+  -438889396 |             0 | f        | f_agree_bonus()                          |  3266.50029100397
+    76240437 |             0 | f        | f_naivefeature(feature.fname=Some(wl))   |                 0
+    76235694 |             0 | f        | f_naivefeature(feature.fname=Some(rn))   |                 0
+ -1931567245 |             0 | f        | f_naivefeature(feature.fname=Some(upp))  |                 0
+   418101421 |             0 | f        | f_naivefeature(feature.fname=Some({))    |                 0
+ -1931567648 |             0 | f        | f_naivefeature(feature.fname=Some(upc))  |                 0
+    76235663 |             0 | f        | f_naivefeature(feature.fname=Some(rm))   |                 0
+   418099003 |             0 | f        | f_naivefeature(feature.fname=Some(-))    |                 0
+   418099034 |             0 | f        | f_naivefeature(feature.fname=Some(.))    |                 0
+   235039028 |             0 | f        | f_naivefeature(feature.fname=Some(dict)) |                 0
+   418098972 |             0 | f        | f_naivefeature(feature.fname=Some(,))    |                 0
+(15 rows)

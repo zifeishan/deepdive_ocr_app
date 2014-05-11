@@ -11,14 +11,22 @@ if __name__ == "__main__":
 
     fids = [s.strip().split('\t')[0] for s in open(inputurls).readlines()]
 
-    firstdir = '/lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15/'
-    seconddir = '/lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL/'
+    # firstdir = '/dfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15/'
+    # seconddir = '/dfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL/'
+    firstdir = '/dfs/madmax/0/zifei/cleanpaleo/TORUNEXT_feb15/'
+    seconddir = '/dfs/madmax/0/zifei/cleanpaleo/TORUNEXT_JOURNAL/'
 
     print fids[:100]
-    # raw_input()
-
-    ferr = open('errlog.txt', 'w')
+    
+    # Align each file
     for fid in fids:
+      print 'Aligning', fid,'...'
+      # Already aligned (cand file not empty), skip
+      candpath = output_base + '/' + fid + '.cand'
+      if os.path.exists(candpath) and os.path.getsize(candpath) > 0:
+        print fid, 'already processed, skipped.'
+        continue
+
       findpaths = [firstdir + fid + '.pdf.task/', seconddir + fid + '.pdf.task/']
       Align.AlignBoxedFromPath(findpaths, fid, output_base)
 

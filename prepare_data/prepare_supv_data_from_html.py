@@ -3,6 +3,9 @@
 # NEW: ignore existing files in output dir
 
 import codecs
+import HTMLParser
+
+htmlparser = HTMLParser.HTMLParser()
 
 import sys, os
 # from pyquery import PyQuery
@@ -62,6 +65,7 @@ for f in files:
   print 'Processing', docid
   htmlpath = path + '/' + f
   html = open(htmlpath).read()
+
   html = re.sub('\&lt;', '<', html)
   html = re.sub('\&gt;', '>', html)
   html = re.sub('&nbsp;', ' ', html)  # handle html non-breaking spaces
@@ -102,7 +106,10 @@ for f in files:
 
     fragtext = frag.findAll(text=True)
     visible_texts = filter(visible, fragtext)
-    text += ' '.join(visible_texts) + ' '
+
+    decoded = htmlparser.unescape(visible_texts)
+    
+    text += ' '.join(decoded) + ' '
     text = re.sub(' +', ' ', text)  # Multiple spaces to only one
 
     # text += '\n'  # between each fragment

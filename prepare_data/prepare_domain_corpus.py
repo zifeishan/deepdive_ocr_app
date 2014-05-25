@@ -14,7 +14,7 @@ else:
   sys.exit(1)
 
 os.system('''
-psql -c "DROP TABLE IF EXISTS domain_corpus_seq CASCADE;" '''+dbname+'''
+psql -c "DROP TABLE IF EXISTS domain_corpus CASCADE;" '''+dbname+'''
 ''')
 
 os.system('''
@@ -23,27 +23,28 @@ psql -c """DROP TABLE IF EXISTS err; CREATE TABLE err (cmdtime timestamp with ti
 ''')
 
 os.system('''
-psql -c """create table domain_corpus_seq(
-    doc_id  BIGINT,
-    wordid BIGSERIAL,
-    word   TEXT) 
-    DISTRIBUTED BY (doc_id); """ '''+dbname+'''
+psql -c """create table domain_corpus(
+    docid  TEXT,
+    article TEXT) 
+    DISTRIBUTED BY (docid); """ '''+dbname+'''
 ''')
 
-doc_id = 1
+doc_num = 1
 files = os.listdir(path)
 
 for filename in files:
-  if not filename.endswith('.seq'):
+  if not filename.endswith('.seq_aggregated'):
     continue
-  docid = filename[:-len('.seq')]
+  docid = filename[:-len('.seq_aggregated')]
   print 'Loading', docid
-  filepath = path + '/' + docid + '.seq'
+  filepath = path + '/' + docid + '.seq_aggregated'
   if not os.path.exists(filepath):
     print 'PATH NOT EXISTS:', filepath
     continue
 
-  os.system('''sed \'s/\\\\/\\\\\\\\/g\' '''+filepath+''' | sed \'s/$/\\t%d/\' | psql -c "COPY domain_corpus_seq(word, doc_id) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000 ROWS;" ''' % (doc_id)+ dbname)
-  doc_id += 1
+  os.system('''sed \'s/\\\\/\\\\\\\\/g\' '''+filepath+''' | psql -c "COPY domain_corpus(docid, article) FROM STDIN LOG ERRORS INTO err SEGMENT REJECT LIMIT 1000 ROWS;" ''' + dbname)
+  doc_num += 1
+  if doc_num % 1000 == 0:
+    print 'Getting ',doc_num,'th Document...'
 
-os.system('''psql -c "ANALYZE domain_corpus_seq;" '''+dbname)
+os.system('''psql -c "ANALYZE domain_corpus;" '''+dbname)

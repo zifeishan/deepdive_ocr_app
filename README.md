@@ -60,6 +60,12 @@ or TOTAL:
 
 ## Escaped supervision / evaluation data:
 
+How to prepare: (e.g.)
+
+```bash
+bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /dfs/hulk/0/zifei/ocr/evaluation_escaped_2/
+```
+
     /dfs/hulk/0/zifei/ocr/supervision_escaped/
     /dfs/hulk/0/zifei/ocr/evaluation_escaped/
 

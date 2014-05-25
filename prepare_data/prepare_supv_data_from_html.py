@@ -121,11 +121,12 @@ for f in files:
     fragtext = frag.findAll(text=True)
     visible_texts = filter(visible, fragtext)
 
-    decoded = htmlparser.unescape(visible_texts)
+    thistext = ' '.join(visible_texts) + ' '
+    thistext = htmlparser.unescape(thistext)  # Decode
+    thistext = re.sub('\xa0', ' ', thistext)  # HTML space
+    thistext = re.sub(' +', ' ', thistext)  # Multiple spaces to only one
 
-    text += ' '.join(decoded) + ' '
-    text = re.sub(' +', ' ', text)  # Multiple spaces to only one
-
+    text += thistext
     # text += '\n'  # between each fragment
 
   # text = pq.find('.page_fragment').text()

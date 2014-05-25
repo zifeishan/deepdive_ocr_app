@@ -1,10 +1,10 @@
 
 def UpperPunish(word):
-  if len(word) == 0:
+  if len(word[1:]) == 0:
     return 0
   uppercase = 0
   lowercase = 0
-  for char in word:
+  for char in word[1:]:
     if char.islower():
       lowercase += 1
     if char.isupper():

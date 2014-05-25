@@ -48,11 +48,20 @@ Datasets
 
 first half:
 
-    17,506  /dfs/madmax5/0/zifei/deepdive/app/ocr/data/output-140508
+    17,506  /dfs/madmax5/0/zifei/deepdive/app/ocr/data/sd-html/output-140508
 
 second half:
 
     20,040  /dfs/madmax5/0/zifei/deepdive/app/ocr/data/output-secondhalf
+
+or TOTAL:
+    
+    /dfs/hulk/0/zifei/ocr/sd-html/
+
+## Escaped supervision / evaluation data:
+
+    /dfs/hulk/0/zifei/ocr/supervision_escaped/
+    /dfs/hulk/0/zifei/ocr/evaluation_escaped/
 
 ## Processed supervision data
 
@@ -78,7 +87,7 @@ second half:
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/google-ngram/2gram/
     OR 
     /dfs/hulk/0/zifei/ocr/google-ngram/1gram/
-    /dfs/hulk/0/zifei/ocr/google-ngram/2gram/ngram_2_reduced.tsv
+    /dfs/hulk/0/zifei/ocr/google-ngram/ngram_2_reduced.tsv
 
 <!-- /dfs/madmax3/0/ -->
 

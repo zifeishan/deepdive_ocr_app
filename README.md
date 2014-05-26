@@ -69,6 +69,7 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
     /dfs/hulk/0/zifei/ocr/supervision_escaped/
     /dfs/hulk/0/zifei/ocr/evaluation_escaped/
 
+<!-- 
 ## Processed supervision data (bad escape)
 
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
@@ -84,7 +85,7 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
     /dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
     OR
     /dfs/hulk/0/zifei/ocr/evaluation/
-
+ -->
 ## Google Ngram
     /dfs/madmax/0/zifei/google-ngram/1gram/
     /dfs/madmax/0/zifei/google-ngram/2gram/
@@ -95,6 +96,10 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
     /dfs/hulk/0/zifei/ocr/google-ngram/1gram/
     /dfs/hulk/0/zifei/ocr/google-ngram/1gram.tsv
     /dfs/hulk/0/zifei/ocr/google-ngram/2gram_reduced.tsv
+
+## Domain corpus (HTML aggregated by docid)
+
+    /dfs/hulk/0/zifei/ocr/domain-corpus/domain-corpus.tsv
 
 <!-- /dfs/madmax3/0/ -->
 

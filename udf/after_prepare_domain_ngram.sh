@@ -1,4 +1,4 @@
-psql -c "drop table if exists domain_$1gram cascade;
+psql -c "DROP TABLE IF EXISTS domain_$1gram CASCADE;
 " $DB_NAME
 
 psql -c "

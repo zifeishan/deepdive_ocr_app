@@ -10,7 +10,7 @@ if len(sys.argv) == 3:
   path = sys.argv[2]
 else:
   print 'Usage:',sys.argv[0],'DBNAME DOMAIN_CORPUS_DIR'
-  print 'e.g. python %s ddocr_100 /dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/' % (sys.argv[0])
+  print 'e.g. python %s ddocr_100 /dfs/hulk/0/zifei/ocr/supervision/' % (sys.argv[0])
   sys.exit(1)
 
 os.system('''

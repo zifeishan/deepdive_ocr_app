@@ -13,7 +13,7 @@ if len(sys.argv) == 4:
   doclist = sys.argv[3]
 else:
   print 'Usage:',sys.argv[0],'DBNAME SUPV_DIR DOCID_LIST'
-  print 'e.g. python load_aligned_ocr_outputs_from_list.py ddocr_100 /dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/ ../data/doclist/doclist-100.txt'
+  print 'e.g. python %s ddocr_100 /dfs/madmax/0/zifei/deepdive/app/ocr/data/supervision/ ../data/doclist/doclist-100.txt' % sys.argv[0]
   sys.exit(1)
 
 

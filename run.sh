@@ -1,8 +1,21 @@
 #! /bin/bash
 
-if [ $# = 2 ]; then
+if hash psql 2>/dev/null; then  # check psql exists
+    true
+else
+    echo 'ERROR: psql does not exist.'
+    exit
+fi
+
+if [ $# = 2 ]; then          # Export DBNAME from command line
   export SUPV_GRAM_LEN=$1
   export DBNAME=$2
+fi
+
+if [ -z "$DBNAME" ]; then # if empty
+  echo 'ERROR: DBNAME is unset.'
+  echo 'Usage: '$0' SUPV_GRAM_LEN DBNAME'
+  exit
 fi
 
 export PGDATABASE=$DBNAME
@@ -52,7 +65,9 @@ cd $DEEPDIVE_HOME
 
 echo 'Running SBT...'
 # SBT_OPTS="-Xmx128g -XX:MaxHeapSize=8g" sbt/sbt "run -c $APP_HOME/application.conf"
-SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
+# SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
+deepdive -c $APP_HOME/application.conf
+
 # SBT_OPTS="-Xmx2g -XX:MaxHeapSize=2g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
 
 

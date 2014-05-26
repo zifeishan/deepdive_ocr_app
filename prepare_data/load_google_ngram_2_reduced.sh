@@ -7,7 +7,6 @@ psql -c "
   DROP TABLE IF EXISTS ngram_2_reduced CASCADE;
   
   CREATE TABLE ngram_2_reduced(
-    id bigint,
     gram text,
     count real
     ) DISTRIBUTED BY (gram);

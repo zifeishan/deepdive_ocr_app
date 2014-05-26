@@ -6,7 +6,11 @@ psql -c "
   SELECT   ngram, sum(count) as count
   FROM     tmp_domain_$1gram
   WHERE    count >= $2
-  GROUP BY ngram
+    AND    NOT EXISTS (
+           SELECT * 
+           FROM eval_docs 
+           WHERE eval_docs.docid = tmp_domain_$1gram.docid
+  ) GROUP BY ngram
   DISTRIBUTED BY (ngram);
 " $DB_NAME
 

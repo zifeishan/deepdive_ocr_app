@@ -69,7 +69,7 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
     /dfs/hulk/0/zifei/ocr/supervision_escaped/
     /dfs/hulk/0/zifei/ocr/evaluation_escaped/
 
-## Processed supervision data
+## Processed supervision data (bad escape)
 
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
     OR 
@@ -77,7 +77,7 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
     OR
     /dfs/hulk/0/zifei/ocr/supervision/
 
-## Processed evaluation data
+## Processed evaluation data (bad escape)
 
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/evaluation/
     OR 
@@ -93,7 +93,8 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/google-ngram/2gram/
     OR 
     /dfs/hulk/0/zifei/ocr/google-ngram/1gram/
-    /dfs/hulk/0/zifei/ocr/google-ngram/ngram_2_reduced.tsv
+    /dfs/hulk/0/zifei/ocr/google-ngram/1gram.tsv
+    /dfs/hulk/0/zifei/ocr/google-ngram/2gram_reduced.tsv
 
 <!-- /dfs/madmax3/0/ -->
 

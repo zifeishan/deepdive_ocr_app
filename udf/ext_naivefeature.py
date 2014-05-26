@@ -16,7 +16,7 @@ if 'FEATURE_LIB_PATH' in os.environ:
 else:
   sys.path.append('script')
 
-print >>sys.stderr, 'FEATURE_LIB_PATH:', flibpath
+# print >>sys.stderr, 'FEATURE_LIB_PATH:', flibpath
 
 # from alignment import *
 from naivefeature import *

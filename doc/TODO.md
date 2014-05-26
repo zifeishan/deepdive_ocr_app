@@ -1,23 +1,12 @@
-  Make tasks not cancellable?
-X spouse symmetry!
-/ changed grongdFactorGraph. Fix tests
+  May 26:
+  - run pipeline with TEXT ids
+  - compare order aware supervision
+  - is new learning problem because of the "each" ngram feature? why?
 
-  None??
+  - if FE takes too long, try on a 30 dataset...
 
-X -a 20 -l OptimalSize
-  DELETE FILES!!
-X db.default
-
-X Fix plpy!
-
-  GPLOAD: put into copy manager..
-
-  Finish tasks for code push!
-X - '\N' for TSV copy! document it!!
-X - IDs for spouse!
-X - documentation of walkthrough! new id!!
-X - Extarctors no longer help you fill IDs!
-X - in json_extractor you must return EVERY column!!
+  - ERROR ANALYSIS with gnu diff! 
+  - See what's the feature needed!
 
   OCR: 
   - Change plot to Err Red rates
@@ -25,27 +14,10 @@ X - in json_extractor you must return EVERY column!!
     - (what's the plot like when supervised with optimal labels?)
 
 
-X Fix -P 0 to -P 1!! Cannot use arbitrary long parallelism..
-
-  Fix bash -> JDBC
-! Fix SELECT "AS" in plpy
-/ New code path!
-
   OCR: 
   - TUNE ngram feature COUNT parameter
 X - PLOT comparisons with T/C/Best (evaluation/plot-*.py)
 
-X ext_people: >10X
-X ext_has_spouse_candidates: 20k -> 7664 ms (3X)
-X ext_has_spouse_features: >10X
-/ System bug: do not stop on errors!! (bash)
-
-X Feature Extraction:
-X - ddext.py: parse .py and save to /tmp/ext.py.sql(?), managed by scala
-X - write another script to take the "input" query and generate expected query. (maybe in Scala)
-
-X weight for deepdive
-X -skiplearn for deepdive!!
 
   Write script: generate 2gram
   Backup order-aware supv result

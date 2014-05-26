@@ -11,7 +11,7 @@ def init():
 
 def run(docid, words, gram_len, count_filter):
   ngrams = {}
-  if words == null: return  # null when article is empty
+  if words == None: return  # null when article is empty
   for i in range(0, len(words) - gram_len + 1):
     gram = ' '.join(words[i : i + gram_len])
     if gram not in ngrams:

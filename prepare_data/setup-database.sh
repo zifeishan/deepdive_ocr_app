@@ -32,9 +32,9 @@ GOOGLE_2GRAM_TSV: $GOOGLE_2GRAM_TSV
 # createdb $DBNAME
 # if [ "$?" != "0" ]; then echo "[00] FAILED! Database cannot exist."; exit 1; fi
 
-echo "loading aligned OCR outputs..."
-pypy load_aligned_ocr_outputs_from_list.py $DBNAME $CAND_DIR $DOCLIST
-if [ "$?" != "0" ]; then echo "[10] FAILED!"; exit 1; fi
+# echo "loading aligned OCR outputs..."
+# pypy load_aligned_ocr_outputs_from_list.py $DBNAME $CAND_DIR $DOCLIST
+# if [ "$?" != "0" ]; then echo "[10] FAILED!"; exit 1; fi
 
 # echo "loading supervision sequence..."
 # pypy load_supervision_seq_from_list.py $DBNAME $SUPV_DIR $DOCLIST
@@ -46,9 +46,9 @@ if [ "$?" != "0" ]; then echo "[10] FAILED!"; exit 1; fi
 
 # if [ "$?" != "0" ]; then echo "[30] FAILED!"; exit 1; fi
 
-# echo "Loading google 2gram..."
-# bash load_google_ngram_from_dump.sh $GOOGLE_2GRAM_TSV $DBNAME google_2gram_reduced
-# if [ "$?" != "0" ]; then echo "[40] FAILED!"; exit 1; fi
+echo "Loading google 2gram..."
+bash load_google_ngram_from_dump.sh $GOOGLE_2GRAM_TSV $DBNAME google_2gram_reduced
+if [ "$?" != "0" ]; then echo "[40] FAILED!"; exit 1; fi
 
 # echo "Loading domain corpus..."
 # # pypy load_domain_corpus.py $DBNAME $SUPV_DIR

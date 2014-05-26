@@ -25,8 +25,8 @@ os.system('''psql -c """DROP TABLE IF EXISTS err; CREATE TABLE err (cmdtime time
 os.system('''psql -c "drop table if exists cand_word CASCADE;" '''+dbname)
 os.system('''psql -c """
   CREATE TABLE cand_word(
-    cand_word_id  BIGINT,
-    candidate_id  BIGINT,
+    cand_word_id  TEXT,
+    candidate_id  TEXT,
     docid         TEXT,
     varid         INT,      -- start from 1
     candid        INT,      -- start from 0, according to source

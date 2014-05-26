@@ -126,6 +126,6 @@ for row in sys.stdin:
   for cid in matched_candidate_ids:
     print json.dumps({
       "docid": docid,
-      "candidate_id": int(cid),
+      "candidate_id": cid,
       "label": True
       })

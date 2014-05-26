@@ -9,7 +9,7 @@ psql -c "DROP TABLE IF EXISTS feature CASCADE;" $DB_NAME
 
 psql -c """create table feature(
   docid         TEXT,
-  cand_word_id  BIGINT,
+  cand_word_id  TEXT,
   fname         TEXT,
   fval          BOOLEAN
   ) DISTRIBUTED BY(docid);

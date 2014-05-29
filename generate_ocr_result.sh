@@ -10,14 +10,8 @@ export EXPORT_ROOT='/tmp'
 
 psql -c """drop table if exists output_candidates, output_words cascade; """ $DBNAME
 
-# psql -c """select cand_label_label_inference_bucketed.id as id, candidate.id as candidateid, docid, wordid, candid, source, word, expectation, bucket, random() as random_number
-# into output_candidates
-# from cand_label_label_inference_bucketed right join candidate on candidateid=candidate.id 
-#  where docid in (select * from eval_docs) 
-#  order by docid, wordid, random_number
-# ;
-# """ $DBNAME
 
+# All candidates with their expectation
 psql -c """
 CREATE TABLE output_candidates AS
 select c.*, array_agg(word order by wordid) as word, random() as random_number
@@ -30,32 +24,48 @@ from candidate_label_inference_bucketed as c, cand_word
 DISTRIBUTED BY (docid);
 """ $DBNAME
 
+# psql -c """create view maxp as 
+# select variable_id, max(docid) as docid, max(varid) as varid, max(expectation) as maxp, max(random_number) as maxrand 
+# from output_candidates group by variable_id;
+# """ $DBNAME
 
-psql -c """create view maxp as 
-select variable_id, max(docid) as docid, max(varid) as varid, max(expectation) as maxp, max(random_number) as maxrand 
-from output_candidates group by variable_id;
-""" $DBNAME
+# psql -c """
+#   CREATE TABLE output_words AS 
+#     select output_candidates.*
+#     from output_candidates join maxp
+#     on  output_candidates.variable_id = maxp.variable_id
+#     and output_candidates.expectation = maxp.maxp
+#     -- and output_candidates.random_number = maxp.maxrand
+#   DISTRIBUTED BY (docid);
+# """ $DBNAME
+
+# # break ties
+# psql -c """delete from output_words
+# where candidate_id in 
+# (select w1.candidate_id
+#   from output_words as w1,
+#   output_words as w2 
+#   where w1.random_number < w2.random_number 
+#   and w1.variable_id = w2.variable_id)
+# ;
+# """ $DBNAME
 
 psql -c """
   CREATE TABLE output_words AS 
-    select output_candidates.*
-    from output_candidates join maxp
-    on  output_candidates.variable_id = maxp.variable_id
-    and output_candidates.expectation = maxp.maxp
-    -- and output_candidates.random_number = maxp.maxrand
+    select * from output_candidates 
   DISTRIBUTED BY (docid);
 """ $DBNAME
 
 # break ties
-psql -c """delete from output_words
-where id in 
-(select w1.candidate_id
-  from output_words as w1,
-  output_words as w2 
-  where w1.random_number < w2.random_number 
-  and w1.variable_id = w2.variable_id)
-;
+psql -c """
+DELETE FROM output_words as w1
+WHERE EXISTS 
+(   SELECT * FROM output_words as w2
+    WHERE w1.docid = w2.docid
+    AND   w1.variable_id = w2.variable_id
+    AND   w1.random_number < w2.random_number);
 """ $DBNAME
+
 
 # psql -c """copy (select docid, varid || '-' || source || '-' || wordid, word from cand_word where candidate_id in (select id from output_words) order by docid, varid, candid, wordid) 
 # to '$EXPORT_ROOT/ocr-output-words.tsv'""" $DBNAME

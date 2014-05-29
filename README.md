@@ -86,6 +86,7 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
     OR
     /dfs/hulk/0/zifei/ocr/evaluation/
  -->
+
 ## Google Ngram
     /dfs/madmax/0/zifei/google-ngram/1gram/
     /dfs/madmax/0/zifei/google-ngram/2gram/
@@ -96,6 +97,12 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
     /dfs/hulk/0/zifei/ocr/google-ngram/1gram/
     /dfs/hulk/0/zifei/ocr/google-ngram/1gram.tsv
     /dfs/hulk/0/zifei/ocr/google-ngram/2gram_reduced.tsv
+
+## Web Ngram (filtered by 10000)
+
+    /dfs/hulk/0/zifei/ocr/web_ngram/3gram.tsv
+    /dfs/hulk/0/zifei/ocr/web_ngram/4gram.tsv
+    /dfs/hulk/0/zifei/ocr/web_ngram/5gram.tsv
 
 ## Domain corpus (HTML aggregated by docid)
 

@@ -83,3 +83,6 @@ deepdive -c $APP_HOME/application.conf
 # echo 'Evaluating Cuneiform:'
 # pypy ocr-evaluation.py /tmp/ocr-output-words-cuneiform.tsv data/test-evaluation/ output-cuni/ eval-results-cuni.txt
 
+cd $APP_HOME
+./run-evaluation.sh
+python plot-eval-recall.py

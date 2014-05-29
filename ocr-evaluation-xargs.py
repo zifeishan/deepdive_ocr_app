@@ -7,16 +7,25 @@ import sys
 import json
 from collections import defaultdict
 
-dd_output_tsv = ''
-eval_path_base = ''
-output_stat_path = ''
+# New: Add segmentation option!
+# DO_SEGMENT = True
+# SEGMENT_CMD = 'CLASSPATH=util/stanford-parser.jar java edu.stanford.nlp.process.PTBTokenizer -options "ptb3Escaping=false" '
+
+# dd_output_tsv = ''
+# eval_path_base = ''
+# output_stat_path = ''
+# this_docid = ''
+# output_sequence_path = ''
 
 docid_filter = None
+# if len(sys.argv) >= 6:
 if len(sys.argv) >= 5:
   dd_output_tsv = sys.argv[1]
   eval_path_base = sys.argv[2]
   output_stat_path = sys.argv[3]
   this_docid = sys.argv[4]
+  # output_sequence_path = sys.argv[5]
+
 
 else:
   print 'Usage:',sys.argv[0], 'dd_output_tsv eval_path_base output_stat_path docid'
@@ -47,7 +56,7 @@ for line in lines:
 
 # doc_candid_word_index:  docid: { candid : [w1,w2,..] }
 # doc_candidate_ids:      docid: [ candid1, candid2.. ]
-eval_data = {}
+eval_data = {}  # dd output data for evaluation
 for docid in doc_candid_word_index:
   eval_data[docid] = []
   index = doc_candid_word_index[docid]

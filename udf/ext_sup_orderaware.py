@@ -22,6 +22,7 @@ bestpick_dir = ''
 if len(sys.argv) >= 3:
     bestpick_dir = sys.argv[1]
     SUPV_DIR = sys.argv[2]
+    print >>sys.stderr, "NOTE: you should already EMPTY the directory", SUPV_DIR
     print >>sys.stderr, "Using EVAL_DIR as SUPV_DIR:", SUPV_DIR
     print >>sys.stderr, "Storing bestpick results into:", bestpick_dir
 
@@ -91,6 +92,8 @@ for row in sys.stdin:
       thisvar = []
 
     thiscand.append(word)
+
+  # TODO didn't add the last element?
 
   if not os.path.exists(SUPV_DIR + '/' + docid + '.seq'):
     print >>sys.stderr, 'SUPERVISION DATA NOT EXISTS:',SUPV_DIR + '/' + docid + '.seq'

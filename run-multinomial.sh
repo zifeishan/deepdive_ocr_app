@@ -65,8 +65,8 @@ cd $DEEPDIVE_HOME
 
 echo 'Running SBT...'
 # SBT_OPTS="-Xmx128g -XX:MaxHeapSize=8g" sbt/sbt "run -c $APP_HOME/application.conf"
-# SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
-deepdive -c $APP_HOME/application.conf
+SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application-multinomial.conf"
+# deepdive -c $APP_HOME/application-multinomial.conf
 
 # SBT_OPTS="-Xmx2g -XX:MaxHeapSize=2g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
 

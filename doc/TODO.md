@@ -1,3 +1,37 @@
+  TODO: debug orderaware 
+    SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/ pypy udf/ext_sup_orderaware.py </tmp/ext_sup_orderaware.input
+
+  - We CAN do a DP over lattice same as SPEECH, without changing data tables! Just a different way of building graphs ("edges" table)...
+
+  TODO: parameter space for candidate generation
+
+X DONE: Spell corrector with non-alphabet chars..! UTF8! Domain corpus!
+  - 100 docs:
+  - 20-thread parallel with pypy
+  - 180 seconds
+  - 96050 new candidates (119618 new cand words)
+
+? Spell slides say: “80% of errors are within edit distance 1
+  Almost all errors within edit distance 2”
+
+
+  STEPS:
+X 1. generate a candidate that appears in this document by edit distance
+  2. generate a candidate that appears in domain corpus by edit distance
+  3. splits / combines / ...
+
+Talked with Chris: Candidate generation
+
+1. knowledge base as a dictionary (Lexical & syntactic features)
+2. cooccurence statistics: 
+  - fixing two Nouns / NPs, what's the bag of words between them?
+  - fixing a word sequence (pattern; is married to, etc), what's the thing at the two ends?
+
+
+## FUTURE:
+- add Latin parser
+- add stanford parser + "FW" -> Latin word / *Italic font*
+
   May 26:
   - run pipeline with TEXT ids
   - compare order aware supervision

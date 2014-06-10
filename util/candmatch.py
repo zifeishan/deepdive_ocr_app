@@ -19,6 +19,7 @@ def ElemMatch(cands, supvseq, index):
     # match = True
     matchnum = 0
 
+    # TODO this is rediculous... DO a real DP!
     words_tomatch = supvseq[index : index + len(cand_arr)]
     for i in range(len(words_tomatch)):
       ###### DO NOT BREAK IF ONE WORD IS WRONG!
@@ -42,6 +43,8 @@ def ElemMatch(cands, supvseq, index):
 # return matches, matched_candidate_ids
 def Match(data, supvseq):
   
+  print len(data)
+  print '\n'.join([str(x) for x in data[:10]])
   # F: longest matching up to ith element from arr1 and and jth from arr2
   arr1 = data
   arr2 = supvseq

@@ -81,10 +81,12 @@ i = 0
 for dname in plotdata:
   ploty = plotdata[dname]
   plotx = range(len(docids))
+  my_xticks = [ d[len('JOURNAL_'):] for d in  docids]
+  plt.xticks(plotx, my_xticks, rotation=45)  # Adding custom sticks
   plt.plot(plotx, ploty, colors[i])
   i += 1
   
-pylab.ylim([0.77, max(plotdata['opti'])])
+pylab.ylim([0.85, max(plotdata['opti'])])
 plt.legend(tuple([name for name in plotdata]), loc='best')
 plt.savefig('pick-result.eps')
 plt.clf()

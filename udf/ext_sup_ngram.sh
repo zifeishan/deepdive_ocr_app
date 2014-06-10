@@ -1,5 +1,6 @@
 #! /usr/bin/env bash
 
+echo "Positive examples (rough):"
 psql -c "
 
   UPDATE candidate 
@@ -16,14 +17,23 @@ psql -c "
     ;
 
 " $DB_NAME
+echo "Negative examples:"
 psql -c "
 
-  UPDATE candidate 
+  UPDATE candidate c1
   SET    label = FALSE
-  WHERE  label IS NULL;
-
+  WHERE   label IS NULL 
+    AND   EXISTS (        -- UPDATE: treat not aligned guys as unknown
+      SELECT * 
+      FROM candidate c2
+      WHERE c1.docid = c2.docid
+      AND   c1.variable_id = c2.variable_id
+      AND   c1.candidate_id != c2.candidate_id
+      AND   c2.label = true
+      );
 " $DB_NAME
-psql -c "
+echo "Break ties:"
+psql -c "        --- Treat duplicated guys as unknown
 
   UPDATE candidate AS c1
   SET    label = null
@@ -37,3 +47,10 @@ psql -c "
 " $DB_NAME
 
 psql -c "ANALYZE candidate;" $DB_NAME
+
+# Check
+psql -c "
+  SELECT source, label, count(*) FROM candidate
+  GROUP BY source, label
+  ORDER BY source, label;
+" $DBNAME 

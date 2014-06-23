@@ -12,5 +12,6 @@ psql -c """create table feature(
   cand_word_id  TEXT,
   fname         TEXT,
   fval          BOOLEAN
-  ) DISTRIBUTED BY(docid);
+  ) 
+-- DISTRIBUTED BY(docid);
 """ $DB_NAME

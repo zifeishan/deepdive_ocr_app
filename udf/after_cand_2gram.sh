@@ -13,7 +13,7 @@ psql -c """
 		select cand_2gram.*, count 
 		from cand_2gram, ngram_2_reduced
 	where count > 1000 and ngram = gram
-	DISTRIBUTED BY (docid);
+	-- DISTRIBUTED BY (docid);
 	""" $DBNAME
 
 # TODO TUNE parameter A
@@ -28,7 +28,7 @@ CREATE TABLE cand_2gram_somepos_candidates AS
 	where cand_word.cand_word_id = t.cand_word_id
 	  AND cand_word.docid = t.docid
 	group by cand_word.docid, cand_word.candidate_id
-	DISTRIBUTED BY (docid);
+	-- DISTRIBUTED BY (docid);
 	""" $DBNAME
 
 
@@ -90,7 +90,7 @@ CREATE TABLE cand_2gram_someneg_candidates AS
 		and   t.docid 			 = cand_word.docid
 	)
 	group by cand_word.docid, cand_word.candidate_id
-DISTRIBUTED BY (docid);
+-- DISTRIBUTED BY (docid);
 """ $DBNAME
 
 

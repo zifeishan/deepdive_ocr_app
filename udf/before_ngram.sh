@@ -7,5 +7,5 @@ psql -c """
     candidate_id TEXT,
     ngram text,
     count int)
-DISTRIBUTED BY (docid);
+-- DISTRIBUTED BY (docid);
 """ $DBNAME

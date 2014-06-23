@@ -1,21 +1,22 @@
 # Clean up cand_word
 echo "Updating cand_word and candidate..."
 psql -c "
-  INSERT INTO cand_word(cand_word_id, candidate_id, docid, varid, candid, source, wordid, word)
-  SELECT cand_word_id, candidate_id, docid, varid, candid, source, wordid, word 
+  INSERT INTO cand_word(docid, cand_word_id, candidate_id, varid, candid, source, wordid, word)
+  SELECT docid, cand_word_id, candidate_id, varid, candid, source, wordid, word 
   FROM generated_cand_word;
-" $DB_NAME
+" $DBNAME
 
-psql -c "ANALYZE cand_word;" $DB_NAME
+psql -c "ANALYZE cand_word;" $DBNAME
 
 psql -c "INSERT INTO candidate (
-               variable_id, candidate_id, docid, varid, candid, source) 
-        SELECT (docid || '@' || varid) as variable_id,
-                candidate_id, docid, varid, candid, source
+               docid, variable_id, candidate_id, varid, candid, source) 
+        SELECT  docid,
+                (docid || '@' || varid) as variable_id,
+                candidate_id,  varid, candid, source
         FROM    generated_cand_word
         GROUP BY docid, candidate_id, varid, candid, source
         
         ;
-" $DB_NAME
+" $DBNAME
 
-psql -c "ANALYZE candidate;" $DB_NAME
+psql -c "ANALYZE candidate;" $DBNAME

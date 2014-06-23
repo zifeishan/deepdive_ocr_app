@@ -8,4 +8,4 @@ psql -c """create table cand_$1gram(
   candidate_id  TEXT,
   ngram         TEXT
   )
-DISTRIBUTED BY (docid);""" $DB_NAME
+-- DISTRIBUTED BY (docid);""" $DB_NAME

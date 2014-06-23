@@ -161,9 +161,9 @@ for row in sys.stdin:
       
       for wordid in range(len(words)):
         print '\t'.join([ str(_) for _ in [
+          docid, # docid
           candidate_id + '.' + str(wordid), # cand_word_id
           candidate_id, # candidate_id
-          docid, # docid
           varid, # varid
           candid, # candid
           source, # source

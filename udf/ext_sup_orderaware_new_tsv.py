@@ -4,7 +4,8 @@ import sys, os, codecs
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(BASE_DIR + '/../util')
-import latticematch
+# import latticematch
+import latticematch_singlepath as latticematch
 
 # Import query:
 '''
@@ -17,8 +18,8 @@ FROM    cand_word
 GROUP BY docid
 '''
 
-# SUPV_DIR = os.environ['SUPV_DIR']
-SUPV_DIR='/dfs/hulk/0/zifei/ocr/supervision_escaped/'
+SUPV_DIR = os.environ['SUPV_DIR']
+# SUPV_DIR='/dfs/hulk/0/zifei/ocr/supervision_escaped/'
 bestpick_dir = ''
 
 OUTPUT_FREQUENCY = 1
@@ -31,13 +32,15 @@ if len(sys.argv) >= 3:
   print >>sys.stderr, "Using EVAL_DIR as SUPV_DIR:", SUPV_DIR
   print >>sys.stderr, "Storing bestpick results into:", bestpick_dir
 
-
+tot_edge_count = 0
 
 # Build graph
 def AddEdge(edges, f, t):
   if f not in edges:
     edges[f] = []
   edges[f].append(t)
+  global tot_edge_count
+  tot_edge_count += 1
 
 
 ################## MAIN FUNCTION ####################
@@ -53,11 +56,12 @@ for row in sys.stdin:
   wordids = [int(x) for x in wordids.split(',')]
   words = words.split('~~~^^^~~~')
 
-  # # DEBUG
-  # varids = varids[:20]
-  # candids = candids[:20]
-  # wordids = wordids[:20]
-  # words = words[:20]
+  # DEBUG
+  SAMPLESIZE = 1000
+  varids = varids[:SAMPLESIZE]
+  candids = candids[:SAMPLESIZE]
+  wordids = wordids[:SAMPLESIZE]
+  words = words[:SAMPLESIZE]
 
   # They should have same length
   assert len(words) == len(varids) and len(words) == len(candids) and len(words) == len(wordids)
@@ -81,8 +85,8 @@ for row in sys.stdin:
   # TODO l.strip().decode('utf-8')
   transcript = [l.strip() for l in open(transcript_file).readlines()]
 
-  # # DEBUG
-  # transcript = transcript[:20]
+  # DEBUG
+  transcript = transcript[:SAMPLESIZE]
   # for i in range(20):
   #   print varids[i], candids[i], wordids[i], words[i]
   # print transcript
@@ -143,6 +147,7 @@ for row in sys.stdin:
           j = index_vcw_sub[v + 1][c][0]
           AddEdge(edges, unique_wordids[i], unique_wordids[j])
 
+  print >>sys.stderr, "#Edges: ", tot_edge_count
   # DEBUG
   # print '\n'.join([k +'\t'+ str(edges[k]) for k in sorted(edges.keys())])
   ############# 2. Return DP result

@@ -26,6 +26,10 @@ export DB_NAME=${DBNAME}
 export PGUSER=${PGUSER:-`whoami`}
 export PGPASSWORD=${PGPASSWORD:-}
 export PG_PORT=${PGPORT:5432}
+if [ -z "$BESTPICK_DIR" ]; then # if empty
+  export BESTPICK_DIR=/lfs/local/0/zifei/bestpick-result/
+  echo "Bestpick dir: $BESTPICK_DIR"
+fi
 
 echo "Set DB_NAME to ${DBNAME}."
 echo "HOST is ${PGHOST}, PORT is ${PGPORT}."
@@ -40,7 +44,7 @@ export APP_HOME=`pwd`
 
 # $APP_HOME/prepare_data.sh
 # 20 have resource problem
-export MAX_PARALLELISM=15
+# export MAX_PARALLELISM=15
 export CALI_FRACTION=0.25
 export KFOLD_ITER=1
 export KFOLD_NUM=4
@@ -54,12 +58,16 @@ export DICT_FILE=$APP_HOME/util/words
 # export SUPV_DIR=$APP_HOME/data/test-supervision
 # # export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
 
-# # LARGE
-# export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
-export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
-# for eval bestpick
-# export EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
-export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation_escaped/
+if [ -z "$SUPV_DIR" ]; then # if empty
+  export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
+fi
+
+if [ -z "$EVAL_DIR" ]; then # if empty
+  export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation_escaped/
+fi
+if [ -z "$MAX_PARALLELISM" ]; then # if empty
+  export MAX_PARALLELISM=15
+fi
 
 cd $DEEPDIVE_HOME
 
@@ -83,13 +91,14 @@ deepdive -c $APP_HOME/bestpick.conf
 # echo 'Evaluating Cuneiform:'
 # pypy ocr-evaluation.py /tmp/ocr-output-words-cuneiform.tsv data/test-evaluation/ output-cuni/ eval-results-cuni.txt
 
-# cd $APP_HOME
+cd $APP_HOME
 # ./run-evaluation.sh
 # python plot-eval-recall.py
 
 mkdir -p evaluation/bestpick-optimal-fuzzy/
-cat /lfs/local/0/zifei/bestpick-result/*.stat.1 > evaluation/bestpick-optimal-fuzzy/opt.1.txt
-cat /lfs/local/0/zifei/bestpick-result/*.stat.2 > evaluation/bestpick-optimal-fuzzy/opt.2.txt
-cat /lfs/local/0/zifei/bestpick-result/*.stat.3 > evaluation/bestpick-optimal-fuzzy/opt.3.txt
-cat /lfs/local/0/zifei/bestpick-result/*.stat.4 > evaluation/bestpick-optimal-fuzzy/opt.4.txt
-cat /lfs/local/0/zifei/bestpick-result/*.stat.5 > evaluation/bestpick-optimal-fuzzy/opt.5.txt
+cat $BESTPICK_DIR/*.stat.0 > evaluation/bestpick-optimal-fuzzy/opt.0.txt
+cat $BESTPICK_DIR/*.stat.1 > evaluation/bestpick-optimal-fuzzy/opt.1.txt
+cat $BESTPICK_DIR/*.stat.2 > evaluation/bestpick-optimal-fuzzy/opt.2.txt
+cat $BESTPICK_DIR/*.stat.3 > evaluation/bestpick-optimal-fuzzy/opt.3.txt
+cat $BESTPICK_DIR/*.stat.4 > evaluation/bestpick-optimal-fuzzy/opt.4.txt
+cat $BESTPICK_DIR/*.stat.5 > evaluation/bestpick-optimal-fuzzy/opt.5.txt

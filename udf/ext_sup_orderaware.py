@@ -22,6 +22,7 @@ bestpick_dir = ''
 
 min_distance = 0
 max_distance = 0
+sample_size = 0
 
 if len(sys.argv) >= 3:
     bestpick_dir = sys.argv[1]
@@ -31,10 +32,15 @@ if len(sys.argv) >= 3:
     print >>sys.stderr, "Storing bestpick results into:", bestpick_dir
     IS_EVALUATION = True
 
-    if len(sys.argv) == 5:
-      print >>sys.stderr, 'Distance range:', sys.argv[3:]
+    if len(sys.argv) >= 5:
+      print >>sys.stderr, 'Distance range:', sys.argv[3:5]
       min_distance = int(sys.argv[3])
       max_distance = int(sys.argv[4])
+
+    if len(sys.argv) >= 6:
+      print >>sys.stderr, 'Sample size:', sys.argv[5]
+      sample_size = int(sys.argv[5])
+      
 
 # For each input tuple
 for row in sys.stdin:
@@ -102,7 +108,9 @@ for row in sys.stdin:
       thiscand = []
 
     if varid != last_varid:
-      data.append(thisvar)
+      # restrict data length by sample size
+      if sample_size == 0 or len(data) < sample_size: 
+        data.append(thisvar)
       last_varid = varid
       thisvar = []
 
@@ -115,6 +123,8 @@ for row in sys.stdin:
     sys.exit(1);
 
   supervision_sequence = [l.strip().decode('utf-8') for l in open(SUPV_DIR + '/' + docid + '.seq').readlines()]
+  if sample_size != 0:
+    supervision_sequence = supervision_sequence[:sample_size]
 
   # print 'IS_EVALUATION:',IS_EVALUATION
   if not IS_EVALUATION:

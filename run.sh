@@ -40,7 +40,7 @@ export APP_HOME=`pwd`
 
 # $APP_HOME/prepare_data.sh
 # 20 have resource problem
-export MAX_PARALLELISM=15
+
 export CALI_FRACTION=0.25
 export KFOLD_ITER=1
 export KFOLD_NUM=4
@@ -54,12 +54,22 @@ export DICT_FILE=$APP_HOME/util/words
 # export SUPV_DIR=$APP_HOME/data/test-supervision
 # # export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
 
-# # LARGE
-# export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
-export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
-# for eval bestpick
-# export EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
-export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation_escaped/
+if [ -z "$SUPV_DIR" ]; then # if empty
+  export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
+fi
+
+if [ -z "$EVAL_DIR" ]; then # if empty
+  export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation_escaped/
+fi
+if [ -z "$MAX_PARALLELISM" ]; then # if empty
+  export MAX_PARALLELISM=15
+fi
+# # # LARGE
+# # export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
+# export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
+# # for eval bestpick
+# # export EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
+# export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation_escaped/
 
 cd $DEEPDIVE_HOME
 

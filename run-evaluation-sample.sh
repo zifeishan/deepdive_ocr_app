@@ -1,3 +1,5 @@
+export SAMPLE_SIZE=3000
+
 if [ "$#" -ne 1 ]; then
     echo "Usage: ... <dbname>. (uses PGHOST)"
 else
@@ -28,7 +30,7 @@ fi
 
 # pypy ocr-evaluation-strict.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results.txt
 
-cat $EVAL_LIST_FILE | xargs -P $MAXPARALLEL -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results/deepdive/$0.txt $0'
+cat $EVAL_LIST_FILE | xargs -P $MAXPARALLEL -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results/deepdive/$0.txt $0 $SAMPLE_SIZE'
 
 cat eval-results/deepdive/* > eval-results.txt
 

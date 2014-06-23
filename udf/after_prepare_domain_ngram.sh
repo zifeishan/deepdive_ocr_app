@@ -11,7 +11,7 @@ psql -c "
            FROM eval_docs 
            WHERE eval_docs.docid = doc_domain_$1gram.docid
   ) GROUP BY ngram
-  DISTRIBUTED BY (ngram);
+  -- DISTRIBUTED BY (ngram);
 " $DB_NAME
 
 # psql -c "

@@ -22,7 +22,7 @@ from candidate_label_inference_bucketed as c, cand_word
  group by 
  c.id, c.docid, c.candidate_id, c.variable_id, c.varid, c.candid, c.source, c.label, c.category, c.expectation, c.bucket, cand_word.candidate_id
  order by c.docid, c.varid, random_number
-DISTRIBUTED BY (docid);
+-- DISTRIBUTED BY (docid);
 " $DBNAME
 
 # psql -c "create view maxp as 
@@ -54,7 +54,7 @@ DISTRIBUTED BY (docid);
 psql -c "
   CREATE TABLE output_words AS 
     select * from output_candidates 
-  DISTRIBUTED BY (docid);
+  -- DISTRIBUTED BY (docid);
 " $DBNAME
 
 # break ties

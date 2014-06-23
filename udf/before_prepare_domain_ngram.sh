@@ -5,5 +5,6 @@ psql -c """create table doc_domain_$1gram(
   docid TEXT,
   ngram TEXT,
   count REAL
-  ) DISTRIBUTED BY (docid);
+  ) -- DISTRIBUTED BY (docid)
+;
 """ $DB_NAME

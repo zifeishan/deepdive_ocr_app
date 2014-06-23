@@ -1,6 +1,7 @@
 #! /usr/bin/python
 # File: latticematch.py
 import sys
+# from line_profiler import LineProfiler
 
 def ElemMatch(e1, e2):
   return e1 == e2
@@ -40,6 +41,8 @@ def orderedLattice(cids, edges):
         indegree[e] -= 1
         if indegree[e] == 0:
           visited.add(e)
+  # print lattice_ordered[:20]
+  # sys.exit(0)
   return lattice_ordered
 
 # DEBUG function
@@ -58,6 +61,7 @@ def PrintStatus(f, path, message=''):
 ################ THE CORE MATCH FUNCTION ##################
 # lattice_words: candidates (words in lattice)
 # trans_words: transcript words 
+# @profile
 def Match(lattice_words, trans_words, edges, candidate_ids, index_cid_sub):
   # F: longest matching up to ith element from lattice_words and and jth from trans_words
   n1 = len(lattice_words)
@@ -71,10 +75,11 @@ def Match(lattice_words, trans_words, edges, candidate_ids, index_cid_sub):
   f = [[0] * n2 for _ in range(n1)] # This is correct way, do not give a shallow copy!!  
   # f = { i:{j : 0 for j in range(0, n2)} for i in range(0, n1)}
   # an "array" for each grid in matrix
+  print >>sys.stderr,  'F: Init finished!'
 
   # This is too slow!
   # path = [[[] for _2 in range(n2)] for _ in range(n1)]
-  path = [[] for _ in range(n1 * n2)]
+  path = [0 for _ in range(n1 * n2)]
 
   def EncodeSub(i, j):
     return i * n2 + j
@@ -83,7 +88,7 @@ def Match(lattice_words, trans_words, edges, candidate_ids, index_cid_sub):
     return sub / n2, sub % n2
 
   
-  print >>sys.stderr,  'Init finished!'
+  print >>sys.stderr,  'Path: Init finished!'
 
   indegree = {}
 
@@ -106,10 +111,11 @@ def Match(lattice_words, trans_words, edges, candidate_ids, index_cid_sub):
   # Initialize zero-indegree with j=0
   for i_zero in zero_indegree_index:
     for j in range(n2):
-      if ElemMatch(lattice_words[i_zero], trans_words[j]):
+      # if ElemMatch(lattice_words[i_zero], trans_words[j]):
+      if lattice_words[i_zero] == trans_words[j]:
         f[i_zero][j] = 1
         # path[i_zero][j].append((-1, -1)) # match
-        path[EncodeSub(i_zero, j)].append((-1, -1)) # match
+        path[i_zero * n2 + j] = (-1, -1)
   
   PrintStatus(f, path, 'Initialization results:')
 
@@ -134,28 +140,29 @@ def Match(lattice_words, trans_words, edges, candidate_ids, index_cid_sub):
         i_succ_index = index_cid_sub[i_succ_cid]
         word_succ = lattice_words[i_succ_index]
         if i_succ_index < n1 and j+1 < n2 \
-          and ElemMatch(word_succ, trans_words[j+1]):
+          and word_succ == trans_words[j+1]:
+          # and ElemMatch(word_succ, trans_words[j+1]):
             if f[i_succ_index][j+1] < f[i_index][j] + 1:
               f[i_succ_index][j+1] = f[i_index][j] + 1
               # path[i_succ_index][j+1] = [(i_index,j)]    # Path stores index :P
-              path[EncodeSub(i_succ_index, j+1)] = [(i_index,j)]
+              path[i_succ_index * n2 + j+1] = (i_index,j)
 
-            elif f[i_succ_index][j+1] == f[i_index][j] + 1:
-              path[EncodeSub(i_succ_index, j+1)].append((i_index,j))
+            # elif f[i_succ_index][j+1] == f[i_index][j] + 1: # multipath
+            #   path[i_succ_index * n2 + j+1] = (i_index,j)
 
         if i_succ_index < n1: # shift down (to successor)
           if f[i_succ_index][j] < f[i_index][j]:
             f[i_succ_index][j] = f[i_index][j]
-            path[EncodeSub(i_succ_index, j)] = [(i_index, j)]
-          elif f[i_succ_index][j] == f[i_index][j]: # another best path
-            path[EncodeSub(i_succ_index, j)].append((i_index, j))
+            path[i_succ_index * n2 + j] = (i_index, j)
+          # elif f[i_succ_index][j] == f[i_index][j]: # another best path
+          #   path[i_succ_index * n2 + j].append((i_index, j))
 
       if j + 1 < n2: # shift right (to next word in transcript)
         if f[i_index][j+1] < f[i_index][j]:
           f[i_index][j+1] = f[i_index][j]
-          path[EncodeSub(i_index, j+1)] = [(i_index, j)]
-        elif f[i_index][j+1] == f[i_index][j]: # another best path
-          path[EncodeSub(i_index, j+1)].append((i_index, j))
+          path[i_index * n2 + j+1] = (i_index, j)
+        # elif f[i_index][j+1] == f[i_index][j]: # another best path
+        #   path[i_index * n2 + j+1].append((i_index, j))
 
   # Only match "diagonal" edges
   possible_opt_match_pairs = []  # can have cases like [(1,a) (2,a)] but have to be both optimal!
@@ -168,7 +175,9 @@ def Match(lattice_words, trans_words, edges, candidate_ids, index_cid_sub):
       return
     visited.add((i, j))   # mark as visited
     if i >= 0 and j >= 0:  # Terminate at "-1"s
-      for (pi, pj) in path[EncodeSub(i, j)]:
+      pair = path[i * n2 + j]
+      if pair != 0:
+        pi, pj = pair
         # i,j is a valid match: if pi != i, pi must be pred of i
         if pi != i and pj != j:
           possible_opt_match_pairs.append((i, j))
@@ -206,7 +215,9 @@ def Match(lattice_words, trans_words, edges, candidate_ids, index_cid_sub):
       continue
     visited.add((i, j))   # mark as visited
     if i >= 0 and j >= 0:  # Terminate at "-1"s
-      for (pi, pj) in path[EncodeSub(i, j)]:
+      pair = path[i * n2 + j]
+      if pair != 0:
+        pi, pj = pair
         # i,j is a valid match: if pi != i, pi must be pred of i
         if pi != i and pj != j:
           possible_opt_match_pairs.append((i, j))

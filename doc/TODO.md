@@ -1,4 +1,14 @@
-  TODO: debug orderaware 
+  TODO: make sure candgen plot makes sense by looking at "THE MATCHED WORDS"!!
+
+  TODO: Add KB. 
+  (entity and relation applies below:)
+    https://raw.githubusercontent.com/zhangce/cleanpaleo/master/dicts/supervision_occurrences.tsv
+
+    https://raw.githubusercontent.com/zhangce/cleanpaleo/master/dicts/paleodb_taxons.tsv
+
+    https://raw.githubusercontent.com/zhangce/cleanpaleo/master/dicts/intervals.tsv
+
+/ TODO: debug orderaware 
     SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/ pypy udf/ext_sup_orderaware.py </tmp/ext_sup_orderaware.input
 
   - We CAN do a DP over lattice same as SPEECH, without changing data tables! Just a different way of building graphs ("edges" table)...

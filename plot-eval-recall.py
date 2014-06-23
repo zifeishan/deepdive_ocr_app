@@ -3,6 +3,7 @@ import sys
 tesspath = "evaluation/bestpick-tess-eval-100.txt"
 cunipath = 'evaluation/bestpick-cuni-eval-100.txt'
 optimalpath = "evaluation/bestpick-optimal-eval-100.txt"
+fuzzypath = "evaluation/bestpick-optimal-fuzzy/"
 ddpath = 'eval-results.txt'
 
 # if len(sys.argv) == 3:
@@ -22,18 +23,25 @@ else:
 
 tess = [l.strip().split('\t') for l in open(tesspath).readlines()]
 cuni = [l.strip().split('\t') for l in open(cunipath).readlines()]
-opti = [l.strip().split('\t') for l in open(optimalpath).readlines()]
+opt = [l.strip().split('\t') for l in open(optimalpath).readlines()]
 dd = [l.strip().split('\t') for l in open(ddpath).readlines()]
 
 tess = [ (t[0], float(t[-1].strip('()'))) for t in tess]
 cuni = [ (t[0], float(t[-1].strip('()'))) for t in cuni]
 dd =   [ (t[0], float(t[-1])) for t in dd]
-opti = [ (t[0], float(t[-1].strip('()'))) for t in opti]
+opt = [ (t[0], float(t[-1].strip('()'))) for t in opt]
 
-data = {'tess':tess, 'opti':opti, 'dd':dd}
+data = {'tess':tess, 'opt':opt, 'dd':dd} # not added cuni
 
-docids = [_[0] for _ in sorted(data['opti'], key=lambda x:x[1])]
+for dist in range(1, 6):
+  path = fuzzypath + 'opt.%d.txt' % dist
+  tmp = [l.strip().split('\t') for l in open(path).readlines()]
+  tmp = [ (t[0], float(t[-1].strip('()'))) for t in tmp]
+  data['opt(%d)' % dist] = tmp
 
+docids = [_[0] for _ in sorted(data['opt'], key=lambda x:x[1])]
+
+plotorder = [i for i in reversed(['tess', 'dd', 'opt'] + ['opt(%d)' % i for i in range(1,6)] )]
 plotdata = {}
 for key in data:
   oldlist = data[key]
@@ -73,12 +81,13 @@ def PlotPrep(xlabel, ylabel, loglog=False):
   #   plt.legend(legends)
 
 PlotPrep(xlabel='Document ID', ylabel='Word Recall')
-colors = ['r', 
-    # 'b', 
-    'g', 'orange']
+colors = [i for i in reversed(['r', 'g', 'orange', 
+  'blue', 'yellow', 'purple', 'gray', 'black'
+  # '0.7', '0.6', '0.5', '0.4', '0.3'
+  ])]
 i = 0
 # plt.yscale('linear')
-for dname in plotdata:
+for dname in plotorder:
   ploty = plotdata[dname]
   plotx = range(len(docids))
   my_xticks = [ d[len('JOURNAL_'):] for d in  docids]
@@ -86,8 +95,10 @@ for dname in plotdata:
   plt.plot(plotx, ploty, colors[i])
   i += 1
   
-pylab.ylim([0.85, max(plotdata['opti'])])
-plt.legend(tuple([name for name in plotdata]), loc='best')
+maxscore = max( [ max(plotdata[name]) for name in plotdata ])
+# pylab.ylim([0.85, maxscore])
+pylab.ylim([0.85, 1])
+plt.legend(tuple([name for name in plotorder]), loc='lower right')
 plt.savefig('pick-result.eps')
 plt.clf()
 

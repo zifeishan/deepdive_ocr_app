@@ -17,7 +17,11 @@ import candmatch
 
 SUPV_DIR = os.environ['SUPV_DIR']
 
+IS_EVALUATION = False
 bestpick_dir = ''
+
+min_distance = 0
+max_distance = 0
 
 if len(sys.argv) >= 3:
     bestpick_dir = sys.argv[1]
@@ -25,6 +29,12 @@ if len(sys.argv) >= 3:
     print >>sys.stderr, "NOTE: you should already EMPTY the directory", SUPV_DIR
     print >>sys.stderr, "Using EVAL_DIR as SUPV_DIR:", SUPV_DIR
     print >>sys.stderr, "Storing bestpick results into:", bestpick_dir
+    IS_EVALUATION = True
+
+    if len(sys.argv) == 5:
+      print >>sys.stderr, 'Distance range:', sys.argv[3:]
+      min_distance = int(sys.argv[3])
+      max_distance = int(sys.argv[4])
 
 # For each input tuple
 for row in sys.stdin:
@@ -53,6 +63,11 @@ for row in sys.stdin:
   # arr_candid = obj['arr_candid']
   # arr_wordid = obj['arr_wordid']
   arr_word = obj['arr_word']
+
+  # # DEBUG
+  # arr_candidate_id = arr_candidate_id[:100]
+  # arr_varid = arr_varid[:100]
+  # arr_word = arr_word[:100]
 
   if len(arr_varid) == 0:
     print >>sys.stderr, 'Empty data:',docid
@@ -100,30 +115,42 @@ for row in sys.stdin:
     sys.exit(1);
 
   supervision_sequence = [l.strip().decode('utf-8') for l in open(SUPV_DIR + '/' + docid + '.seq').readlines()]
-  matches, matched_candidate_ids, f, path, records = candmatch.Match(data, supervision_sequence)
 
-  print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
+  # print 'IS_EVALUATION:',IS_EVALUATION
+  if not IS_EVALUATION:
+    matches, matched_candidate_ids, f, path, records = candmatch.Match(data, supervision_sequence)
 
-  # If output dir specified, store bestpick results
-  if bestpick_dir != '':
-    statdir = bestpick_dir
-    if not os.path.exists(statdir):
-      os.makedirs(statdir)
-    fout = open(statdir + docid + '.stat', 'w')
-    print >>fout, '\t'.join([str(s) for s in [
-      docid, matches, len(supervision_sequence), 
-      '(%.4f)' % (matches / float(len(supervision_sequence)))
-      ]])
-    fout.close()
+    print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
 
-    fout = codecs.open(statdir + docid + '.seq', 'w', 'utf-8')
-    matched_candidate_ids_index = set(matched_candidate_ids)
-    for var in data:
-      for cand in var:
-        if cand[0] in matched_candidate_ids_index:
-          for w in cand[1]:
-            print >>fout, w
-    fout.close()
+  else:  # is evaluation: generate optimal for 0--X
+    for dist in range(min_distance, max_distance + 1):
+
+      # print >>sys.stderr, 'Evaluating distance:', dist
+    
+
+      matches, matched_candidate_ids, f, path, records = candmatch.Match(data, supervision_sequence, dist)
+
+      print >>sys.stderr, 'D=%d: DOCID:' % dist, docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
+
+      # store bestpick results      
+      statdir = bestpick_dir
+      if not os.path.exists(statdir):
+        os.makedirs(statdir)
+      fout = open(statdir + docid + '.stat.' + str(dist), 'w')
+      print >>fout, '\t'.join([str(s) for s in [
+        docid, matches, len(supervision_sequence), 
+        '(%.4f)' % (matches / float(len(supervision_sequence)))
+        ]])
+      fout.close()
+
+      fout = codecs.open(statdir + docid + '.seq.' + str(dist), 'w', 'utf-8')
+      matched_candidate_ids_index = set(matched_candidate_ids)
+      for var in data:
+        for cand in var:
+          if cand[0] in matched_candidate_ids_index:
+            for w in cand[1]:
+              print >>fout, w
+      fout.close()
 
 
   for cid in matched_candidate_ids:

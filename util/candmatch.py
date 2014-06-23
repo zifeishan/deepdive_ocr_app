@@ -1,11 +1,39 @@
 #! /usr/bin/python
 
 import os, sys, codecs
+import Levenshtein
+
+dist_dict = {}
+hits = 0
+misses = 0
+
+def WordEqual(w1, w2, distance=0):  # use fuzzy equal
+  global equal_dict
+  global hits, misses
+
+  if distance == 0:
+    return w1 == w2
+  else:
+    # Optimize by memorizing comparisons
+    if (w1, w2) in dist_dict:
+      d = dist_dict[(w1, w2)]
+      hits += 1
+      return d <= distance
+      
+    else:
+      d = Levenshtein.distance(w1, w2)
+      dist_dict[(w1, w2)] = d
+      misses += 1
+      return d <= distance
+        
+
+    # return Levenshtein.distance(w1, w2) <= distance
+
 
 # e1: a variable. [cid, [wordseq]]
 # match each dandidate in cands, with supvseq[index]!
 # return: (T/F, [(candidate_id, cand_length_words, matchnum)])
-def ElemMatch(cands, supvseq, index):
+def ElemMatch(cands, supvseq, index, distance=0):
   # print 'Elemmatch:',cands, index  # DEBUG
   matches = []
   for pair in cands:
@@ -27,7 +55,8 @@ def ElemMatch(cands, supvseq, index):
       # if cand_arr[i] != words_tomatch[i]:
       #   match = False
       #   break
-      if cand_arr[i] == words_tomatch[i]:
+      if WordEqual(cand_arr[i], words_tomatch[i], distance):
+      # if cand_arr[i] == words_tomatch[i]:
         matchnum += 1
 
     if matchnum > 0:
@@ -41,10 +70,12 @@ def ElemMatch(cands, supvseq, index):
   
 
 # return matches, matched_candidate_ids
-def Match(data, supvseq):
+def Match(data, supvseq, distance=0):
   
-  print len(data)
-  print '\n'.join([str(x) for x in data[:10]])
+  # DEBUG
+  # print >>sys.stderr, len(data)
+  # print >>sys.stderr, '\n'.join([str(x) for x in data[:10]])
+
   # F: longest matching up to ith element from arr1 and and jth from arr2
   arr1 = data
   arr2 = supvseq
@@ -67,7 +98,7 @@ def Match(data, supvseq):
   cand_records = [[-1 for _2 in range(n2)] for _ in range(n1)]
 
   # Init
-  succ, matches = ElemMatch(arr1[0], arr2, 0)
+  succ, matches = ElemMatch(arr1[0], arr2, 0, distance)
   for pair in matches:
     candid, length, matchnum = pair
     newj = 0 + length - 1
@@ -88,7 +119,7 @@ def Match(data, supvseq):
       # cand_records[i][0] = cand_records[i-1][0]
       cand_records[i][0] = -1
 
-    succ, matches = ElemMatch(arr1[i], arr2, 0)
+    succ, matches = ElemMatch(arr1[i], arr2, 0, distance)
     for pair in matches:
       candid, length, matchnum = pair
       newj = 0 + length - 1
@@ -110,7 +141,7 @@ def Match(data, supvseq):
       # cand_records[0][j] = cand_records[0][j-1]
       cand_records[0][j] = -1
 
-    succ, matches = ElemMatch(arr1[0], arr2, j)
+    succ, matches = ElemMatch(arr1[0], arr2, j, distance)
     for pair in matches:
       candid, length, matchnum = pair
       newj = j + length - 1
@@ -124,7 +155,7 @@ def Match(data, supvseq):
   for i in range(0, n1):
     for j in range(0, n2):
       if i + 1 < n1 and j + 1 < n2:
-        succ, matches = ElemMatch(arr1[i+1], arr2, j+1)
+        succ, matches = ElemMatch(arr1[i+1], arr2, j+1, distance)
         for pair in matches:
           candid, length, matchnum = pair
           newj = j + length # j+1 + length - 1
@@ -159,9 +190,14 @@ def Match(data, supvseq):
     if cand_records[i][j] != -1:
       matched_candids.append(cand_records[i][j])
     i, j = path[i][j]
-    
+  
+  # global hits, misses
+  # print >>sys.stderr, 'Hits %d, Misses %d' % (hits, misses)
+
   # return f[n1 - 1][n2 - 1], matched_candids
   return f[n1 - 1][n2 - 1], matched_candids, f, path, cand_records
+
+
 
 def IsASCII(s):
   return all(ord(c) < 128 for c in s)

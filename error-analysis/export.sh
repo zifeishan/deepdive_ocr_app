@@ -1,0 +1,1 @@
+psql -c "select * from output_candidates where docid='$1' order by varid,candid;" $DBNAME >$1_candidates.txt

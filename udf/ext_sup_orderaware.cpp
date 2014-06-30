@@ -206,7 +206,7 @@ int Match(vector<string>& words, vector<string>& transcript, set<int>& matched_w
         // TODO
         if (ordersub % 1000 == 0)
         {
-            cerr << ".";
+            DEBUGCODE(cerr << ".";)
         }
         // i: last node
         int i = order[ordersub];
@@ -262,7 +262,7 @@ int Match(vector<string>& words, vector<string>& transcript, set<int>& matched_w
             // TODO consider multi paths!
         }
     }
-    cerr << "Finished DP. MaxScore:" << maxscore << endl;
+    DEBUGCODE( cerr << "Finished DP. MaxScore:" << maxscore << endl;)
     
     int nowi = besti;
     int nowj = n2 - 1;
@@ -369,7 +369,7 @@ int main(int argc, const char * argv[])
 
         vector<string> transcript;
         ifstream fin;
-        fin.open(transcript_file, ifstream::in);
+        fin.open(transcript_file.c_str(), ifstream::in);
         string word;
         while( std::getline( fin, word ) ) {
             transcript.push_back(word);

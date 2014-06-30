@@ -72,4 +72,9 @@ ANALYZE domain_corpus;
 " $DBNAME
 if [ "$?" != "0" ]; then echo "[50] FAILED!"; exit 1; fi
 
+<<<<<<< HEAD
 echo "Done!"
+echo "Remember to setup contrib module. e.g.: psql $DBNAME -f /usr/local/Cellar/postgresql/9.3.4/share/postgresql/contrib/fuzzystrmatch.sql (OR: /lfs/rambo/0/zifei/software/greenplum-db-4.2.2.4/share/postgresql/contrib/fuzzystrmatch.sql)"
+=======
+echo "Done!"
+>>>>>>> master

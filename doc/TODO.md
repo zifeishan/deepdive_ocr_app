@@ -1,3 +1,15 @@
+  Get "non-dict" words to generate candidates (or too many canditates?)
+
+  ERROR ANALYSIS for current candgen (why bad?)
+
+  Write evaluation script with C++
+
+  TODO (Jun 19): now can run with 3000-subsample. Let's run with more cand gen. (KB!) KB address:
+    /Users/Robin/ssh-afs-deepdive/app/ocr/data-local
+
+X TODO: supervision too slow. force alignment? subsample?
+  - implemented with C++!
+
   TODO: make sure candgen plot makes sense by looking at "THE MATCHED WORDS"!!
 
   TODO: Add KB. 

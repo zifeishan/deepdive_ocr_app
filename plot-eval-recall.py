@@ -1,10 +1,19 @@
 import sys
 
-tesspath = "evaluation/bestpick-tess-eval-100.txt"
-cunipath = 'evaluation/bestpick-cuni-eval-100.txt'
-optimalpath = "evaluation/bestpick-optimal-eval-100.txt"
+# 100 docs
+# tesspath = "evaluation/bestpick-tess-eval-100.txt"
+# cunipath = 'evaluation/bestpick-cuni-eval-100.txt'
+# optimalpath = "evaluation/bestpick-optimal-eval-100.txt"
+# fuzzypath = "evaluation/bestpick-optimal-fuzzy/"
+# ddpath = 'eval-results.txt'
+
+# 30 docs
+tesspath = "evaluation/bestpick-tess-eval-30-sample.txt"
+cunipath = 'evaluation/bestpick-cuni-eval-30-sample.txt'
+optimalpath = "evaluation/bestpick-optimal-fuzzy/opt.0.txt"
 fuzzypath = "evaluation/bestpick-optimal-fuzzy/"
 ddpath = 'eval-results.txt'
+
 
 # if len(sys.argv) == 3:
 #   path = sys.argv[1]
@@ -31,7 +40,8 @@ cuni = [ (t[0], float(t[-1].strip('()'))) for t in cuni]
 dd =   [ (t[0], float(t[-1])) for t in dd]
 opt = [ (t[0], float(t[-1].strip('()'))) for t in opt]
 
-data = {'tess':tess, 'opt':opt, 'dd':dd} # not added cuni
+# data = {'tess':tess, 'opt':opt, 'dd':dd} # not added cuni
+data = {'opt':opt, 'dd':dd} # not added cuni / tess
 
 for dist in range(1, 6):
   path = fuzzypath + 'opt.%d.txt' % dist
@@ -41,7 +51,9 @@ for dist in range(1, 6):
 
 docids = [_[0] for _ in sorted(data['opt'], key=lambda x:x[1])]
 
-plotorder = [i for i in reversed(['tess', 'dd', 'opt'] + ['opt(%d)' % i for i in range(1,6)] )]
+# plotorder = [i for i in reversed(['tess', 'dd', 'opt'] + ['opt(%d)' % i for i in range(1,6)] )]
+# not added tess
+plotorder = [i for i in reversed(['dd', 'opt'] + ['opt(%d)' % i for i in range(1,6)] )]
 plotdata = {}
 for key in data:
   oldlist = data[key]
@@ -96,8 +108,10 @@ for dname in plotorder:
   i += 1
   
 maxscore = max( [ max(plotdata[name]) for name in plotdata ])
+minscore = min( [ min(plotdata[name]) for name in plotdata ])
 # pylab.ylim([0.85, maxscore])
-pylab.ylim([0.85, 1])
+# pylab.ylim([0.85, 1])
+pylab.ylim([minscore, 1])
 plt.legend(tuple([name for name in plotorder]), loc='lower right')
 plt.savefig('pick-result.eps')
 plt.clf()

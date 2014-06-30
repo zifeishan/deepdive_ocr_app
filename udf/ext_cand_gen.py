@@ -3,6 +3,10 @@
 # Testing this file:
 # pypy udf/ext_cand_gen.py 3 /tmp/tmp_cand_gen_ <data/sample-cand-gen-input.txt
 
+'''
+for words that are not in English dictionary, generate a candidate that is the most similar word that appear frequently (>=3 times) in current document
+'''
+
 import os, sys
 import codecs
 import enchant

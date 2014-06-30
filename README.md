@@ -111,6 +111,12 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
 <!-- /dfs/madmax3/0/ -->
 
 
+## KB data
+
+    /dfs/hulk/0/zifei/ocr/kb/intervals.tsv
+    /dfs/hulk/0/zifei/ocr/kb/paleodb_taxons.tsv
+    /dfs/hulk/0/zifei/ocr/kb/supervision_occurrences.tsv
+
 
 Ground truth
 ----
@@ -134,3 +140,4 @@ Dependencies
 - python-Levenshtein
 - pyquery
 - snappy 0.8.5 or higher (http://snap.stanford.edu/snappy/0.8.5/)
+- psql "fuzzystrmatch" module: http://blog.2ndquadrant.com/wp-content/uploads/2011/03/fuzzystrmatch-gp-4.0.4.0.tar.gz

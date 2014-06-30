@@ -23,3 +23,5 @@ eval-results*.txt
 output-cuni/
 output-tess/
 eval-results/
+data-local/
+data/bestpick-results-local/

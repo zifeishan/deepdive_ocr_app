@@ -1,8 +1,21 @@
 #! /bin/bash
 
-if [ $# = 2 ]; then
+if hash psql 2>/dev/null; then  # check psql exists
+    true
+else
+    echo 'ERROR: psql does not exist.'
+    exit
+fi
+
+if [ $# = 2 ]; then          # Export DBNAME from command line
   export SUPV_GRAM_LEN=$1
   export DBNAME=$2
+fi
+
+if [ -z "$DBNAME" ]; then # if empty
+  echo 'ERROR: DBNAME is unset.'
+  echo 'Usage: '$0' SUPV_GRAM_LEN DBNAME'
+  exit
 fi
 
 export PGDATABASE=$DBNAME
@@ -27,7 +40,7 @@ export APP_HOME=`pwd`
 
 # $APP_HOME/prepare_data.sh
 # 20 have resource problem
-export MAX_PARALLELISM=15
+
 export CALI_FRACTION=0.25
 export KFOLD_ITER=1
 export KFOLD_NUM=4
@@ -41,18 +54,30 @@ export DICT_FILE=$APP_HOME/util/words
 # export SUPV_DIR=$APP_HOME/data/test-supervision
 # # export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
 
-# # LARGE
-# export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
-export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision/
-# for eval bestpick
-# export EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
-export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation/
+if [ -z "$SUPV_DIR" ]; then # if empty
+  export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
+fi
+
+if [ -z "$EVAL_DIR" ]; then # if empty
+  export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation_escaped/
+fi
+if [ -z "$MAX_PARALLELISM" ]; then # if empty
+  export MAX_PARALLELISM=15
+fi
+# # # LARGE
+# # export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
+# export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
+# # for eval bestpick
+# # export EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
+# export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation_escaped/
 
 cd $DEEPDIVE_HOME
 
 echo 'Running SBT...'
 # SBT_OPTS="-Xmx128g -XX:MaxHeapSize=8g" sbt/sbt "run -c $APP_HOME/application.conf"
-SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
+# SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
+deepdive -c $APP_HOME/application.conf
+
 # SBT_OPTS="-Xmx2g -XX:MaxHeapSize=2g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
 
 
@@ -68,3 +93,6 @@ SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
 # echo 'Evaluating Cuneiform:'
 # pypy ocr-evaluation.py /tmp/ocr-output-words-cuneiform.tsv data/test-evaluation/ output-cuni/ eval-results-cuni.txt
 
+# cd $APP_HOME
+# ./run-evaluation.sh
+# python plot-eval-recall.py

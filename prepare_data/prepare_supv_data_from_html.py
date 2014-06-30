@@ -33,6 +33,7 @@ if len(sys.argv) == 4:
   path = sys.argv[2]
   outbase = sys.argv[3]
 else:
+  print 'Got arguments:',sys.argv
   print 'Usage:',sys.argv[0],'<supv_or_eval> <path> <outbase>'
   print 'e.g. pypy ./prepare_supv_data_from_html.py supv ../data/html-labels-accurate/html/test-30docs/ ../data/test-supervision/'
   print 'e.g. pypy ./prepare_supv_data_from_html.py eval ../data/html-labels-accurate/html/test-30docs/ ../data/test-evaluation/'
@@ -52,18 +53,31 @@ else:
 if not os.path.exists(outbase):
   os.makedirs(outbase)
 
-files = os.listdir(path)
+# is a single file!
+if os.path.isfile(path): 
+  # print 'Path',path,'is a single file!'
+  files = [path]
+  parts = path.rsplit('/', 1)
+  if len(parts) > 1:
+    path = parts[0]
+  else:
+    raise Exception('ERROR!!')
+
+else:
+  files = [path + '/' + f for f in os.listdir(path)]
 
 for f in files:
   if not f.endswith('.html'): continue
-  docid = f[:-len('.html')]
+  # Escape before and after
+  docid = f[len(path) + 1 : -len('.html')]
 
   if os.path.exists(outbase + '/' + docid + '.seq_unsegmented'):
     print 'Skipping', docid
     continue
 
   print 'Processing', docid
-  htmlpath = path + '/' + f
+  # htmlpath = path + '/' + f
+  htmlpath = f
   html = open(htmlpath).read()
 
   html = re.sub('\&lt;', '<', html)
@@ -107,11 +121,12 @@ for f in files:
     fragtext = frag.findAll(text=True)
     visible_texts = filter(visible, fragtext)
 
-    decoded = htmlparser.unescape(visible_texts)
-    
-    text += ' '.join(decoded) + ' '
-    text = re.sub(' +', ' ', text)  # Multiple spaces to only one
+    thistext = ' '.join(visible_texts) + ' '
+    thistext = htmlparser.unescape(thistext)  # Decode
+    thistext = re.sub('\xa0', ' ', thistext)  # HTML space
+    thistext = re.sub(' +', ' ', thistext)  # Multiple spaces to only one
 
+    text += thistext
     # text += '\n'  # between each fragment
 
   # text = pq.find('.page_fragment').text()

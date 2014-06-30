@@ -3,7 +3,7 @@ psql -c """drop table if exists orderaware_supv_label cascade;
 
 psql -c """create table orderaware_supv_label(
   docid TEXT,
-  candidate_id BIGINT,
+  candidate_id TEXT,
   label BOOLEAN
   );
 """ $DB_NAME

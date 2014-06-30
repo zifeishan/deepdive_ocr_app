@@ -4,16 +4,16 @@ import ddext
 
 def init():
   ddext.input('docid', 'text')
-  ddext.input('arr_candidate_id', 'bigint[]')
-  ddext.input('arr_cand_word_id', 'bigint[]')
+  ddext.input('arr_candidate_id', 'text[]')
+  ddext.input('arr_cand_word_id', 'text[]')
   ddext.input('arr_varid', 'bigint[]')
   ddext.input('arr_candid', 'bigint[]')
   ddext.input('arr_feature', 'text[]')
   ddext.input('gram_len', 'bigint')
 
   ddext.returns('docid', 'text')
-  ddext.returns('cand_word_id', 'bigint')
-  ddext.returns('candidate_id', 'bigint')
+  ddext.returns('cand_word_id', 'text')
+  ddext.returns('candidate_id', 'text')
   ddext.returns('ngram', 'text')
 
 def run(docid, arr_candidate_id, arr_cand_word_id, arr_varid, arr_candid, arr_feature, gram_len):

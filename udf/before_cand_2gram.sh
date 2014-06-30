@@ -6,4 +6,4 @@ psql -c """create table cand_2gram(
   docid TEXT,
   cand_word_id BIGINT,
   feature_gram TEXT)
-DISTRIBUTED BY (docid);""" $DB_NAME
+-- DISTRIBUTED BY (docid);""" $DB_NAME

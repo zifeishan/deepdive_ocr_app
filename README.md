@@ -48,13 +48,29 @@ Datasets
 
 first half:
 
-    17,506  /dfs/madmax5/0/zifei/deepdive/app/ocr/data/output-140508
+    17,506  /dfs/madmax5/0/zifei/deepdive/app/ocr/data/sd-html/output-140508
 
 second half:
 
     20,040  /dfs/madmax5/0/zifei/deepdive/app/ocr/data/output-secondhalf
 
-## Processed supervision data
+or TOTAL:
+    
+    /dfs/hulk/0/zifei/ocr/sd-html/
+
+## Escaped supervision / evaluation data:
+
+How to prepare: (e.g.)
+
+```bash
+bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /dfs/hulk/0/zifei/ocr/evaluation_escaped_2/
+```
+
+    /dfs/hulk/0/zifei/ocr/supervision_escaped/
+    /dfs/hulk/0/zifei/ocr/evaluation_escaped/
+
+<!-- 
+## Processed supervision data (bad escape)
 
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
     OR 
@@ -62,13 +78,14 @@ second half:
     OR
     /dfs/hulk/0/zifei/ocr/supervision/
 
-## Processed evaluation data
+## Processed evaluation data (bad escape)
 
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/evaluation/
     OR 
     /dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
     OR
     /dfs/hulk/0/zifei/ocr/evaluation/
+ -->
 
 ## Google Ngram
     /dfs/madmax/0/zifei/google-ngram/1gram/
@@ -78,7 +95,18 @@ second half:
     /dfs/madmax5/0/zifei/deepdive/app/ocr/data/google-ngram/2gram/
     OR 
     /dfs/hulk/0/zifei/ocr/google-ngram/1gram/
-    /dfs/hulk/0/zifei/ocr/google-ngram/2gram/ngram_2_reduced.tsv
+    /dfs/hulk/0/zifei/ocr/google-ngram/1gram.tsv
+    /dfs/hulk/0/zifei/ocr/google-ngram/2gram_reduced.tsv
+
+## Web Ngram (filtered by 10000)
+
+    /dfs/hulk/0/zifei/ocr/web_ngram/3gram.tsv
+    /dfs/hulk/0/zifei/ocr/web_ngram/4gram.tsv
+    /dfs/hulk/0/zifei/ocr/web_ngram/5gram.tsv
+
+## Domain corpus (HTML aggregated by docid)
+
+    /dfs/hulk/0/zifei/ocr/domain-corpus/domain-corpus.tsv
 
 <!-- /dfs/madmax3/0/ -->
 

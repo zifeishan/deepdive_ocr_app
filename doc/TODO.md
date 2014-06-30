@@ -9,6 +9,11 @@
 
 X TODO: supervision too slow. force alignment? subsample?
   - implemented with C++!
+    
+    NEW
+    INFO  [JOURNAL_18178]  SCORE: 3569 / 5151 (0.692875), matches: 3569 / 8900
+    OLD
+    DEBUG DOCID: JOURNAL_18178  MATCHES: 3278 / 5151 (0.6364)
 
   TODO: make sure candgen plot makes sense by looking at "THE MATCHED WORDS"!!
 

@@ -1,3 +1,29 @@
+  Jul 2
+  - Trigram similarity: error analysis
+  - 
+  Jul 1
+  - General-purpose KB
+    - English dict
+    - Freebase?
+    - Wikipedia?
+
+  deprecated: Get "non-dict" words to generate candidates (or too many canditates?)
+
+  ERROR ANALYSIS for current candgen (why bad?)
+
+  Write evaluation script with C++
+
+  TODO (Jun 19): now can run with 3000-subsample. Let's run with more cand gen. (KB!) KB address:
+    /Users/Robin/ssh-afs-deepdive/app/ocr/data-local
+
+X TODO: supervision too slow. force alignment? subsample?
+  - implemented with C++!
+    
+    NEW
+    INFO  [JOURNAL_18178]  SCORE: 3569 / 5151 (0.692875), matches: 3569 / 8900
+    OLD
+    DEBUG DOCID: JOURNAL_18178  MATCHES: 3278 / 5151 (0.6364)
+
   TODO: make sure candgen plot makes sense by looking at "THE MATCHED WORDS"!!
 
   TODO: Add KB. 

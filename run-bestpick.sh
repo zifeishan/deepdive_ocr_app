@@ -95,10 +95,17 @@ cd $APP_HOME
 # ./run-evaluation.sh
 # python plot-eval-recall.py
 
-mkdir -p evaluation/bestpick-optimal-fuzzy/
-cat $BESTPICK_DIR/*.stat.0 > evaluation/bestpick-optimal-fuzzy/opt.0.txt
-cat $BESTPICK_DIR/*.stat.1 > evaluation/bestpick-optimal-fuzzy/opt.1.txt
-cat $BESTPICK_DIR/*.stat.2 > evaluation/bestpick-optimal-fuzzy/opt.2.txt
-cat $BESTPICK_DIR/*.stat.3 > evaluation/bestpick-optimal-fuzzy/opt.3.txt
-cat $BESTPICK_DIR/*.stat.4 > evaluation/bestpick-optimal-fuzzy/opt.4.txt
-cat $BESTPICK_DIR/*.stat.5 > evaluation/bestpick-optimal-fuzzy/opt.5.txt
+# mkdir -p evaluation/bestpick-optimal-fuzzy/
+# cat $BESTPICK_DIR/*.stat.0 > evaluation/bestpick-optimal-fuzzy/opt.0.txt
+# cat $BESTPICK_DIR/*.stat.1 > evaluation/bestpick-optimal-fuzzy/opt.1.txt
+# cat $BESTPICK_DIR/*.stat.2 > evaluation/bestpick-optimal-fuzzy/opt.2.txt
+# cat $BESTPICK_DIR/*.stat.3 > evaluation/bestpick-optimal-fuzzy/opt.3.txt
+# cat $BESTPICK_DIR/*.stat.4 > evaluation/bestpick-optimal-fuzzy/opt.4.txt
+# cat $BESTPICK_DIR/*.stat.5 > evaluation/bestpick-optimal-fuzzy/opt.5.txt
+
+# mkdir -p evaluation/bestpick-optimal-fuzzy-trgm/
+# cat $BESTPICK_DIR/*.stat.0.1 > evaluation/bestpick-optimal-fuzzy-trgm/opt.0.1.txt
+# cat $BESTPICK_DIR/*.stat.0.3 > evaluation/bestpick-optimal-fuzzy-trgm/opt.0.3.txt
+# cat $BESTPICK_DIR/*.stat.0.5 > evaluation/bestpick-optimal-fuzzy-trgm/opt.0.5.txt
+# cat $BESTPICK_DIR/*.stat.0.7 > evaluation/bestpick-optimal-fuzzy-trgm/opt.0.7.txt
+# cat $BESTPICK_DIR/*.stat.0.9 > evaluation/bestpick-optimal-fuzzy-trgm/opt.0.9.txt

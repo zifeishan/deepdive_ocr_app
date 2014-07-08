@@ -1,4 +1,109 @@
-  Get "non-dict" words to generate candidates (or too many canditates?)
+Jul 8
+
+  Features:
+    - "best candidate": with minimum distance
+    - single best candidate: the only one with minimum distance
+    - wordlength: 1/2/3/.../6/ / many
+
+  TODO: 
+  following Errors:
+  'darl <' -> 'dark'
+  'cl' -> 'd'
+    - Confusion matrix?
+    - 2gram?
+
+  Findings:
+  3 candidates are enough
+  Most words are correct (10k KB too small?)
+
+Avg Error reduction from Tesseract: 0.109664184133
+Avg Error reduction from Optimal: -0.0357580202109
+
+Jul 7
+
+X TODO: Get "why is opt(1) so high": fuzzy match that counts "match 
+  results" stats.
+
+  TODO: OCR confusion matrix! error probability, weighted matrix
+
+  TODO: bigram language model
+
+
+X GET SUPERVISION STATS:
+
+    select source, label, count(*) from candidate group by source, label order by source, label;
+
+X Benchmarks: KB dist 1 (~= without candgen)
+
+    Avg Error reduction from Tesseract: 0.0948142717848
+    Avg Error reduction from Optimal: -0.0545531954891
+
+X How to get optimal bound for generated candidates:
+
+    rm -f /lfs/local/0/zifei/bestpick-result-candgen-dict/*
+
+    export BESTPICK_DIR='/lfs/local/0/zifei/bestpick-result-candgen-dict/'
+    ./run-bestpick.sh
+
+    cat /lfs/local/0/zifei/bestpick-result-candgen-dict/*.stat.0 > evaluation/bestpick-candgen-kb-100.txt
+
+    python plotting/plot-candgen-bestpick.py
+
+
+
+  Jul 4
+X - "words" -> CandGen(' '.join(words)), not most systematic
+
+Time: 1634.545 ms
+ddocr_100_candgen=# select CHAR_LENGTH(word) as wordlen, count(*) from cand_word where source like '%Sg' group by wordlen order by wordlen;
+ wordlen |  count
+---------+---------
+       1 | 1086260
+       2 |  573563
+       3 |  238916
+
+
+    19:26:16 [extractorRunner-ext_sup_orderaware] INFO  JOURNAL_57921 ERROR: lengths does not match! / Empty data!
+    19:26:17 [extractorRunner-ext_sup_orderaware] INFO  JOURNAL_58568 ERROR: lengths does not match! / Empty data!
+    19:26:17 [extractorRunner-ext_sup_orderaware] INFO  JOURNAL_58670 ERROR: lengths does not match! / Empty data!
+    19:26:17 [extractorRunner-ext_sup_orderaware] INFO  .JOURNAL_58762 ERROR: lengths does not match! / Empty data!
+    19:26:17 [extractorRunner-ext_sup_orderaware] INFO  JOURNAL_63084 ERROR: lengths does not match! / Empty data!
+
+  STATS:
+  1. generate 1x--5x more candidates
+  2. 
+
+  MAJOR PROBLEMS:
+  1. Do we need to generate candidates when one of the candidates are "valid"??
+    - yes and?
+    - do experiments on evaluation
+  2. How to deal with short words?
+
+['2'] 52 [('A', 1), ('C', 1), ('B', 1), ('E', 1), ('D', 1), ('G', 1), ('F', 1), ('I', 1), ('H', 1), ('K', 1)]
+['1'] 52 [('A', 1), ('C', 1), ('B', 1), ('E', 1), ('D', 1), ('G', 1), ('F', 1), ('I', 1), ('H', 1), ('K', 1)]
+['2'] 52 [('A', 1), ('C', 1), ('B', 1), ('E', 1), ('D', 1), ('G', 1), ('F', 1), ('I', 1), ('H', 1), ('K', 1)]
+['2'] 52 [('A', 1), ('C', 1), ('B', 1), ('E', 1), ('D', 1), ('G', 1), ('F', 1), ('I', 1), ('H', 1), ('K', 1)]
+['lc'] 7 [('c', 1), ('l', 1), ('la', 1), ('lac', 1), ('li', 1), ('lo', 1), ('ly', 1)]
+['dnl'] 1 [('dal', 1)]
+['.'] 52 [('A', 1), ('C', 1), ('B', 1), ('E', 1), ('D', 1), ('G', 1), ('F', 1), ('I', 1), ('H', 1), ('K', 1)]
+['<'] 52 [('A', 1), ('C', 1), ('B', 1), ('E', 1), ('D', 1), ('G', 1), ('F', 1), ('I', 1), ('H', 1), ('K', 1)]
+['.'] 52 [('A', 1), ('C', 1), ('B', 1), ('E', 1), ('D', 1), ('G', 1), ('F', 1), ('I', 1), ('H', 1), ('K', 1)]
+
+  Jul 2
+/ - Trigram similarity: error analysis
+    - TODO: Why trigrams implemented as '$$word$' + LOWER?
+    - Refer to: http://www.sai.msu.su/~megera/wiki/ReadmeTrgm
+  - TODO gather result for analysis.
+
+  Jul 1
+  - General-purpose KB
+    - English dict
+    - Freebase?
+    - Wikipedia?
+
+    select word, name, word <-> name from cand_word, entity_kb where word % name order by word<->name limit 10;
+
+  deprecated: Get "non-dict" words to generate candidates (or too many canditates?)
 
   ERROR ANALYSIS for current candgen (why bad?)
 

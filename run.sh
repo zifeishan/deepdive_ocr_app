@@ -51,6 +51,9 @@ export FEATURE_CONF_PATH=$APP_HOME/script/extract-feature-list.conf
 export LD_LIBRARY_PATH="/dfs/rulk/0/hazy_share/lib64/:/dfs/rulk/0/hazy_share/lib/protobuf/lib/:/dfs/rulk/0/hazy_share/lib/tclap/lib/:$LD_LIBRARY_PATH"
 export DICT_FILE=$APP_HOME/util/words
 
+export CAND_GEN_DIST=2
+export MAX_CAND_NUM=5
+
 # export SUPV_DIR=$APP_HOME/data/test-supervision
 # # export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
 
@@ -78,9 +81,6 @@ echo 'Running SBT...'
 # SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
 deepdive -c $APP_HOME/application.conf
 
-# SBT_OPTS="-Xmx2g -XX:MaxHeapSize=2g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
-
-
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application-old.conf"
 
@@ -93,6 +93,6 @@ deepdive -c $APP_HOME/application.conf
 # echo 'Evaluating Cuneiform:'
 # pypy ocr-evaluation.py /tmp/ocr-output-words-cuneiform.tsv data/test-evaluation/ output-cuni/ eval-results-cuni.txt
 
-# cd $APP_HOME
-# ./run-evaluation.sh
-# python plot-eval-recall.py
+cd $APP_HOME
+./run-evaluation.sh
+python plot-eval-recall.py

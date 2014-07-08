@@ -13,6 +13,8 @@ psql -d $DBNAME -c "select *
 from dd_inference_result_variables_mapped_weights 
 order by weight desc" > experiments/${DATE}-$1/weights.txt
 
+cp result-errred.txt experiments/${DATE}-$1/
+
 echo "Results saved to: experiments/${DATE}-$1/"
 echo "Saving calibration plots:"
 cp -r ../../out/${DATE}/calibration experiments/${DATE}-$1/calibration  # comment in $1

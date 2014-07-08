@@ -7,10 +7,30 @@ dist_dict = {}
 hits = 0
 misses = 0
 
-def WordEqual(w1, w2, distance=0):  # use fuzzy equal
+GRAM_LEN = 3
+
+def JaccardDistance(w1, w2):
+  PREFIX_PLACEHOLDER = ' '*(GRAM_LEN-1)
+  SUFFIX_PLACEHOLDER = ' '*(GRAM_LEN-2)
+  w1 = PREFIX_PLACEHOLDER + w1.lower() + SUFFIX_PLACEHOLDER
+  w2 = PREFIX_PLACEHOLDER + w2.lower() + SUFFIX_PLACEHOLDER
+  s1 = set([w1[i : i + GRAM_LEN] for i in range(0, len(w1) - GRAM_LEN + 1)])
+  s2 = set([w2[i : i + GRAM_LEN] for i in range(0, len(w2) - GRAM_LEN + 1)])
+  # print s1
+  # print s2
+  return 1.0 - len(s1.intersection(s2)) / float(len(s1.union(s2)))
+     
+
+'''
+use fuzzy equal with trigrams.
+  distance: jaccard distance [0,1)
+'''
+def WordEqual(w1, w2, distance=0):
   global equal_dict
   global hits, misses
 
+  if distance == 1:
+    return True
   if distance == 0:
     return w1 == w2
   else:
@@ -21,10 +41,9 @@ def WordEqual(w1, w2, distance=0):  # use fuzzy equal
       return d <= distance
       
     else:
-      d = Levenshtein.distance(w1, w2)
+      d = JaccardDistance(w1, w2)
       dist_dict[(w1, w2)] = d
       misses += 1
-      # DEBUG
       # if d <= distance and d != 0: 
       #   print >>sys.stderr, w1, '\t', w2, '\t', d
       return d <= distance
@@ -186,24 +205,30 @@ def Match(data, supvseq, distance=0):
   #     print '(%d,%d): %d\t' % (i,j,f[i][j]),
 
   matched_candids = [] # TODO not set?
-  matched_trans = []
   i = n1 - 1
   j = n2 - 1
   # TODO ugly..
   while (i,j) != (-1,-1): # last time: i,j != -1,-1, path == -1,-1
     if cand_records[i][j] != -1:
       matched_candids.append(cand_records[i][j])
-      matched_trans.append(j)
 
-      # # DEBUG: print all matches
-      # oriword = ' | '.join([x[1][0] for x in data[i]])
-      # if oriword != supvseq[j]:
-      #   try:
-      #     if '|' not in oriword:
-      #       print >>sys.stderr, i, j, oriword, '\t', supvseq[j]
-      #     print oriword, '=>\t', supvseq[j]
-      #   except:
-      #     pass
+      # DEBUG: print all matches
+      oriword = ' | '.join([x[1][0] for x in data[i]])
+      if oriword != supvseq[j]:
+      # if True:
+        print >>sys.stderr, 'X',
+      else:
+        print >>sys.stderr, ' ',
+
+      try:
+        # if '|' not in oriword:
+        #   print >>sys.stderr, i, j, oriword, '\t', supvseq[j]
+        ii, jj = path[i][j]
+        matchnum = int(f[i][j] - f[ii][jj])
+        print >>sys.stderr, i, j, oriword, '\t=> [%d]'%matchnum, ' '.join(supvseq[j : j+matchnum])
+        # print oriword, '=>\t', supvseq[j]
+      except:
+        pass
 
     i, j = path[i][j]
   
@@ -211,7 +236,7 @@ def Match(data, supvseq, distance=0):
   # print >>sys.stderr, 'Hits %d, Misses %d' % (hits, misses)
 
   # return f[n1 - 1][n2 - 1], matched_candids
-  return f[n1 - 1][n2 - 1], matched_candids, matched_trans, f, path, cand_records
+  return f[n1 - 1][n2 - 1], matched_candids, f, path, cand_records
 
 
 

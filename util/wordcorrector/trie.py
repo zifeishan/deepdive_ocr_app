@@ -3,18 +3,11 @@
 import time
 import sys
 
-DICTIONARY = "/usr/share/dict/words";
-TARGET = sys.argv[1]
-MAX_COST = int(sys.argv[2])
-
-# Keep some interesting statistics
-NodeCount = 0
-WordCount = 0
 
 # The Trie data structure keeps a set of words, organized with one node for
 # each letter. Each node has a branch for each letter that may follow it in the
 # set of words.
-class TrieNode:
+class _TrieNode:
     def __init__(self):
         self.word = None
         self.children = {}
@@ -26,19 +19,28 @@ class TrieNode:
         node = self
         for letter in word:
             if letter not in node.children: 
-                node.children[letter] = TrieNode()
+                node.children[letter] = _TrieNode()
 
             node = node.children[letter]
 
         node.word = word
 
-# read dictionary file into a trie
-trie = TrieNode()
-for word in open(DICTIONARY, "rt").read().split():
-    WordCount += 1
-    trie.insert( word )
+# Global objects
+NodeCount = 0
+WordCount = 0
+trie = _TrieNode()
 
-print "Read %d words into %d nodes" % (WordCount, NodeCount)
+def init(DICTIONARY):
+
+    # read dictionary file into a trie
+    # trie = _TrieNode()
+    global trie, NodeCount, WordCount
+
+    # for word in open(DICTIONARY, "rt").read().split():
+    for word in [l.strip() for l in open(DICTIONARY).readlines()]:
+        WordCount += 1
+        trie.insert( word )
+    print >>sys.stderr, "Read %d words into %d nodes" % (WordCount, NodeCount)
 
 # The search function returns a list of all words that are less than the given
 # maximum distance from the target word
@@ -51,14 +53,32 @@ def search( word, maxCost ):
 
     # recursively search each branch of the trie
     for letter in trie.children:
-        searchRecursive( trie.children[letter], letter, word, currentRow, 
+        _searchRecursive( trie.children[letter], letter, word, currentRow, 
             results, maxCost )
 
     return results
 
+# The search function returns a list of all words that are less than the given
+# maximum distance from the target word
+# if maxCandNum = 0, return all; otherwise return some.
+# returns:
+#   [(candword, dist)]
+def searchTops( word, maxCost, maxCandNum = 0 ):
+
+    # TODO Slow implementation
+    results = []
+    for i in range(1, maxCost + 1):
+        results = search(word, i)
+        # Already get enough results
+        if len(results) >= maxCandNum:
+            return sorted(results, key=lambda x:x[1])[:maxCandNum]
+
+    # return last-round result if cannot meet enough candidates
+    return sorted(results, key=lambda x:x[1])[:maxCandNum]
+
 # This recursive helper is used by the search function above. It assumes that
 # the previousRow has been filled in already.
-def searchRecursive( node, letter, word, previousRow, results, maxCost ):
+def _searchRecursive( node, letter, word, previousRow, results, maxCost ):
 
     columns = len( word ) + 1
     currentRow = [ previousRow[0] + 1 ]
@@ -86,13 +106,29 @@ def searchRecursive( node, letter, word, previousRow, results, maxCost ):
     # recursively search each branch of the trie
     if min( currentRow ) <= maxCost:
         for letter in node.children:
-            searchRecursive( node.children[letter], letter, word, currentRow, 
+            _searchRecursive( node.children[letter], letter, word, currentRow, 
                 results, maxCost )
 
-start = time.time()
-results = search( TARGET, MAX_COST )
-end = time.time()
+## MAIN func
+if __name__ == '__main__':
+    tottime = 0.0
+    DICTIONARY = sys.argv[1]
+    MAX_COST = int(sys.argv[2])
+    NUMWORDS = int(sys.argv[3])
+    init(DICTIONARY)
 
-for result in results: print result        
+    # Test
+    for word in [l.strip() for l in open("/usr/share/dict/words").readlines()[:NUMWORDS]]:
+        start = time.time()
+        # results = search( TARGET, MAX_COST )
+        results = search( word, MAX_COST )
+        end = time.time()
+        print '%s: %d candidates.' % (word, len(results))
+        print ' ', sorted(results, key=lambda x:x[1])[:10]
+        # for result in results: 
+            # print result
+        print "Search took %g s" % (end - start)
 
-print "Search took %g s" % (end - start)
+        tottime += (end - start)
+
+    print 'Total time:', tottime, '#Words:', NUMWORDS, 'Avg speed:', tottime / float(NUMWORDS)

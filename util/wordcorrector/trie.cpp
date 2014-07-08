@@ -1,4 +1,3 @@
-// # TODO NOT CORRECT YET 
 // http://murilo.wordpress.com/2011/02/01/fast-and-easy-levenshtein-distance-using-a-trie-in-c/
 
 #include <iostream>

@@ -468,7 +468,7 @@ int main(int argc, const char * argv[])
         set<int> matched_words;
         int score = Match(words, transcript, matched_words, n1, n2);
 
-        cerr << docid << " Finished running DP.  score=" << score << endl;
+        DEBUGCODE(cerr << docid << " Finished running DP.  score=" << score << endl;)
 
         
         // Print all outputs

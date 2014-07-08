@@ -13,13 +13,16 @@ import codecs
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 sys.path.append(BASE_DIR + '/../util')
-import candmatch
+import candmatch_trigramdist as candmatch
+
+
 
 IS_EVALUATION = False
 bestpick_dir = ''
 
 min_distance = 0
 max_distance = 0
+dist_interval = 0.1
 sample_size = 0
 
 if len(sys.argv) >= 3:
@@ -31,16 +34,16 @@ if len(sys.argv) >= 3:
   IS_EVALUATION = True
 
   if len(sys.argv) >= 5:
-    print >>sys.stderr, 'Distance range:', sys.argv[3:5]
-    min_distance = int(sys.argv[3])
-    max_distance = int(sys.argv[4])
+    print >>sys.stderr, 'Distance range:', sys.argv[3:6]
+    min_distance = float(sys.argv[3])
+    max_distance = float(sys.argv[4])
+    dist_interval = float(sys.argv[5])
 
-  if len(sys.argv) >= 6:
-    print >>sys.stderr, 'Sample size:', sys.argv[5]
-    sample_size = int(sys.argv[5])
+  if len(sys.argv) >= 7:
+    print >>sys.stderr, 'Sample size:', sys.argv[6]
+    sample_size = int(sys.argv[6])
 else:
   SUPV_DIR = os.environ['SUPV_DIR']
-      
 
 # For each input tuple
 for row in sys.stdin:
@@ -133,18 +136,15 @@ for row in sys.stdin:
     print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
 
   else:  # is evaluation: generate optimal for 0--X
-    for dist in range(min_distance, max_distance + 1):
-
-      # print >>sys.stderr, 'Evaluating distance:', dist
+    # for dist in range(min_distance, max_distance + 1):
+    dist = min_distance
+    while dist <= max_distance:
+      print >>sys.stderr, 'Evaluating distance:', dist
     
 
-      matches, matched_candidate_ids, matched_trans, f, path, records = candmatch.Match(data, supervision_sequence, dist)
+      matches, matched_candidate_ids, f, path, records = candmatch.Match(data, supervision_sequence, dist)
 
       print >>sys.stderr, 'D=%d: DOCID:' % dist, docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
-
-      # print >>sys.stderr, matched_trans, 
-      print >>sys.stderr,  'Matched:', [supervision_sequence[i] for i in matched_trans][:10]
-      print >>sys.stderr,  'Unmatched:', [supervision_sequence[i] for i in set(range(len(supervision_sequence))).difference(matched_trans)][:10]
 
       # store bestpick results      
       statdir = bestpick_dir
@@ -166,15 +166,8 @@ for row in sys.stdin:
               print >>fout, w
       fout.close()
 
-      # Print matched / unmatched words in transcript
-      fout = codecs.open(statdir + docid + '.matches.' + str(dist), 'w', 'utf-8')
-      set_matched_trans = set(matched_trans)
-      for i in range(len(supervision_sequence)):
-        if i in set_matched_trans:
-          print >>fout, '.\t%s' % supervision_sequence[i]
-        else:
-          print >>fout, 'X\t%s' % supervision_sequence[i]
-      fout.close()
+      dist += dist_interval  # next distance
+
 
   for cid in matched_candidate_ids:
     print json.dumps({

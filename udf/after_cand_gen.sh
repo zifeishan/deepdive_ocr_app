@@ -20,3 +20,19 @@ psql -c "INSERT INTO candidate (
 " $DBNAME
 
 psql -c "ANALYZE candidate;" $DBNAME
+
+# Generate an aggregated "candidate" table
+psql -c "DROP TABLE IF EXISTS generated_candidates CASCADE;" $DBNAME
+
+psql -c "
+CREATE TABLE generated_candidates AS
+SELECT  docid, 
+        candidate_id, 
+        max(source)   as source, 
+        max(distance) as distance, 
+        max(original_word) as original_word,
+        max(varid)    as varid,
+        max(candid)   as candid,
+        array_agg(word order by wordid) as words
+FROM generated_cand_word
+GROUP BY docid, candidate_id;" $DBNAME

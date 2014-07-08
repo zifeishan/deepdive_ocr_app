@@ -10,7 +10,8 @@ psql -c """create table generated_cand_word(
     source        TEXT,     -- 1-1 mapping to source
     wordid        INT,      -- start from 0
     word          TEXT,
-    distance      INT       -- edit distance from original word
+    distance      INT,       -- edit distance from original word
+    original_word TEXT
     )
 -- DISTRIBUTED BY (docid);
 """ $DBNAME  # TODO???

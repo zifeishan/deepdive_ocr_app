@@ -91,7 +91,7 @@ for docid in eval_data:
     eval_sequence = eval_sequence[:sample_size]
 
   print 'Matching',docid,'...'
-  matches, matched_candidate_ids, f, path, records = candmatch.Match(data, eval_sequence)
+  matches, matched_candidate_ids, matched_trans, f, path, records = candmatch.Match(data, eval_sequence)
 
   print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(eval_sequence),'(%.4f)' % (matches / float(len(eval_sequence)))
 

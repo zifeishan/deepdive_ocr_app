@@ -49,13 +49,15 @@ fi
 # pypy ocr-evaluation-strict.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results.txt
 
 
-cat $EVAL_LIST_FILE | xargs -P $MAXPARALLEL -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words-tesseract.tsv $EVAL_DIR eval-results/tesseract/$0.txt $0'
+cat $EVAL_LIST_FILE | xargs -P $MAX_PARALLELISM -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words-tesseract.tsv $EVAL_DIR eval-results/tesseract/$0.txt $0'
 
 cat eval-results/tesseract/* > eval-results-tess.txt
 
-cat $EVAL_LIST_FILE | xargs -P $MAXPARALLEL -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words-cuneiform.tsv $EVAL_DIR eval-results/cuneiform/$0.txt $0'
+cat $EVAL_LIST_FILE | xargs -P $MAX_PARALLELISM -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words-cuneiform.tsv $EVAL_DIR eval-results/cuneiform/$0.txt $0'
 
 cat eval-results/cuneiform/* > eval-results-cuni.txt
+
+echo "Now you may want to run: cp eval-results-tess.txt YOUR_PLOTTING_FILE"
 
 # pypy ocr-evaluation-strict.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results.txt
 

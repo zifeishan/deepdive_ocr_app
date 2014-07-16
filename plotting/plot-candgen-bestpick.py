@@ -3,16 +3,20 @@ import sys
 # 100 docs
 tesspath = "evaluation/bestpick-tess-eval-100.txt"
 cunipath = 'evaluation/bestpick-cuni-eval-100.txt'
-optimalpath = "evaluation/bestpick-optimal-eval-100.txt"
+# optimalpath = "evaluation/bestpick-optimal-eval-100.txt"
+optimalpath = "evaluation/bestpick-optimal-fuzzy/opt.0.txt"
 fuzzypath = "evaluation/bestpick-optimal-fuzzy/"
 
 # opt2path = "evaluation/bestpick-candgen-dict-100.txt"
 # opt2path = "evaluation/bestpick-candgen-kb-100.txt"
-opt2path = "evaluation/bestpick-candgen-google-100-dist2.txt"
+# opt2path = "evaluation/bestpick-candgen-google-100-dist2.txt"
+# opt2path = 'evaluation/bestpick-candgen-domain-100-dist2.txt'
+opt2path = 'evaluation/bestpick-evalgen.txt'
 
 # fuzzypath = "evaluation/bestpick-optimal-fuzzy-trgm/"
 ddpath = 'eval-results.txt'
-DISTRANGE = range(1, 6)
+# DISTRANGE = range(1, 6)
+DISTRANGE = range(1, 4)
 # DISTRANGE = [0.1, 0.3, 0.5, 0.7, 0.9]
 
 # # 30 docs
@@ -64,7 +68,7 @@ docids = [_[0] for _ in sorted(data['opt'], key=lambda x:x[1])]
 
 # plotorder = [i for i in reversed(['tess', 'dd', 'opt'] + ['opt(%d)' % i for i in DISTRANGE] )]
 # not added tess
-plotorder = [i for i in reversed(['dd', 'opt', 'opt(gen)'] + ['opt(' + str(i) + ')' for i in DISTRANGE] )]
+plotorder = [i for i in reversed(['tess', 'dd', 'opt', 'opt(gen)'] + ['opt(' + str(i) + ')' for i in DISTRANGE] )]
 plotdata = {}
 for key in data:
   oldlist = data[key]
@@ -104,8 +108,9 @@ def PlotPrep(xlabel, ylabel, loglog=False):
   #   plt.legend(legends)
 
 PlotPrep(xlabel='Document ID', ylabel='Word Recall')
-colors = [i for i in reversed(['g', 'orange', 'cyan', 
-  'blue', 'yellow', 'purple', 'gray', 'black'
+colors = [i for i in reversed(['r', 'g', 'orange', 'cyan', 
+  'blue', 'yellow', 'purple'
+  # , 'gray', 'black'
   # 'bo--', 'yo--', 'mo--', 'go--', 'ro--'
   # '0.7', '0.6', '0.5', '0.4', '0.3'
   ])]

@@ -1,4 +1,97 @@
+Jul 16
+
+NEW DECISION:
+
+Escape all divs except:
+
+    div.svArticle
+    h2.svArticle
+    p.section
+
+JOURNAL_13730
+
+All-dist1:
+
+    Avg Error reduction from Tesseract: 0.122515117947
+    Avg Error reduction from Optimal: -0.0471327074561
+
+TODO a simple way: 
+
+Before candgen, NO kb, only do seg/comb within a single var.
+May combine C/T into a "CT"?
+
+Combination is important!!
+
+TODO: PaleoSg too stupid: do not have basic dictionary. Only gen for "unrecognized" ones?
+
+Jul 15
+
+TODO Combine multiple candgen results
+Then see errors again...
+
+TODO feature: (different) KB verification
+
+
+Jul 14
+
+JOURNAL_45405:
+- Most errors are: OCR tokenization errors
+- TODO: tokenize Cuneiform before Align.py !!!
+
+TODO Cuneiform fixes:
+- TODO: combine 'xxx-' + 'yyy' (nextline)
+- TODO: 'geological' 'logical'
+
+Jul 10
+
+TODO get opt(gen) results in: /lfs/local/0/zifei/bestpick-evalgen/
+
+New eval (domain 1gram):
+
+    Avg Error reduction from Tesseract: 0.136012780223
+    Avg Error reduction from Optimal: -0.0325676481956
+
+
+TODO rerun all evaluation
+
+  < 22% error reduction: not so much...
+
+X TODO error: 
+    Keyword section mismtach? (might have been fixed by removing Resume)
+
+X HTML escaping:
+
+X Divs to remove:
+    - Resume (not English)
+    - Copyright (not in original doc)
+
+TODO: 
+    
+X   rm -rf /dfs/hulk/0/zifei/ocr/evaluation_escaped/
+
+X   mv /dfs/hulk/0/zifei/ocr/evaluation_escaped_2/ /dfs/hulk/0/zifei/ocr/evaluation_escaped/
+
+
+<div class="artFooterContent"><dl class="correspondence" id="cor1"><dt class="label topPadd"><a href="#bcor1" class="intra_ref"><sup><img class="imgLazyJSB" border="0" src="http://cdn.els-cdn.com/sd/entities/REcor.gif" alt="Corresponding author contact information" title="Corresponding author contact information" data-inlimg="/entities/REcor.gif" data-loaded="true" style="display: inline;"><noscript>&lt;img border="0" alt="Corresponding author contact information" title="Corresponding author conact information" src="http://origin-cdn.els-cdn.com/sd/entities/REcor.gif"&gt;</noscript></sup></a></dt><dd>Corresponding author.</dd></dl><!--footerNotes--></div>
+
+<p class="copyright">Copyright © 2010 Académie des sciences. Published by Elsevier Masson SAS All rights reserved.</p>
+
+TODO future:
+  (Optional) minimizing edit distance rather than maximizing #matches in supervision?
+
+
 Jul 8
+
+
+TO STUDY:
+
+      - "at most generate K new candidates for one original word (K=5 in these experiments);"
+      - K=1,2,3,4,5...infinity, what about quality change??
+
+Tables
+
+    generated_cand_word_google_1gram
+    orderaware_supv_label_google_1gram
 
   Features:
     - "best candidate": with minimum distance
@@ -18,6 +111,16 @@ Jul 8
 
 Avg Error reduction from Tesseract: 0.109664184133
 Avg Error reduction from Optimal: -0.0357580202109
++onebset:
+
+Avg Error reduction from Tesseract: 0.105452891665
+Avg Error reduction from Optimal: -0.0404587545291
++ multi:
+10.3
+
+Domain Ngram:
+0.116417383854
+-0.0285583842851
 
 Jul 7
 

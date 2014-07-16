@@ -11,10 +11,15 @@ Results are saved in :
 
 on madmax:
 
-		ocr (master) $ export DOCID='JOURNAL_40091'
+		export DOCID='JOURNAL_40091'
 
-		ocr (master) $ vimdiff /lfs/local/0/zifei/bestpick-result-printmatch/$DOCID.matches.0 /lfs/local/0/zifei/bestpick-result-printmatch/$DOCID.matches.1 /lfs/local/0/zifei/bestpick-result-printmatch/$DOCID.matches.2
+		export GEN_RES_DIR='/lfs/local/0/zifei/bestpick-result'
+		# export GEN_RES_DIR='/dfs/madmax2/0/zifei/bestpick-result-domain1gram'
+		# export GEN_RES_DIR='/dfs/madmax2/0/zifei/bestpick-result-google1gram'
 
+		vimdiff $GEN_RES_DIR/$DOCID.matches.0 /lfs/local/0/zifei/bestpick-result-printmatch/$DOCID.matches.1 /lfs/local/0/zifei/bestpick-result-printmatch/$DOCID.matches.2
+
+		
 
 
 ## Results

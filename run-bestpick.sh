@@ -31,6 +31,12 @@ if [ -z "$BESTPICK_DIR" ]; then # if empty
   echo "Bestpick dir: $BESTPICK_DIR"
 fi
 
+if [ -z "$BESTPICK_EVALGEN_DIR" ]; then # if empty
+  export BESTPICK_EVALGEN_DIR=/lfs/local/0/zifei/bestpick-evalgen/
+  echo "Bestpick Evalgen dir: $BESTPICK_EVALGEN_DIR"
+fi
+
+
 echo "Set DB_NAME to ${DBNAME}."
 echo "HOST is ${PGHOST}, PORT is ${PGPORT}."
 echo "Supervision ngram: ${SUPV_GRAM_LEN}"
@@ -100,8 +106,8 @@ cd $APP_HOME
 # cat $BESTPICK_DIR/*.stat.1 > evaluation/bestpick-optimal-fuzzy/opt.1.txt
 # cat $BESTPICK_DIR/*.stat.2 > evaluation/bestpick-optimal-fuzzy/opt.2.txt
 # cat $BESTPICK_DIR/*.stat.3 > evaluation/bestpick-optimal-fuzzy/opt.3.txt
-# cat $BESTPICK_DIR/*.stat.4 > evaluation/bestpick-optimal-fuzzy/opt.4.txt
-# cat $BESTPICK_DIR/*.stat.5 > evaluation/bestpick-optimal-fuzzy/opt.5.txt
+# # cat $BESTPICK_DIR/*.stat.4 > evaluation/bestpick-optimal-fuzzy/opt.4.txt
+# # cat $BESTPICK_DIR/*.stat.5 > evaluation/bestpick-optimal-fuzzy/opt.5.txt
 
 # mkdir -p evaluation/bestpick-optimal-fuzzy-trgm/
 # cat $BESTPICK_DIR/*.stat.0.1 > evaluation/bestpick-optimal-fuzzy-trgm/opt.0.1.txt

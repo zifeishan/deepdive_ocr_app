@@ -3,11 +3,13 @@ import sys
 # 100 docs
 tesspath = "evaluation/bestpick-tess-eval-100.txt"
 cunipath = 'evaluation/bestpick-cuni-eval-100.txt'
-optimalpath = "evaluation/bestpick-optimal-eval-100.txt"
+# optimalpath = "evaluation/bestpick-optimal-eval-100.txt"
+optimalpath = "evaluation/bestpick-optimal-fuzzy/opt.0.txt"
 fuzzypath = "evaluation/bestpick-optimal-fuzzy/"
 # fuzzypath = "evaluation/bestpick-optimal-fuzzy-trgm/"
 ddpath = 'eval-results.txt'
-DISTRANGE = range(1, 6)
+# DISTRANGE = range(1, 6)
+DISTRANGE = range(1, 4)
 # DISTRANGE = [0.1, 0.3, 0.5, 0.7, 0.9]
 
 # # 30 docs
@@ -98,7 +100,8 @@ def PlotPrep(xlabel, ylabel, loglog=False):
 
 PlotPrep(xlabel='Document ID', ylabel='Word Recall')
 colors = [i for i in reversed(['r', 'g', 'orange', 
-  'blue', 'yellow', 'purple', 'gray', 'black'
+  'blue', 'yellow', 'purple'
+  # , 'gray', 'black'
   # 'bo--', 'yo--', 'mo--', 'go--', 'ro--'
   # '0.7', '0.6', '0.5', '0.4', '0.3'
   ])]

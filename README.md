@@ -69,6 +69,8 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
     /dfs/hulk/0/zifei/ocr/supervision_escaped/
     /dfs/hulk/0/zifei/ocr/evaluation_escaped/
 
+    /dfs/hulk/0/zifei/ocr/evaluation_escaped_new/
+
 <!-- 
 ## Processed supervision data (bad escape)
 

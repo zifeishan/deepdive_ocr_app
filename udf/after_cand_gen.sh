@@ -1,9 +1,11 @@
+# $1: CandGen source
+
 # Clean up cand_word
 echo "Updating cand_word and candidate..."
 psql -c "
   INSERT INTO cand_word(docid, cand_word_id, candidate_id, varid, candid, source, wordid, word)
   SELECT docid, cand_word_id, candidate_id, varid, candid, source, wordid, word 
-  FROM generated_cand_word;
+  FROM generated_cand_word_$1;
 " $DBNAME
 
 psql -c "ANALYZE cand_word;" $DBNAME
@@ -13,7 +15,7 @@ psql -c "INSERT INTO candidate (
         SELECT  docid,
                 (docid || '@' || varid) as variable_id,
                 candidate_id,  varid, candid, source
-        FROM    generated_cand_word
+        FROM    generated_cand_word_$1
         GROUP BY docid, candidate_id, varid, candid, source
         
         ;
@@ -34,5 +36,5 @@ SELECT  docid,
         max(varid)    as varid,
         max(candid)   as candid,
         array_agg(word order by wordid) as words
-FROM generated_cand_word
+FROM generated_cand_word_$1
 GROUP BY docid, candidate_id;" $DBNAME

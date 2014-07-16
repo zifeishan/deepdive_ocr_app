@@ -1,7 +1,7 @@
 #! /usr/bin/python
 
 # Testing this file:
-# pypy udf/ext_cand_gen.py 3 /tmp/tmp_cand_gen_ <data/sample-cand-gen-input.txt
+# pypy udf/ext_cand_gen.py 2 5 <data/sample-cand-gen-input.txt
 
 import os, sys
 import codecs
@@ -22,12 +22,18 @@ DICT_PATH = '/usr/share/dict/words'
 # (0 for unrestricted)
 MAXCANDNUM = 0
 
+# Prefix of "Sg" source
+SOURCE_PREFIX = ''
+
 if len(sys.argv) >= 3:
   DICT_PATH = sys.argv[1]
   DISTANCE_THRESHOLD = int(sys.argv[2])
 
   if len(sys.argv) >= 4:
     MAXCANDNUM =  int(sys.argv[3])
+
+    if len(sys.argv) >= 5:
+      SOURCE_PREFIX = sys.argv[4]
 
 # Init trie
 trie.init(DICT_PATH)
@@ -225,7 +231,7 @@ for row in sys.stdin:
       # Construct a return value for generated "cand_word"
       candid = newcandids[newcand]
       pairs = sugg_cands[newcand]
-      source = ''.join([x[0] for x in pairs]) + 'Sg'
+      source = ''.join([x[0] for x in pairs]) + '_' + SOURCE_PREFIX + 'Sg'
       genwords = newcand.split(' ')  
       oriword = oriwords[newcand]
       # TODO now do this in a weird way...

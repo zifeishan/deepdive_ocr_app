@@ -2,6 +2,9 @@
 # Sample usage: <this> <html_path> <outbase>
 # NEW: ignore existing files in output dir
 
+### Test with a single file:
+# pypy prepare_supv_data_from_html.py eval /dfs/hulk/0/zifei/ocr/sd-html/JOURNAL_13652.html /tmp/
+
 import codecs
 import HTMLParser
 
@@ -37,6 +40,8 @@ else:
   print 'Usage:',sys.argv[0],'<supv_or_eval> <path> <outbase>'
   print 'e.g. pypy ./prepare_supv_data_from_html.py supv ../data/html-labels-accurate/html/test-30docs/ ../data/test-supervision/'
   print 'e.g. pypy ./prepare_supv_data_from_html.py eval ../data/html-labels-accurate/html/test-30docs/ ../data/test-evaluation/'
+  print 'Or run with a single HTML file:'
+  print 'e.g. pypy ./prepare_supv_data_from_html.py eval ../data/html-labels-accurate/html/test-30docs/JOURNAL_13652.html ../data/test-evaluation/'
   sys.exit(1)
 
 # Parse whether escape References / figures / tables for evaluation
@@ -113,10 +118,65 @@ for f in files:
     # Filter figures and tables and references
     divs = frag('div')
     for div in divs:
-      if ESCAPE_FOR_EVAL and div.has_key('class') and ('figTblUpiOuter' in div['class'] 
-        # or 'btnHolder' in div['class']
-        or 'refText' in div['class']):  # ignore references
+      if ESCAPE_FOR_EVAL and div.has_key('class') and \
+        (
+          'figTblUpiOuter' in div['class'] 
+          # or 'btnHolder' in div['class']
+          or 'refText' in div['class'] # ignore references
+          or 'artFooterContent' in div['class']
+        ):
+        div.extract()  # Remove this div
+
+      if ESCAPE_FOR_EVAL and div.has_key('class') and \
+        ( 'abstractHighlights' in div['class'] # author highlights
+          ):
+        print >>sys.stderr, '%s\tREMOVE HIGHLIGHT:' % docid, div.text[:100],'...'
         div.extract()
+
+      if ESCAPE_FOR_EVAL and div.has_key('class') and \
+        ( 'formula' in div['class']
+          ):
+        print >>sys.stderr, '%s\tREMOVE FORMULA:' % docid, div.text[:100],'...'
+        div.extract()
+
+      # Remove Resume section (not English)
+      if ESCAPE_FOR_EVAL and div.has_key('class') and 'svAbstract' in div['class']:
+        divtitles = div.findAll('h2', {'class': 'secHeading'})
+        for divtitle in divtitles:
+          if 'R&eacute;sum&eacute;' in divtitle.text:
+            print >>sys.stderr, '%s\tREMOVE RESUME:' % docid, div.text[:100],'...'
+            div.extract()
+
+    # Remove copyright
+    divs = frag('p')
+    for div in divs:
+      if ESCAPE_FOR_EVAL and div.has_key('class') and \
+        (
+          'copyright' in div['class'] 
+        ):  # ignore copyright
+        div.extract()  # Remove this div
+
+    # Remove keyword headline (e.g. Keywords / Mots clés)
+    divs = frag('h2')
+    for div in divs:
+      if ESCAPE_FOR_EVAL and div.has_key('id') and \
+        (
+          'kwd_' in div['id'] 
+        ):  # ignore copyright
+        print >>sys.stderr, '%s\tREMOVE KW TITLE:' % docid, div.text[:100],'...'
+        div.extract()  # Remove this div
+
+    # Remove keyword list
+    divs = frag('ul')
+    for div in divs:
+      if ESCAPE_FOR_EVAL and div.has_key('class') and \
+        (
+          'keyword' in div['class']
+        ):  # ignore copyright
+        print >>sys.stderr, '%s\tREMOVE KW LIST:' % docid, div.text[:100],'...'
+        div.extract()  # Remove this div
+
+
 
     fragtext = frag.findAll(text=True)
     visible_texts = filter(visible, fragtext)
@@ -125,6 +185,7 @@ for f in files:
     thistext = htmlparser.unescape(thistext)  # Decode
     thistext = re.sub('\xa0', ' ', thistext)  # HTML space
     thistext = re.sub(' +', ' ', thistext)  # Multiple spaces to only one
+    thistext = re.sub('\xe2\x80\x93', '-', thistext) # '–' -> '-'
 
     text += thistext
     # text += '\n'  # between each fragment

@@ -1,12 +1,144 @@
+Jul 22
+
+TODO: first "verify" candidates in KB, then only gen for unverified candidates..?
+TODO: write a sql script to check a certain word's generated candidates?
+TODO: char 2gram feature for T/C (initial bias)
+
+Jul 21
+
+X Seems working well! Check plot results. Generate numbers for Ce.
+
+    tess avg    : 0.92443
+    dd avg      : 0.93629
+    opt avg     : 0.93812
+    opt(gen) avg: 0.94666
+    opt(1) avg  : 0.95984
+    ErrRed tess -> dd      : 0.15740
+    ErrRed opt -> opt(gen) : 0.13760
+    ErrRed tess -> opt(gen): 0.29616
+
+! Give evaluation protocol.
+
+X  (solved) Bottleneck: cannot run DP on huge generated candidates...
+    (because N1*N2 is long long rather than int in C++.)
+
+When N1*N2 =10k * 2k: 6min for 2 docs (2 parallel):
+
+    09:07:24 INFO  JOURNAL_58762 Running DP.. N1=86197, N2=24305
+    09:07:24 INFO  JOURNAL_58568 Running DP.. N1=93406, N2=24076
+    ext_sup_orderaware_incremental SUCCESS [364666 ms]
+
+Stats:
+
+    ddocr_100_candgen=# select source, count(*) as cnt from cand_word where docid='JOURNAL_58568' group by source order by cnt desc;
+                source             |  cnt
+    -------------------------------+-------
+     CSeg_Presg                    | 19009
+     T                             | 18826
+     C                             | 17232
+     T_PaleoSg                     | 14762
+     CT_PaleoSg                    | 12394
+     C_PaleoSg                     |  7267
+     CT                            |  4967
+     C_GglSg                       |  3524
+     CComb_Presg                   |  3100
+     T_GglSg                       |  2910
+     TSeg_Presg                    |  1618
+     TComb_Presg                   |  1430
+     ...
+
+
+Speed based on seg/comb (dist 2, maxcands 3, comb20, seg5):
+
+  domain: 5 docs / min
+
+Added segcomb candgen. distance need to be treated individually?
+
+
+    Plotting 24 documents
+    Plot saved to:  pick-result.eps
+    tess avg  : 0.9244
+    dd avg    : 0.9338
+    opt avg   : 0.9381
+    opt(1) avg: 0.9598
+    Avg Error reduction from Tesseract: 0.123978876371
+    Avg Error reduction from Optimal: -0.0745110389621
+
+Testing match of Tesseract:
+
+    test/match_tesseract_with_docid.sh JOURNAL_13504
+    Saved to test/tess-output/JOURNAL_13504.seq
+    Matching Tesseract with sequence using original stringmatch:
+    pypy candmatch.py test/tess-output/JOURNAL_13504.seq /dfs/hulk/0/zifei/ocr/evaluation_escaped/JOURNAL_13504.seq
+    2038
+
+    zifei@madmax: util (master) $ pypy candmatch.py test/tess-output/JOURNAL_13504.seq /dfs/hulk/0/zifei/ocr/evaluation_escaped/JOURNAL_13504.seq
+    2039
+
+
+    zifei@madmax: util (master) $ pypy candmatch_eval.py test/tess-output/JOURNAL_13504.seq /dfs/hulk/0/zifei/ocr/evaluation_escaped/JOURNAL_13504.seq
+    2039
+
+Jul 18
+
+Error reduction: 
+- talk about absolute precision
+
+- Monday: make sure numbers are correct
+
+- order-aware
+
+FATAL: Is our C++ DP script correct? Test two sequences with seqmatch / candmatch!
+
+
+Error analysis:
+
+    author  37  33.94%
+      - Author name in citation mismatch
+    seg 25  22.94%
+      - segmentation
+    direct  13  11.93%
+      - need "confusion matrix" for candidate generation (rm->nn)
+    ??  9 8.26%
+      - not sure how to fix
+    comb  7 6.42%
+      - combination
+    char  6 5.50%
+      - non-ascii characters have different representations (-, ", ~, ...)
+    lan 4 3.67%
+      - a different language
+    comb, char  3 2.75%
+      - combination + character
+
+TODO:
+
+  - Remove "intra_ref" in HTML for evaluation
+
+"? -> fi" cannot be fixed in dist 1...
+
+    TODO Removed 'Sum&agrave;rio' and rerun
+
+X   TODO rewrite evaluation script in C++
+
+Jul 17
+
+Rerun again:
+
+X   mv /dfs/hulk/0/zifei/ocr/evaluation_escaped/ /dfs/hulk/0/zifei/ocr/evaluation_escaped_old2/
+
+X   mv /dfs/hulk/0/zifei/ocr/evaluation_escaped_2/ /dfs/hulk/0/zifei/ocr/evaluation_escaped/
+
+X Then rerun all evaluations......
+
+X TODO: check results in :
+
+    /lfs/local/0/zifei/bestpick-evalgen/
+    /lfs/local/0/zifei/bestpick-result/
+
+
 Jul 16
 
-NEW DECISION:
-
-Escape all divs except:
-
-    div.svArticle
-    h2.svArticle
-    p.section
+TODO run checkgen.sh for more docs (prior wrong)
 
 JOURNAL_13730
 

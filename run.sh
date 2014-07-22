@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 if hash psql 2>/dev/null; then  # check psql exists
     true
 else
@@ -51,10 +53,12 @@ export FEATURE_CONF_PATH=$APP_HOME/script/extract-feature-list.conf
 export LD_LIBRARY_PATH="/dfs/rulk/0/hazy_share/lib64/:/dfs/rulk/0/hazy_share/lib/protobuf/lib/:/dfs/rulk/0/hazy_share/lib/tclap/lib/:$LD_LIBRARY_PATH"
 export DICT_FILE=$APP_HOME/util/words
 
-# export CAND_GEN_DIST=2
+export CAND_GEN_DIST=2
 # export MAX_CAND_NUM=5
-export CAND_GEN_DIST=1
+# export CAND_GEN_DIST=1
 export MAX_CAND_NUM=3
+export MAX_COMB_STRLEN=20
+export MAX_SEG_PARTS=5
 
 # export SUPV_DIR=$APP_HOME/data/test-supervision
 # # export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking

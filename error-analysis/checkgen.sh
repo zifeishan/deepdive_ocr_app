@@ -1,6 +1,7 @@
 export DOCID='JOURNAL_40091'
 
-export GEN_RES_DIR='/lfs/local/0/zifei/bestpick-result'
+export OPT_MATCH_DIR='/lfs/local/0/zifei/bestpick-result'
+export GEN_RES_DIR='/lfs/local/0/zifei/bestpick-evalgen'
 # export GEN_RES_DIR='/dfs/madmax2/0/zifei/bestpick-result-domain1gram'
 # export GEN_RES_DIR='/dfs/madmax2/0/zifei/bestpick-result-google1gram'
 
@@ -16,4 +17,6 @@ if [ $# = 2 ]; then
   export GEN_RES_DIR=$2
 fi
 
-vimdiff $GEN_RES_DIR/$DOCID.matches.0 /lfs/local/0/zifei/bestpick-result-printmatch/$DOCID.matches.1 /lfs/local/0/zifei/bestpick-result-printmatch/$DOCID.matches.2
+vimdiff $OPT_MATCH_DIR/$DOCID.matches.0 $GEN_RES_DIR/$DOCID.matches.0 $OPT_MATCH_DIR/$DOCID.matches.1
+
+# vimdiff $GEN_RES_DIR/$DOCID.matches.0 $OPT_MATCH_DIR/$DOCID.matches.1 $OPT_MATCH_DIR/$DOCID.matches.2

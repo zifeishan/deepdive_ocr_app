@@ -85,6 +85,13 @@ for key in data:
 
   plotdata[key] = newlist
 
+# Compute avg on docs where T/C/all has outputs
+# Discard documents that does not have T/opt/dd..
+complete_data = [] # storing subs
+for i in range(len(plotdata['dd'])):
+  if all(plotdata[name][i] for name in ['tess', 'opt', 'dd', 'opt(1)', 'opt(gen)']):
+    complete_data.append(i)
+print 'Plotting %d documents' % len(complete_data)
 
 import numpy
 import matplotlib
@@ -114,20 +121,22 @@ colors = [i for i in reversed(['r', 'g', 'orange', 'cyan',
   # 'bo--', 'yo--', 'mo--', 'go--', 'ro--'
   # '0.7', '0.6', '0.5', '0.4', '0.3'
   ])]
-i = 0
+dname_i = 0
 # plt.yscale('linear')
 for dname in plotorder:
-  ploty = plotdata[dname]
-  plotx = range(len(docids))
-  my_xticks = [ d[len('JOURNAL_'):] for d in  docids]
+  # ploty = plotdata[dname]
+  ploty = [plotdata[dname][i] for i in complete_data]
+  plotx = range(len(complete_data))
+  my_xticks = [docids[i][len('JOURNAL_'):] for i in complete_data]
+  # [ d[len('JOURNAL_'):] for d in docids]
   plt.xticks(plotx, my_xticks, rotation=45)  # Adding custom sticks
-  plt.plot(plotx, ploty, colors[i])
-  i += 1
+  plt.plot(plotx, ploty, colors[dname_i])
+  dname_i += 1
   
 maxscore = max( [ max(plotdata[name]) for name in plotdata ])
 minscore = min( [ min(plotdata[name]) for name in plotdata ])
 # pylab.ylim([0.85, maxscore])
-pylab.ylim([0.85, 1])
+pylab.ylim([0.88, 1])
 # pylab.ylim([minscore, 1])
 plt.legend(tuple([name for name in plotorder]), loc='lower right')
 plt.savefig('pick-result.eps')
@@ -138,7 +147,8 @@ print 'Plot saved to: ', 'pick-result.eps'
 def MacroErrRed(new, base):
   counter = 0
   sumred = 0.0
-  for i in range(len(base)):
+  # for i in range(len(base)):
+  for i in complete_data:
     if new[i] and base[i]:  # have data for both (Tess has Nones)
       counter += 1
       # print '%.4f %.4f: ErrRed =' % (new[i], base[i]), (new[i] - base[i]) / float(1 - base[i])
@@ -148,11 +158,39 @@ def MacroErrRed(new, base):
 
   # return sum([(new[i] - base[i]) / float(base[i]) for i in range(len(base)) if new[i] and base[i]]) / len(base)
 
+def MacroAvg(data):
+  counter = 0
+  sumdata = 0.0
+  # for i in range(len(data)):
+  for i in complete_data:
+    if data[i]:  # have data for both (Tess has Nones)
+      counter += 1
+      sumdata += data[i]
+    else:  # None
+      counter += 1
+  return sumdata / counter
+
 tessred = MacroErrRed(plotdata['dd'], plotdata['tess'])
-optred = MacroErrRed(plotdata['dd'], plotdata['opt'])
-print 'Avg Error reduction from Tesseract:', tessred
-print 'Avg Error reduction from Optimal:', optred
+optgenred = MacroErrRed(plotdata['opt(gen)'], plotdata['opt'])
+
+print 'tess avg    : %.5f' % MacroAvg(plotdata['tess'])
+print 'dd avg      : %.5f' % MacroAvg(plotdata['dd'])
+print 'opt avg     : %.5f' % MacroAvg(plotdata['opt'])
+print 'opt(gen) avg: %.5f' % MacroAvg(plotdata['opt(gen)'])
+print 'opt(1) avg  : %.5f' % MacroAvg(plotdata['opt(1)'])
+print 'ErrRed tess -> dd      : %.5f' % tessred
+print 'ErrRed opt -> opt(gen) : %.5f' % optgenred
+print 'ErrRed tess -> opt(gen): %.5f' % MacroErrRed(plotdata['opt(gen)'], plotdata['tess'])
+
 fout = open('result-errred.txt', 'w')
-print >>fout, tessred
-print >>fout, optred
+# print >>fout, tessred
+# print >>fout, optgenred
+print >>fout, 'tess avg  :\t%.5f' % MacroAvg(plotdata['tess'])
+print >>fout, 'dd avg    :\t%.5f' % MacroAvg(plotdata['dd'])
+print >>fout, 'opt avg   :\t%.5f' % MacroAvg(plotdata['opt'])
+print >>fout, 'opt(gen) avg:\t%.5f' % MacroAvg(plotdata['opt(gen)'])
+print >>fout, 'opt(1) avg:\t%.5f' % MacroAvg(plotdata['opt(1)'])
+print >>fout, 'ErrRed tess -> dd:\t%.5f' % tessred
+print >>fout, 'ErrRed opt -> opt(gen):\t%.5f' % optgenred
+print >>fout, 'ErrRed tess -> opt(gen):\t%.5f' % MacroErrRed(plotdata['opt(gen)'], plotdata['tess'])
 fout.close()

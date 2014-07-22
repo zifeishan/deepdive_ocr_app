@@ -70,6 +70,8 @@ def searchTops( word, maxCost, maxCandNum = 0 ):
     for i in range(1, maxCost + 1):
         results = search(word, i)
         # Already get enough results
+        if maxCandNum == 0: # unristricted
+            return sorted(results, key=lambda x:x[1])
         if len(results) >= maxCandNum:
             return sorted(results, key=lambda x:x[1])[:maxCandNum]
 

@@ -2,14 +2,46 @@
 
 import os, sys, codecs
 import Levenshtein
+import re
 
 dist_dict = {}
 hits = 0
 misses = 0
 
+# '\xe2\x80\x93|\xe2\x80\x94|\xe2\x88\x92'
+re_dash = re.compile(u'\u2013|\u2014|\u2212')
+# '\xe2\x80\x9d|\xe2\x80\x9c'
+re_quote = re.compile(u'\u201d|\u201c')
+
+re_singlequote = re.compile(u'\u2019|\u2018')
+
+def Escape(word):
+  # if word in ['\xe2\x80\x93', '\xe2\x80\x94', '\xe2\x88\x92']:
+  #   return '-'
+  # if word in ['\xe2\x80\x9d', '\xe2\x80\x9c']:
+  #   return '"'
+  # return word
+  # word = re.sub('\xa0', ' ', word)  # HTML space
+  # word = re.sub('\xe2\x80\x93', '-', word) # 'super -' -> '-'
+  # word = re.sub('\xe2\x80\x94', '-', word) # 'super -' -> '-'
+  # word = re.sub('\xe2\x88\x92', '-', word)
+
+  # word = re.sub('\xe2\x80\x9d', '"', word) # "
+  # word = re.sub('\xe2\x80\x9c', '"', word)
+  word = re.sub(re_dash, '-', word)
+  word = re.sub(re_quote, '"', word)
+  word = re.sub(re_singlequote, "'", word)
+  
+
+  return word
+
+
 def WordEqual(w1, w2, distance=0):  # use fuzzy equal
   global equal_dict
   global hits, misses
+
+  # w1 = Escape(w1)
+  # w2 = Escape(w2)
 
   if distance == 0:
     return w1 == w2
@@ -80,9 +112,10 @@ def Match(data, supvseq, distance=0):
   # print >>sys.stderr, '\n'.join([str(x) for x in data[:10]])
 
   # F: longest matching up to ith element from arr1 and and jth from arr2
-  arr1 = data
+  # arr1 = data
+  arr1 = []
   arr2 = supvseq
-  n1 = len(arr1)
+  n1 = len(data)
   n2 = len(arr2)
   if n1 == 0 or n2 == 0: return 0, []
 
@@ -90,7 +123,31 @@ def Match(data, supvseq, distance=0):
     arr1 = []
     # [ [(0, [x])] for x in data]
     for i in range(len(data)):
-      arr1.append( [(i, [data[i]])] )
+      # arr1.append( [(i, [data[i]])] )
+      newdata = Escape(data[i])
+      arr1.append( [(i, [newdata])] )
+
+  # Escape for evaluation
+  else:
+    for cands in data:
+      newcands = []
+      for pair in cands:
+        candidate_id = pair[0]
+        cand_arr = pair[1]
+        newpair = pair[0], [Escape(c) for c in cand_arr]
+        # DEBUG
+        # if newpair != pair:
+        #   print >>sys.stderr, 'ESCAPE ARR1:', newpair
+        newcands.append(newpair)
+      arr1.append(newcands)
+
+  # DEBUG
+  # for i in arr2:
+  #   ei = Escape(i)
+  #   if ei != i:
+  #     print >>sys.stderr,  'ESCAPE ARR2', i, Escape(i)
+
+  arr2 = [Escape(i) for i in arr2]
 
   # f = [[0] * (n2)] * (n1)  # Python array is weird....
   f = [[0 for _2 in range(n2)] for _ in range(n1)] # This is correct way, do not give a shallow copy!!
@@ -193,7 +250,11 @@ def Match(data, supvseq, distance=0):
   while (i,j) != (-1,-1): # last time: i,j != -1,-1, path == -1,-1
     if cand_records[i][j] != -1:
       matched_candids.append(cand_records[i][j])
+      # pi, pj = path[i][j]
+      # matchnum = f[i][j] - f[pi][pj]
+      # maxmatchnum = j - pj
       matched_trans.append(j)
+      # WRONG! # "matchnum" words are matched in transcript.
 
       # # DEBUG: print all matches
       # oriword = ' | '.join([x[1][0] for x in data[i]])
@@ -226,7 +287,7 @@ def MatchMarkSeq(dataseq, supvseq):
       arr1.append( [(i, [dataseq[i]])] )
     data = arr1
 
-  matches, matched_candidate_ids, matched_trans, f, path, records = Match(data, supvseq)
+  matches, matched_candidate_ids, f, path, records = Match(data, supvseq)
 
   fout = codecs.open('test-mark.tmp', 'w', 'utf-8')
   matched_candidate_ids_index = set(matched_candidate_ids)
@@ -262,16 +323,16 @@ if __name__ == "__main__":
   if len(sys.argv) == 3:
     f1 = sys.argv[1]
     f2 = sys.argv[2]
-    arr1 = [l.strip() for l in open(f1).readlines()]
-    arr2 = [l.strip() for l in open(f2).readlines()]
+    arr1 = [l.strip() for l in codecs.open(f1, 'r', 'utf-8').readlines()]
+    arr2 = [l.strip() for l in codecs.open(f2, 'r', 'utf-8').readlines()]
     m,can,tran,f,path,cand_records =  Match(arr1, arr2)
     print m
 
   elif len(sys.argv) == 4 and sys.argv[3] == 'mark':
     f1 = sys.argv[1]
     f2 = sys.argv[2]
-    arr1 = [l.strip() for l in open(f1).readlines()]
-    arr2 = [l.strip() for l in open(f2).readlines()]
+    arr1 = [l.strip() for l in codecs.open(f1, 'r', 'utf-8').readlines()]
+    arr2 = [l.strip() for l in codecs.open(f2, 'r', 'utf-8').readlines()]
     MatchMarkSeq(arr1, arr2)
 
   else:
@@ -327,6 +388,7 @@ if __name__ == "__main__":
     import json
     obj = json.load(open('../testgroupby-JOURNAL_14255.json'))
     docid = obj["docid"]
+
     arr_candidate_id = obj['arr_candidate_id']
     arr_varid = obj['arr_varid']
     arr_word = obj['arr_word']
@@ -358,7 +420,7 @@ if __name__ == "__main__":
       thiscand.append(word)    
 
     # make sure Both data and lines are utf-8
-    lines = [l.strip().decode('utf-8') for l in open('../data/test-evaluation/'+docid+'.seq').readlines()]
+    lines = [l.strip().decode('utf-8') for l in codecs.open('../data/test-evaluation/'+docid+'.seq', 'r', 'utf-8').readlines()]
     print 'Matching 1000 words:'
     m,can,tran,f,path,cand_records = Match(data[:1000], lines[:1000])
     print m

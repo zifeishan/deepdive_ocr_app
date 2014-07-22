@@ -12,33 +12,17 @@ import codecs
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
-sys.path.append(BASE_DIR + '/../util/wordcorrector')
-import trie
+MAX_COMB_STRLEN = 20  # if #chars exceed this number, do not do segmentation / combination
 
-# RATIO_THRESHOLD = 0.3  # must <= this value
-DISTANCE_THRESHOLD = 1
-DICT_PATH = '/usr/share/dict/words'
-# en_dict = enchant.Dict("en_US")
+MAX_SEG_PARTS = 5  # if #chars exceed this number, do not do segmentation / combination
 
-# for each word, only generate at most this many candidates 
-# (0 for unrestricted)
-MAXCANDNUM = 0
 
 # Prefix of "Sg" source
 SOURCE_PREFIX = ''
 
 if len(sys.argv) >= 3:
-  DICT_PATH = sys.argv[1]
-  DISTANCE_THRESHOLD = int(sys.argv[2])
-
-  if len(sys.argv) >= 4:
-    MAXCANDNUM =  int(sys.argv[3])
-
-    if len(sys.argv) >= 5:
-      SOURCE_PREFIX = sys.argv[4]
-
-# Init trie
-trie.init(DICT_PATH)
+  MAX_COMB_STRLEN = int(sys.argv[1])
+  MAX_SEG_PARTS = int(sys.argv[2])
 
 # Optimization: store "visited" words for candgen.
 visited_results = {}
@@ -54,6 +38,17 @@ def Escape(word):
   word = re.sub(re_singlequote, "'", word)
   
   return word
+
+# groups
+split_pattern = re.compile(r'([,\.\?!:;\(\)\[\]/"\-=\'])')
+def SplitWordByPunc(s):
+  # puncs = ' ,.?!\':;()[]/"-='
+  
+  # test: 'a,b.c?d!e\'g:h;i(j)k[l]m/n"o-p=q'
+  # Do not split by space.. see later proc
+  return re.split(split_pattern, s)
+
+
 
 # For each input tuple
 for row in sys.stdin:
@@ -172,15 +167,37 @@ for row in sys.stdin:
     if tosearch not in visited_results:
       # visited_results[tosearch] = trie.search(tosearch, DISTANCE_THRESHOLD)
 
-      # suggestions
-      res = trie.searchTops(tosearch, DISTANCE_THRESHOLD, MAXCANDNUM)
+      res = []
+
+      # TODO: currently if candidate not too long, do comb;
+      # if candidate not too long & parts not too much, do seg.
+
+      # one candidate: segmentation
+      parts = SplitWordByPunc(tosearch)
+      if len(parts) <= MAX_SEG_PARTS and len(tosearch) <= MAX_COMB_STRLEN:
+        
+        dist = len(parts) / 2  # word punc word punc word ...
+        segcand = ' '.join(parts)
+        segcand = re.sub(' +', ' ', segcand)
+        if segcand != tosearch: # make sure do not return the same
+          res += [(segcand, dist, 'Seg')]  # "distance = 0" for bonus
+          # print >>sys.stderr, 'SEGCAND:', tosearch, '->',segcand
+
+      # one candidate: combination
+      if len(tosearch) <= MAX_COMB_STRLEN:
+        parts = tosearch.split(' ')
+        dist = len(parts) - 1 # w1 w2 w3 -> 2 deletes
+        combcand = ''.join(parts)
+        if combcand != tosearch: # make sure do not return the same
+          res += [(combcand, dist, 'Comb')]  # "distance = 0" for bonus
+          # print >>sys.stderr, 'COMBCAND:', tosearch, '->',combcand
 
       visited_results[tosearch] = res
     # return trie.search(' '.join(words), DISTANCE_THRESHOLD)
     # return visited_results[tosearch]
     # Add punctuations
     return [ 
-        ( leftpuncs + x[0] + rightpuncs, x[1] )
+        ( leftpuncs + x[0] + rightpuncs, x[1], x[2] )
         for x in visited_results[tosearch]]
 
   for varpair in data:
@@ -201,7 +218,7 @@ for row in sys.stdin:
       words = cand[2]
 
       # Do not generate based on generated candidates
-      if source.endswith('Sg'):
+      if source.endswith('Sg') or source.endswith('Presg'):
         continue
 
       results = SuggestCands(words)
@@ -211,35 +228,12 @@ for row in sys.stdin:
       if len(results) == 0: 
         continue
 
-      # DEBUG
-      # X If minimal distance == 0, we find in KB a same candidate!
-      # X If some cands in "all_existing_cands", we find in KB a same candidate!
-      # Therefore we do not generate ANY candidate??
-
-      mindist = min([x[1] for x in results])
-      if mindist == 0:  
-        COUNT_MINDIST_0 += 1
-      else:
-        COUNT_MINDIST_NO0 += 1
-
-      # if mindist != 0:
-      #   print words, len(results), sorted(results, key=lambda x:x[1])[:10]
-
-      # for (newcand, dist) in results:
-      #   if newcand in all_existing_cands:
-      #     print >>sys.stderr, '  EXISTING cand:', newcand
-
-      if any((newcand in all_existing_cands) for (newcand, dist) in results):
+      if any((newcand in all_existing_cands) for (newcand, dist, newsrc) in results):
         # print 'Some existing cands:', results
         has_valid_candidate = True
         break
 
-      # if mindist == 0:
-      #   has_valid_candidate = True
-      #   break
-
-
-      for (newcand, dist) in results:
+      for (newcand, dist, newsrc) in results:
         # DO not generate existing candidates
         # TODO this does not count "minimal" distance..
         if newcand in all_existing_cands:
@@ -252,7 +246,7 @@ for row in sys.stdin:
           oriwords[newcand] = ' '.join(words)
           next_candid += 1
 
-        sugg_cands[newcand].append( (source, dist) )
+        sugg_cands[newcand].append( (source, dist, newsrc) )
 
     # Do not generate any new candidate
     if has_valid_candidate:
@@ -265,13 +259,16 @@ for row in sys.stdin:
       # Construct a return value for generated "cand_word"
       candid = newcandids[newcand]
       pairs = sugg_cands[newcand]
-      source = ''.join([x[0] for x in pairs]) + '_' + SOURCE_PREFIX + 'Sg'
+      # source = ''.join([x[0] for x in pairs]) + '_' + SOURCE_PREFIX + 'Sg'
+      source = ''.join([x[0] for x in pairs]) + min([x[2] for x in pairs]) + '_' + SOURCE_PREFIX + 'Presg'
       genwords = newcand.split(' ')  
       oriword = oriwords[newcand]
       # TODO now do this in a weird way...
       # Generated candidates are split into multi words by spaces
 
-      distance = min([x[1] for x in pairs])  
+      # distance = min([x[1] for x in pairs])  
+      distance = min([x[1] for x in pairs])
+      
       # TODO now: minimum distance
 
       candidate_id = docid + '@' + str(varid) + '_' + str(candid)

@@ -1,4 +1,5 @@
 #! /usr/bin/python
+# -*- coding: utf-8 -*-
 
 import fileinput
 import json
@@ -13,7 +14,8 @@ import codecs
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 sys.path.append(BASE_DIR + '/../util')
-import candmatch
+# import candmatch
+import candmatch_eval as candmatch
 
 IS_EVALUATION = False
 bestpick_dir = ''
@@ -62,7 +64,12 @@ for row in sys.stdin:
   #  "arr_id": [98112, 98113, 98114, 98115, 98116, 98117, 98118, 98119, 98120, 98121, 98122,
   
 
+  # print >>sys.stderr, obj.keys()
   docid = obj["docid"]
+
+  # # DEBUG 
+  # if docid != 'JOURNAL_26741': continue
+
   # arr_id = obj['arr_id']
   arr_candidate_id = obj['arr_candidate_id']
   arr_varid = obj['arr_varid']
@@ -128,7 +135,7 @@ for row in sys.stdin:
 
   # print 'IS_EVALUATION:',IS_EVALUATION
   if not IS_EVALUATION:
-    matches, matched_candidate_ids, f, path, records = candmatch.Match(data, supervision_sequence)
+    matches, matched_candidate_ids, matched_trans, f, path, records = candmatch.Match(data, supervision_sequence)
 
     print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(supervision_sequence),'(%.4f)' % (matches / float(len(supervision_sequence)))
 
@@ -166,12 +173,38 @@ for row in sys.stdin:
               print >>fout, w
       fout.close()
 
+      # RECOMPUTE matched_trans since it's wrong
+      matched_trans_char = {} # sub : "char" (. / X / 1,2,3..)
+      n1 = len(data)
+      n2 = len(supervision_sequence)
+      assert n1 == len(f)
+      assert n2 == len(f[0])
+      i = n1 - 1
+      j = n2 - 1
+      # TODO ugly..
+      while (i,j) != (-1,-1): # last time: i,j != -1,-1, path == -1,-1
+        if records[i][j] != -1:
+          pi, pj = path[i][j]
+          if pi,pj == -1,-1:
+            matchnum = f[i][j]
+            maxmatchnum = j
+          else:
+            matchnum = f[i][j] - f[pi][pj]
+            maxmatchnum = j - pj
+          if matchnum == maxmatchnum:
+            for k in range(pj + 1, j + 1):
+              matched_trans_char[k] = '.' # all match
+          else:
+            for k in range(pj + 1, j + 1):
+              matched_trans_char[k] = '%d' % matchnum # part match
+        i, j = path[i][j]
+
       # Print matched / unmatched words in transcript
       fout = codecs.open(statdir + docid + '.matches.' + str(dist), 'w', 'utf-8')
-      set_matched_trans = set(matched_trans)
+      # set_matched_trans = set(matched_trans)
       for i in range(len(supervision_sequence)):
-        if i in set_matched_trans:
-          print >>fout, '.\t%s' % supervision_sequence[i]
+        if i in matched_trans_char:
+          print >>fout, '%s\t%s' % (matched_trans_char[i], supervision_sequence[i])
         else:
           print >>fout, 'X\t%s' % supervision_sequence[i]
       fout.close()

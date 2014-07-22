@@ -48,10 +48,13 @@ fi
 
 # pypy ocr-evaluation-strict.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results.txt
 
+echo 'Evaluating Tesseract...'
 
 cat $EVAL_LIST_FILE | xargs -P $MAX_PARALLELISM -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words-tesseract.tsv $EVAL_DIR eval-results/tesseract/$0.txt $0'
 
 cat eval-results/tesseract/* > eval-results-tess.txt
+
+echo 'Evaluating Cuneiform...'
 
 cat $EVAL_LIST_FILE | xargs -P $MAX_PARALLELISM -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words-cuneiform.tsv $EVAL_DIR eval-results/cuneiform/$0.txt $0'
 

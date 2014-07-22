@@ -36,6 +36,7 @@ if [ -z "$BESTPICK_EVALGEN_DIR" ]; then # if empty
   echo "Bestpick Evalgen dir: $BESTPICK_EVALGEN_DIR"
 fi
 
+export BESTPICK_TESS_DIR=/lfs/local/0/zifei/bestpick-result-tess/
 
 echo "Set DB_NAME to ${DBNAME}."
 echo "HOST is ${PGHOST}, PORT is ${PGPORT}."
@@ -72,7 +73,7 @@ if [ -z "$EVAL_DIR" ]; then # if empty
   export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation_escaped/
 fi
 if [ -z "$MAX_PARALLELISM" ]; then # if empty
-  export MAX_PARALLELISM=15
+  export MAX_PARALLELISM=25
 fi
 
 cd $DEEPDIVE_HOME

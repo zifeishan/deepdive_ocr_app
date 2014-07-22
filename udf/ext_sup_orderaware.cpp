@@ -147,6 +147,10 @@ int Match(vector<string>& words, vector<string>& transcript, set<int>& matched_w
 //    int n2 = transcript.size();
     
     if (n1 == 0 ||  n2 == 0) return 0;
+    long long n1n2 = n1;
+    n1n2 *= n2;
+    // cerr << "Creating array with size: " <<  n1n2 << endl;
+    // fprintf(stderr, "N1=%d, N2=%d, arraysize %d\n", n1, n2, long(n1)*n2 );
     
     // Creating score array (f[i][j]: N*N)
     int** f = new int*[n1];
@@ -158,9 +162,9 @@ int Match(vector<string>& words, vector<string>& transcript, set<int>& matched_w
     }
     
     // Creating path array (path[i * n2 + j]: N*N)
-    int * pathi = new int [n1 * n2];
-    int * pathj = new int [n1 * n2];
-    for (int i = 0; i < n1 * n2; i++){
+    int * pathi = new int [n1n2];
+    int * pathj = new int [n1n2];
+    for (long long i = 0; i < n1n2; i++){
         pathi[i] = -2;
         pathj[i] = -2;
     }
@@ -178,7 +182,7 @@ int Match(vector<string>& words, vector<string>& transcript, set<int>& matched_w
         }
     }
     // init paths and scores for all "zero indegree nodes"
-    for (int i = 0; i < n1; i++)
+    for (long long i = 0; i < n1; i++)
         for (int j = 0; j < n2; j++)
         {
             if (words[i] == transcript[j])
@@ -209,12 +213,12 @@ int Match(vector<string>& words, vector<string>& transcript, set<int>& matched_w
             DEBUGCODE(cerr << ".";)
         }
         // i: last node
-        int i = order[ordersub];
+        long long i = order[ordersub];
         for (int j = 0; j < n2; j++) // j: transcript position
         {
             for (int t = 0; t < edge_num[i]; t++)
             {
-                int i2 = edges[i][t]; // i2: next node
+                long long i2 = edges[i][t]; // i2: next node
                 if (i2 < n1 && j+1 < n2 and words[i2] == transcript[j+1])
                 {
                     if (f[i2][j+1] < f[i][j] + 1)
@@ -264,7 +268,7 @@ int Match(vector<string>& words, vector<string>& transcript, set<int>& matched_w
     }
     DEBUGCODE( cerr << "Finished DP. MaxScore:" << maxscore << endl;)
     
-    int nowi = besti;
+    long long nowi = besti;
     int nowj = n2 - 1;
 
     set<pair<int, int> > visited_pairs;

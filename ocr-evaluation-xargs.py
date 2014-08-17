@@ -37,7 +37,7 @@ else:
    
 
 # GENERATE DATA with one pass
-lines = [l.strip().split('\t') for l in open(dd_output_tsv).readlines()]
+lines = [l.strip().split('\t') for l in codecs.open(dd_output_tsv, 'r', 'utf-8').readlines()]
 
 doc_candid_word_index = {}
 doc_candidate_ids = {}
@@ -71,11 +71,12 @@ for docid in doc_candid_word_index:
     if sample_size == 0 or len(eval_data[docid]) < sample_size:
       eval_data[docid].append(var)
 
-print 'Finished processing',len(eval_data),'documents'
+# print 'Finished processing',len(eval_data),'documents'
 
-fout = open(output_stat_path, 'w')
+fout = codecs.open(output_stat_path, 'w', 'utf-8')
 sys.path.append('util/')
-import candmatch  # Use our script here
+# import candmatch  # Use our script here
+import candmatch_eval as candmatch  # Use our script here
 
 
 for docid in eval_data:
@@ -86,12 +87,12 @@ for docid in eval_data:
     print 'Error: cannot find path:',evalpath
     continue
   
-  eval_sequence = [l.rstrip('\n') for l in open(evalpath).readlines()]
+  eval_sequence = [l.rstrip('\n') for l in codecs.open(evalpath, 'r', 'utf-8').readlines()]
   if sample_size > 0:
     eval_sequence = eval_sequence[:sample_size]
 
-  print 'Matching',docid,'...'
-  matches, matched_candidate_ids, f, path, records = candmatch.Match(data, eval_sequence)
+  # print 'Matching',docid,'...'
+  matches, matched_candidate_ids, matched_trans, f, path, records = candmatch.Match(data, eval_sequence)
 
   print >>sys.stderr, 'DOCID:',docid, ' MATCHES:',matches,'/',len(eval_sequence),'(%.4f)' % (matches / float(len(eval_sequence)))
 

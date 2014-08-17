@@ -1,3 +1,6 @@
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $SCRIPT_DIR/default.sh
+
 export DBNAME=ddocr_1k
 export PGHOST=rambo
 export PGPORT=5433

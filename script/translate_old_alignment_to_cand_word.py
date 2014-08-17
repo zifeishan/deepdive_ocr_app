@@ -1,5 +1,10 @@
 import sys, os
 
+'''
+This script is just used for translating old alignment (e.g. journals-output) to the new cand_word.
+If you need to process raw candidates (eg. cleanpaleo), run AlignJournals.py.""
+'''
+
 data_dir = 'journals-output/'
 outputbase = ''
 if len(sys.argv) == 3:

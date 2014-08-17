@@ -1,4 +1,5 @@
 #! /bin/bash
+set -e
 
 if hash psql 2>/dev/null; then  # check psql exists
     true
@@ -16,11 +17,11 @@ else
   exit
 fi
 
-CAND_DIR=/dfs/hulk/0/zifei/ocr/journals-output/
-SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
-GOOGLE_1GRAM_TSV=/dfs/hulk/0/zifei/ocr/google-ngram/1gram.tsv
-GOOGLE_2GRAM_TSV=/dfs/hulk/0/zifei/ocr/google-ngram/2gram_reduced.tsv
-DOMAIN_CORPUS=/dfs/hulk/0/zifei/ocr/domain-corpus.tsv
+# CAND_DIR=/dfs/hulk/0/zifei/ocr/journals-output/
+# SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
+# GOOGLE_1GRAM_TSV=/dfs/hulk/0/zifei/ocr/google-ngram/1gram.tsv
+# GOOGLE_2GRAM_TSV=/dfs/hulk/0/zifei/ocr/google-ngram/2gram_reduced.tsv
+# DOMAIN_CORPUS=/dfs/hulk/0/zifei/ocr/domain-corpus.tsv
 echo "Data dir:
 CAND_DIR: $CAND_DIR
 SUPV_DIR: $SUPV_DIR
@@ -72,4 +73,16 @@ ANALYZE domain_corpus;
 " $DBNAME
 if [ "$?" != "0" ]; then echo "[50] FAILED!"; exit 1; fi
 
+cat /dfs/hulk/0/zifei/ocr/kb/entity_kb.tsv | psql -c "
+DROP TABLE IF EXISTS entity_kb;
+CREATE TABLE entity_kb (
+    name text,
+    class text,
+    subclass text
+);
+COPY entity_kb FROM STDIN;" $DBNAME
+if [ "$?" != "0" ]; then echo "[60] FAILED!"; exit 1; fi
+
+
 echo "Done!"
+echo "Remember to setup contrib module. e.g.: psql $DBNAME -f /usr/local/Cellar/postgresql/9.3.4/share/postgresql/contrib/fuzzystrmatch.sql (OR: /lfs/rambo/0/zifei/software/greenplum-db-4.2.2.4/share/postgresql/contrib/fuzzystrmatch.sql)"

@@ -1,6 +1,9 @@
 import os, sys
 from alignment import *
 
+'''
+This script processes Raw OCR results to aligned journal files.
+'''
 if __name__ == "__main__": 
   if len(sys.argv) == 3:
     inputurls = sys.argv[1]
@@ -32,6 +35,7 @@ if __name__ == "__main__":
 
     # AlignBoxedFromPath(path, 'JOURNAL_28971', './test')
   else:
-    print 'Usage:',sys.argv[0],'<procfiles> <output_base>'
-    print 'e.g.:',sys.argv[0],'data/html-labels-accurate/ground-truth-url.txt', './journals-output'
+    print 'This module needs SNAP library.'
+    print 'Usage: python2.7',sys.argv[0],'<procfiles> <output_base>'
+    print 'e.g.: python2.7',sys.argv[0],'data/html-labels-accurate/ground-truth-url.txt', './journals-output'
     sys.exit(1)

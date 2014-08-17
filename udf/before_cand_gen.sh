@@ -1,7 +1,7 @@
-psql -c """drop table if exists generated_cand_word cascade;
+psql -c """drop table if exists generated_cand_word_$1 cascade;
 """ $DBNAME
 
-psql -c """create table generated_cand_word(
+psql -c """create table generated_cand_word_$1(
     docid         TEXT,
     cand_word_id  TEXT,
     candidate_id  TEXT,
@@ -10,21 +10,23 @@ psql -c """create table generated_cand_word(
     source        TEXT,     -- 1-1 mapping to source
     wordid        INT,      -- start from 0
     word          TEXT,
-    distance      INT       -- edit distance from original word
+    distance      INT,       -- edit distance from original word
+    original_word TEXT,
+    editops TEXT
     )
 -- DISTRIBUTED BY (docid);
 """ $DBNAME  # TODO???
 
 
-# Clean up cand_word
-echo "Clean up cand_word..."
-psql -c """
-  DELETE FROM cand_word
-  WHERE source like '%Sg';
+# # Clean up cand_word
+# echo "Clean up cand_word..."
+# psql -c """
+#   DELETE FROM cand_word
+#   WHERE source like '%Sg';
 
-  DELETE FROM candidate
-  WHERE source like '%Sg';
+#   DELETE FROM candidate
+#   WHERE source like '%Sg';
 
-  ANALYZE cand_word;
-  ANALYZE candidate;
-""" $DBNAME
+#   ANALYZE cand_word;
+#   ANALYZE candidate;
+# """ $DBNAME

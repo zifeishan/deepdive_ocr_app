@@ -1,10 +1,24 @@
 import sys
 
+# 100 docs
 tesspath = "evaluation/bestpick-tess-eval-100.txt"
 cunipath = 'evaluation/bestpick-cuni-eval-100.txt'
-optimalpath = "evaluation/bestpick-optimal-eval-100.txt"
+# optimalpath = "evaluation/bestpick-optimal-eval-100.txt"
+optimalpath = "evaluation/bestpick-optimal-fuzzy/opt.0.txt"
 fuzzypath = "evaluation/bestpick-optimal-fuzzy/"
+# fuzzypath = "evaluation/bestpick-optimal-fuzzy-trgm/"
 ddpath = 'eval-results.txt'
+# DISTRANGE = range(1, 6)
+DISTRANGE = range(1, 4)
+# DISTRANGE = [0.1, 0.3, 0.5, 0.7, 0.9]
+
+# # 30 docs
+# tesspath = "evaluation/bestpick-tess-eval-30-sample.txt"
+# cunipath = 'evaluation/bestpick-cuni-eval-30-sample.txt'
+# optimalpath = "evaluation/bestpick-optimal-fuzzy/opt.0.txt"
+# fuzzypath = "evaluation/bestpick-optimal-fuzzy/"
+# ddpath = 'eval-results.txt'
+
 
 # if len(sys.argv) == 3:
 #   path = sys.argv[1]
@@ -32,16 +46,20 @@ dd =   [ (t[0], float(t[-1])) for t in dd]
 opt = [ (t[0], float(t[-1].strip('()'))) for t in opt]
 
 data = {'tess':tess, 'opt':opt, 'dd':dd} # not added cuni
+# data = {'opt':opt, 'dd':dd} # not added cuni / tess
 
-for dist in range(1, 6):
-  path = fuzzypath + 'opt.%d.txt' % dist
+for dist in DISTRANGE:
+  # path = fuzzypath + 'opt.%d.txt' % dist
+  path = fuzzypath + 'opt.' + str(dist) + '.txt'
   tmp = [l.strip().split('\t') for l in open(path).readlines()]
   tmp = [ (t[0], float(t[-1].strip('()'))) for t in tmp]
-  data['opt(%d)' % dist] = tmp
+  data['opt('+str(dist)+')'] = tmp
 
 docids = [_[0] for _ in sorted(data['opt'], key=lambda x:x[1])]
 
-plotorder = [i for i in reversed(['tess', 'dd', 'opt'] + ['opt(%d)' % i for i in range(1,6)] )]
+# plotorder = [i for i in reversed(['tess', 'dd', 'opt'] + ['opt(%d)' % i for i in DISTRANGE] )]
+# not added tess
+plotorder = [i for i in reversed(['tess', 'dd', 'opt'] + ['opt(' + str(i) + ')' for i in DISTRANGE] )]
 plotdata = {}
 for key in data:
   oldlist = data[key]
@@ -82,7 +100,9 @@ def PlotPrep(xlabel, ylabel, loglog=False):
 
 PlotPrep(xlabel='Document ID', ylabel='Word Recall')
 colors = [i for i in reversed(['r', 'g', 'orange', 
-  'blue', 'yellow', 'purple', 'gray', 'black'
+  'blue', 'yellow', 'purple'
+  # , 'gray', 'black'
+  # 'bo--', 'yo--', 'mo--', 'go--', 'ro--'
   # '0.7', '0.6', '0.5', '0.4', '0.3'
   ])]
 i = 0
@@ -96,10 +116,34 @@ for dname in plotorder:
   i += 1
   
 maxscore = max( [ max(plotdata[name]) for name in plotdata ])
+minscore = min( [ min(plotdata[name]) for name in plotdata ])
 # pylab.ylim([0.85, maxscore])
 pylab.ylim([0.85, 1])
+# pylab.ylim([minscore, 1])
 plt.legend(tuple([name for name in plotorder]), loc='lower right')
 plt.savefig('pick-result.eps')
 plt.clf()
 
 print 'Plot saved to: ', 'pick-result.eps'
+
+def MacroErrRed(new, base):
+  counter = 0
+  sumred = 0.0
+  for i in range(len(base)):
+    if new[i] and base[i]:  # have data for both (Tess has Nones)
+      counter += 1
+      # print '%.4f %.4f: ErrRed =' % (new[i], base[i]), (new[i] - base[i]) / float(1 - base[i])
+      sumred += (new[i] - base[i]) / float(1 - base[i])
+
+  return sumred / counter
+
+  # return sum([(new[i] - base[i]) / float(base[i]) for i in range(len(base)) if new[i] and base[i]]) / len(base)
+
+tessred = MacroErrRed(plotdata['dd'], plotdata['tess'])
+optred = MacroErrRed(plotdata['dd'], plotdata['opt'])
+print 'Avg Error reduction from Tesseract:', tessred
+print 'Avg Error reduction from Optimal:', optred
+fout = open('result-errred.txt', 'w')
+print >>fout, tessred
+print >>fout, optred
+fout.close()

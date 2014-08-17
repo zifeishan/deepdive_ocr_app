@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 if hash psql 2>/dev/null; then  # check psql exists
     true
 else
@@ -41,29 +43,40 @@ export APP_HOME=`pwd`
 # $APP_HOME/prepare_data.sh
 # 20 have resource problem
 
-export CALI_FRACTION=0.25
-export KFOLD_ITER=1
-export KFOLD_NUM=4
-# Only fold a fraction of data, TODO
+# export CALI_FRACTION=0.25
+# export KFOLD_ITER=1
+# if [ -z "$KFOLD_NUM" ]; then # if empty
+#   export KFOLD_NUM=4
+# fi
+# # Only fold a fraction of data, TODO
 
 export FEATURE_LIB_PATH=$APP_HOME/script/
 export FEATURE_CONF_PATH=$APP_HOME/script/extract-feature-list.conf
 export LD_LIBRARY_PATH="/dfs/rulk/0/hazy_share/lib64/:/dfs/rulk/0/hazy_share/lib/protobuf/lib/:/dfs/rulk/0/hazy_share/lib/tclap/lib/:$LD_LIBRARY_PATH"
 export DICT_FILE=$APP_HOME/util/words
 
-# export SUPV_DIR=$APP_HOME/data/test-supervision
-# # export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
+# export CAND_GEN_DIST=2
+# # export MAX_CAND_NUM=5
+# # export CAND_GEN_DIST=1
+# export MAX_CAND_NUM=3
+# export MAX_COMB_STRLEN=20
+# export MAX_SEG_PARTS=5
 
-if [ -z "$SUPV_DIR" ]; then # if empty
-  export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
-fi
+# # export SUPV_DIR=$APP_HOME/data/test-supervision
+# # # export SUPV_DIR=$APP_HOME/data/test-evaluation  # for testing optimal picking
 
-if [ -z "$EVAL_DIR" ]; then # if empty
-  export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation_escaped/
-fi
-if [ -z "$MAX_PARALLELISM" ]; then # if empty
-  export MAX_PARALLELISM=15
-fi
+# if [ -z "$SUPV_DIR" ]; then # if empty
+#   export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
+# fi
+
+# if [ -z "$EVAL_DIR" ]; then # if empty
+#   export EVAL_DIR=/dfs/hulk/0/zifei/ocr/evaluation_escaped/
+# fi
+# if [ -z "$MAX_PARALLELISM" ]; then # if empty
+#   export MAX_PARALLELISM=15
+# fi
+
+
 # # # LARGE
 # # export SUPV_DIR=/dfs/madmax5/0/zifei/deepdive/app/ocr/data/supervision/
 # export SUPV_DIR=/dfs/hulk/0/zifei/ocr/supervision_escaped/
@@ -77,9 +90,6 @@ echo 'Running SBT...'
 # SBT_OPTS="-Xmx128g -XX:MaxHeapSize=8g" sbt/sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx128g" sbt/sbt "run -c $APP_HOME/application.conf"
 deepdive -c $APP_HOME/application.conf
-
-# SBT_OPTS="-Xmx2g -XX:MaxHeapSize=2g" sbt/sbt "run -c $APP_HOME/application-develop.conf"
-
 
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application.conf"
 # SBT_OPTS="-Xmx4g" sbt "run -c $APP_HOME/application-old.conf"

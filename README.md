@@ -30,11 +30,21 @@ How to run the system
 Datasets
 ----
 
+## Error analysis location
+
+    /Users/Robin/Documents/repos/deepdive_ocr/data-140111/compare/getaccrecall.py
+
 ## Raw OCR Results
 
     140,982  /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_JOURNAL
      43,487  /lfs/madmax3/0/czhang/cleanpaleo/TORUNEXT_feb15
      14,646  /lfs/madmax3/0/czhang/cleanpaleo/NLPRS_jan20_overlap.22/
+
+     dirty papers: 
+     http://hazy.cs.wisc.edu/hazy/share/zifeipdf/
+     /lfs/madmax/0/czhang/paleopaleo/input_large_compact/
+     or with cuneiform HTML outputs: 
+     /lfs/madmax/0/czhang/paleopaleo/input_large/
 
 ## Candidates
 
@@ -43,6 +53,13 @@ Datasets
 
     OR:
     /dfs/madmax/0/zifei/deepdive/app/ocr/data/journals-output
+
+HOW TO GET: 
+from raw candidates, do:
+
+    cd script/
+    python2.7 align_one_document.py ......
+
 
 ## Supervision HTMLs
 
@@ -68,6 +85,8 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
 
     /dfs/hulk/0/zifei/ocr/supervision_escaped/
     /dfs/hulk/0/zifei/ocr/evaluation_escaped/
+
+    <!-- /dfs/hulk/0/zifei/ocr/evaluation_escaped_new/ -->
 
 <!-- 
 ## Processed supervision data (bad escape)
@@ -117,6 +136,16 @@ bash prepare_supv_data_from_html_xargs.sh eval /dfs/hulk/0/zifei/ocr/sd-html/ /d
     /dfs/hulk/0/zifei/ocr/kb/paleodb_taxons.tsv
     /dfs/hulk/0/zifei/ocr/kb/supervision_occurrences.tsv
 
+    # Aggregated:
+    /dfs/hulk/0/zifei/ocr/kb/entity_kb.tsv
+    /dfs/hulk/0/zifei/ocr/kb/entity_kb_words.txt
+
+    # ngrams
+    /dfs/hulk/0/zifei/ocr/kb/domain_1gram_100docs_reduced5.txt
+    /dfs/hulk/0/zifei/ocr/kb/domain_1gram_100docs.txt
+    /dfs/hulk/0/zifei/ocr/kb/google_1gram_1000.txt
+    /dfs/hulk/0/zifei/ocr/kb/google_1gram_10k.txt
+
 
 Ground truth
 ----
@@ -140,4 +169,9 @@ Dependencies
 - python-Levenshtein
 - pyquery
 - snappy 0.8.5 or higher (http://snap.stanford.edu/snappy/0.8.5/)
-- psql "fuzzystrmatch" module: http://blog.2ndquadrant.com/wp-content/uploads/2011/03/fuzzystrmatch-gp-4.0.4.0.tar.gz
+- psql "fuzzystrmatch" module: 
+    - http://blog.2ndquadrant.com/wp-content/uploads/2011/03/fuzzystrmatch-gp-4.0.4.0.tar.gz
+    - Doc: http://blog.2ndquadrant.com/fuzzystrmatch_greenplum/
+- psql "pg_trgm" module (in GiST):
+    - http://www.sai.msu.su/~megera/postgres/gist/pg_trgm/pg_trgm.tar.gz
+    - Docs: http://www.sai.msu.su/~megera/postgres/gist/

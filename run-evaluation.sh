@@ -18,7 +18,8 @@ export EXPORT_ROOT=/tmp/
 # EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
 # EVAL_DIR=data/test-evaluation
 
-rm -f eval-results/deepdive/*
+rm -f eval-results/$DBNAME/deepdive/*
+mkdir -p eval-results/$DBNAME/deepdive/
 
 export MAXPARALLEL=25
 export EVAL_LIST_FILE=$EXPORT_ROOT/ocr-eval-docs.tsv
@@ -28,9 +29,11 @@ fi
 
 # pypy ocr-evaluation-strict.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results.txt
 
-cat $EVAL_LIST_FILE | xargs -P $MAXPARALLEL -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results/deepdive/$0.txt $0'
+cat $EVAL_LIST_FILE | xargs -P $MAXPARALLEL -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results/$DBNAME/deepdive/$0.txt $0'
 
-cat eval-results/deepdive/* > eval-results.txt
+cat eval-results/$DBNAME/deepdive/* > eval-results-$DBNAME.txt
+
+cp eval-results-$DBNAME.txt eval-results.txt
 
 # pypy ocr-evaluation-strict.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results.txt
 

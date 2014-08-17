@@ -24,6 +24,9 @@ def WordEqual(w1, w2, distance=0):  # use fuzzy equal
       d = Levenshtein.distance(w1, w2)
       dist_dict[(w1, w2)] = d
       misses += 1
+      # DEBUG
+      # if d <= distance and d != 0: 
+      #   print >>sys.stderr, w1, '\t', w2, '\t', d
       return d <= distance
         
 
@@ -183,19 +186,32 @@ def Match(data, supvseq, distance=0):
   #     print '(%d,%d): %d\t' % (i,j,f[i][j]),
 
   matched_candids = [] # TODO not set?
+  matched_trans = []
   i = n1 - 1
   j = n2 - 1
   # TODO ugly..
   while (i,j) != (-1,-1): # last time: i,j != -1,-1, path == -1,-1
     if cand_records[i][j] != -1:
       matched_candids.append(cand_records[i][j])
+      matched_trans.append(j)
+
+      # # DEBUG: print all matches
+      # oriword = ' | '.join([x[1][0] for x in data[i]])
+      # if oriword != supvseq[j]:
+      #   try:
+      #     if '|' not in oriword:
+      #       print >>sys.stderr, i, j, oriword, '\t', supvseq[j]
+      #     print oriword, '=>\t', supvseq[j]
+      #   except:
+      #     pass
+
     i, j = path[i][j]
   
   # global hits, misses
   # print >>sys.stderr, 'Hits %d, Misses %d' % (hits, misses)
 
   # return f[n1 - 1][n2 - 1], matched_candids
-  return f[n1 - 1][n2 - 1], matched_candids, f, path, cand_records
+  return f[n1 - 1][n2 - 1], matched_candids, matched_trans, f, path, cand_records
 
 
 
@@ -210,7 +226,7 @@ def MatchMarkSeq(dataseq, supvseq):
       arr1.append( [(i, [dataseq[i]])] )
     data = arr1
 
-  matches, matched_candidate_ids, f, path, records = Match(data, supvseq)
+  matches, matched_candidate_ids, matched_trans, f, path, records = Match(data, supvseq)
 
   fout = codecs.open('test-mark.tmp', 'w', 'utf-8')
   matched_candidate_ids_index = set(matched_candidate_ids)
@@ -229,7 +245,7 @@ def MatchMarkSeq(dataseq, supvseq):
 
 
 def TestMatch(data, supvseq):
-  m,can,f,path,cand_records = Match(data, supvseq)
+  m,can,tran,f,path,cand_records = Match(data, supvseq)
   print 'M:',m
   print 'Can:',can[::-1][:50],'...'
   for i in range(len(f)):
@@ -248,7 +264,7 @@ if __name__ == "__main__":
     f2 = sys.argv[2]
     arr1 = [l.strip() for l in open(f1).readlines()]
     arr2 = [l.strip() for l in open(f2).readlines()]
-    m,can,f,path,cand_records =  Match(arr1, arr2)
+    m,can,tran,f,path,cand_records =  Match(arr1, arr2)
     print m
 
   elif len(sys.argv) == 4 and sys.argv[3] == 'mark':
@@ -287,7 +303,7 @@ if __name__ == "__main__":
     ]
     supvdata = [1]
     TestMatch(data, supvdata)
-    # m,can,f,path,cand_records = Match(data, supvdata)
+    # m,can,tran,f,path,cand_records = Match(data, supvdata)
     # print 'M:',m
     # print 'Can:',can[::-1] # reversed list
     # for i in range(len(f)):
@@ -302,10 +318,10 @@ if __name__ == "__main__":
     # tess = [l.strip().split('\t')[5] for l in open('../data/journal-test-output3-distinct/JOURNAL_12307.cand_word').readlines()]
     # lines = [l.strip() for l in open('../data/test-evaluation/JOURNAL_12307.seq').readlines()]
     # print 'Matching 1000 words:'
-    # m,can,f,path,cand_records = Match(tess[:1000], lines[:1000])
+    # m,can,tran,f,path,cand_records = Match(tess[:1000], lines[:1000])
     # print m
     # print 'Matching all words:', len(tess), len(lines)
-    # m,can,f,path,cand_records = Match(tess, lines)
+    # m,can,tran,f,path,cand_records = Match(tess, lines)
     # print m
 
     import json
@@ -344,10 +360,10 @@ if __name__ == "__main__":
     # make sure Both data and lines are utf-8
     lines = [l.strip().decode('utf-8') for l in open('../data/test-evaluation/'+docid+'.seq').readlines()]
     print 'Matching 1000 words:'
-    m,can,f,path,cand_records = Match(data[:1000], lines[:1000])
+    m,can,tran,f,path,cand_records = Match(data[:1000], lines[:1000])
     print m
     print 'Matching all words:', len(data), len(lines)
-    m,can,f,path,cand_records = Match(data, lines)
+    m,can,tran,f,path,cand_records = Match(data, lines)
     print m
 
 

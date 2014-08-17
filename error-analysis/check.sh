@@ -11,28 +11,58 @@ export EXPORT_ROOT='/tmp/'
 # DOCID='JOURNAL_13504'
 DOCID='JOURNAL_45432'
 TRANSCRIPT_DIR='/dfs/hulk/0/zifei/ocr/evaluation_escaped/'   # Compare to transcript
-OPTIMAL_DIR='../evaluation/bestpick-result/'								# Compare to optimal
+# OPTGEN_DIR='../evaluation/bestpick-result/'								# Compare to optimal
+# OPTGEN_DIR='/lfs/local/0/zifei/bestpick-evalgen/'                # Compare to optimal
+OPTGEN_DIR=$BESTPICK_EVALGEN_DIR
+OPTX_DIR=$BESTPICK_DIR
 
-COMPARE_METHOD='1'    # 1: dd-optimal 2: dd-transcript 3: optimal-transcript
+COMPARE_METHOD='2'    # 1: dd-optimal 2: dd-transcript 3: optimal-transcript
 
-if [ $# > 0 ]; then
+if [ $# = 1 ]; then
   export DOCID=$1
 fi
-if [ $# > 1 ]; then
+if [ $# = 2 ]; then
+  export DOCID=$1
   export COMPARE_METHOD=$2
 fi
 
 grep $DOCID $EXPORT_ROOT/ocr-output-words.tsv | cut -f 3 > tmp-dd-output.tsv
 
 if [ $COMPARE_METHOD = '1' ]; then
-	vimdiff -R tmp-dd-output.tsv $OPTIMAL_DIR/$DOCID.seq
+	vimdiff -R tmp-dd-output.tsv $OPTGEN_DIR/$DOCID.seq.0
 fi
 if [ $COMPARE_METHOD = '2' ]; then
 	vimdiff -R tmp-dd-output.tsv $TRANSCRIPT_DIR/$DOCID.seq
 fi
 if [ $COMPARE_METHOD = '3' ]; then
-	vimdiff -R $OPTIMAL_DIR/$DOCID.seq $TRANSCRIPT_DIR/$DOCID.seq
+	vimdiff -R $OPTGEN_DIR/$DOCID.seq.0 $TRANSCRIPT_DIR/$DOCID.seq
 fi
+if [ $COMPARE_METHOD = 'opt' ]; then
+  vimdiff -R $OPTGEN_DIR/$DOCID.seq.0 $OPTX_DIR/opt2/$DOCID.seq.0 $TRANSCRIPT_DIR/$DOCID.seq
+fi
+if [ $COMPARE_METHOD = 'opt2' ]; then
+  vimdiff -R $OPTX_DIR/opt2/$DOCID.seq.0 $TRANSCRIPT_DIR/$DOCID.seq
+fi
+# if [ $COMPARE_METHOD = 'debugmatch' ]; then
+  ## starts with ".", matches
+  # Not sure why it is problematic. ".matches.0 sometimes has error?"
+  # grep -P "\.\t" $OPTGEN_DIR/$DOCID.matches.0 | cut -f 2 > tmp-optimal.matches
+  # grep -P "[^X]\t" $DOCID.matches.0 | cut -f 2 > tmp-optimal.matches
+  # vimdiff -R $DOCID.seq.0 tmp-optimal.matches
+# fi
 if [ $COMPARE_METHOD = '0' ]; then
-	vimdiff -R tmp-dd-output.tsv $OPTIMAL_DIR/$DOCID.seq $TRANSCRIPT_DIR/$DOCID.seq
+	vimdiff -R tmp-dd-output.tsv $OPTGEN_DIR/$DOCID.seq.0 $OPTX_DIR/opt2/$DOCID.seq.0 $TRANSCRIPT_DIR/$DOCID.seq
+  # vimdiff -R tmp-dd-output.tsv tmp-optimal.matches $TRANSCRIPT_DIR/$DOCID.seq
+fi
+if [ $COMPARE_METHOD = '2d' ]; then
+  diff tmp-dd-output.tsv $TRANSCRIPT_DIR/$DOCID.seq | grep '^>' | sort | uniq -c | sort -n | tail -n 20
+fi
+if [ $COMPARE_METHOD = '1d' ]; then
+  diff tmp-dd-output.tsv $OPTGEN_DIR/$DOCID.seq.0 | grep '^>' | sort | uniq -c | sort -n | tail -n 20
+fi
+if [ $COMPARE_METHOD = '3d' ]; then
+  diff $OPTGEN_DIR/$DOCID.seq.0 $TRANSCRIPT_DIR/$DOCID.seq | grep '^>' | sort | uniq -c | sort -n | tail -n 20
+fi
+if [ $COMPARE_METHOD = 'opt2d' ]; then
+  diff $OPTX_DIR/opt2/$DOCID.seq.0 $TRANSCRIPT_DIR/$DOCID.seq | grep '^>' | sort | uniq -c | sort -n | less
 fi

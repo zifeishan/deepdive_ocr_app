@@ -30,9 +30,10 @@ export EXPORT_ROOT=/tmp/
 # EVAL_DIR=/dfs/madmax/0/zifei/deepdive/app/ocr/data/evaluation/
 # EVAL_DIR=data/test-evaluation
 
-rm -f eval-results/tesseract/*
-rm -f eval-results/cuneiform/*
-
+rm -f eval-results/$DBNAME/tesseract/*
+rm -f eval-results/$DBNAME/cuneiform/*
+mkdir -p eval-results/$DBNAME/tesseract
+mkdir -p eval-results/$DBNAME/cuneiform
 
 export EVAL_LIST_FILE=$EXPORT_ROOT/ocr-eval-docs.tsv
 if [ -z "$SUPV_DIR" ]; then # if empty
@@ -48,14 +49,19 @@ fi
 
 # pypy ocr-evaluation-strict.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results.txt
 
+echo 'Evaluating Tesseract...'
 
-cat $EVAL_LIST_FILE | xargs -P $MAXPARALLEL -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words-tesseract.tsv $EVAL_DIR eval-results/tesseract/$0.txt $0'
+cat $EVAL_LIST_FILE | xargs -P $MAX_PARALLELISM -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words-tesseract.tsv $EVAL_DIR eval-results/$DBNAME/tesseract/$0.txt $0'
 
-cat eval-results/tesseract/* > eval-results-tess.txt
+cat eval-results/$DBNAME/tesseract/* > eval-results-tess-$DBNAME.txt
 
-cat $EVAL_LIST_FILE | xargs -P $MAXPARALLEL -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words-cuneiform.tsv $EVAL_DIR eval-results/cuneiform/$0.txt $0'
+echo 'Evaluating Cuneiform...'
 
-cat eval-results/cuneiform/* > eval-results-cuni.txt
+cat $EVAL_LIST_FILE | xargs -P $MAX_PARALLELISM -L 1 bash -c 'pypy ocr-evaluation-xargs.py $EXPORT_ROOT/ocr-output-words-cuneiform.tsv $EVAL_DIR eval-results/$DBNAME/cuneiform/$0.txt $0'
+
+cat eval-results/$DBNAME/cuneiform/* > eval-results-cuni-$DBNAME.txt
+
+echo "Now you may want to run: cp eval-results-tess-$DBNAME.txt YOUR_PLOTTING_FILE"
 
 # pypy ocr-evaluation-strict.py $EXPORT_ROOT/ocr-output-words.tsv $EVAL_DIR eval-results.txt
 
